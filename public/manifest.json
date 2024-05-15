@@ -1,0 +1,28 @@
+{
+  "name": "GreenGive",
+  "short_name": "GreenGive",
+  "theme_color": "#2196f3",
+  "background_color": "#2196f3",
+  "display": "minimal-ui",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "splash_pages": null
+}
