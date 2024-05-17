@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss"
 const { fontFamily } = require("tailwindcss/defaultTheme")
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 const config = {
   darkMode: ["class"],
@@ -17,6 +18,10 @@ const config = {
       screens: {
         "2xl": "1400px",
       },
+    },
+    screens: {
+      'xs': '475px',
+      ...defaultTheme.screens,
     },
     extend: {
       colors: {
@@ -53,6 +58,14 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "grey-1": "#1d2129",
+        "grey-2": "#4e5969",
+        "grey-3": "#86909c",
+        "grey-4": "#c9cdd4",
+        "blue-1": "#0e42d2",
+        "blue-2": "#165dff",
+        "blue-3": "#4080ff",
+        "blue-4": "#6aa1ff",
       },
       borderRadius: {
         lg: "var(--radius)",
