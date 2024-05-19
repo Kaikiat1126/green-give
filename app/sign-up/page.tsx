@@ -3,15 +3,35 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { SubmitButton } from "@/components/ui/submit-button";
+import { Montserrat } from "next/font/google";
+import { signUp } from "./sign-up";
+import { useToast } from "@/components/ui/use-toast"
+import { redirect } from 'next/navigation';
+
+const montserrat = Montserrat({ subsets: ["latin"] })
 
 export default function SignUp() {
+
+  const { toast } = useToast()
+
+  async function sign_up(formData: FormData) {
+    const response = await signUp(formData)
+    
+    const success = response?.success;
+    toast({
+      variant: success ? 'default' : 'destructive',
+      title: response.success || response.error,
+    })
+    if (response.success) redirect('/');
+  }
+
   return ( 
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="px-5 py-8 min-w-[23rem] sm:border-2 sm:rounded-lg sm:shadow-lg">
         <div className="flex flex-col gap-y-4 xs:px-0 px-6">
           <h1 className="text-2xl font-semibold text-grey-1 text-center">Sign Up</h1>
           <h3 className="text-base font-normal text-grey-2 self-center">Let&lsquo;s get started with 
-            <strong className="ml-1 tracking-wide text-[#16a34a]">GreeGive</strong>
+            <strong className={"ml-1 tracking-wide text-[#16a34a] " + montserrat.className}>GreeGive</strong>
           </h3>
         </div>
         <form className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground px-6 my-5">
@@ -61,7 +81,7 @@ export default function SignUp() {
             placeholder="••••••••"
             required
           />
-          <SubmitButton pendingText="Signing Up...">Sign Up</SubmitButton>
+          <SubmitButton formAction={sign_up} pendingText="Signing Up...">Sign Up</SubmitButton>
         </form>
         <div className="text-sm mb-2 px-6">
           <span className="text-grey-3">Already have an account?</span>

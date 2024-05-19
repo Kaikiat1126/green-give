@@ -3,8 +3,25 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { SubmitButton } from "@/components/ui/submit-button";
+import { signIn } from "./sign-in";
+import { useToast } from "@/components/ui/use-toast";
+import { redirect } from 'next/navigation';
 
 export default function SignIn() {
+
+  const { toast } = useToast()
+
+  async function sign_in(formData: FormData){
+    const response = await signIn(formData);
+
+    const success = response?.success;
+    toast({
+      variant: success ? 'default' : 'destructive',
+      title: response.success || response.error,
+    })
+    if (response.success) redirect('/');
+  }
+  
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="px-5 py-8 min-w-[23rem] sm:border-2 sm:rounded-lg sm:shadow-lg">
@@ -33,7 +50,7 @@ export default function SignIn() {
             placeholder="••••••••"
             required
           />
-          <SubmitButton pendingText="Signing In...">Sign In</SubmitButton>
+          <SubmitButton formAction={sign_in} pendingText="Signing In...">Sign In</SubmitButton>
         </form>
         <div className="text-sm mb-2 px-9">
           <span className="text-grey-3">Dont&lsquo;t have an account yet?</span>
