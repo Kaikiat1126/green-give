@@ -2,8 +2,9 @@ import type { Metadata, Viewport  } from "next";
 import { Inter as FontSans } from "next/font/google";
 import '../styles/globals.css'
 import { Toaster } from "@/components/ui/toaster"
+import NavBar from "@/components/nav-bar";
 
-import { cn } from "@/utils/utils"
+import { cn } from "@/lib/utils"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -42,6 +43,7 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}>
+          <NavBar />
           {children}
           <Toaster />
         </body>
