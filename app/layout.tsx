@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import '../styles/globals.css'
 import { Toaster } from "@/components/ui/toaster"
 import NavBar from "@/components/nav-bar";
+import BottomNavBar from "@/components/bottom-nav-bar";
 
 import { cn } from "@/lib/utils"
 
@@ -45,6 +46,7 @@ export default function RootLayout({
         )}>
           <NavBar />
           {children}
+          <BottomNavBar />
           <Toaster />
         </body>
     </html>
