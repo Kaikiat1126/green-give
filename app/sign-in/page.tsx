@@ -21,6 +21,26 @@ export default function SignIn() {
     })
     if (response.success) redirect('/');
   }
+
+  // async function signInWithGoogle(){
+  //   const supabase = createClient();
+  //   const { error } = await supabase.auth.signInWithOAuth({
+  //     provider: 'google',
+  //     options: {
+  //       redirectTo: `https://imjicjvnxbntgauqmmzp.supabase.co/auth/v1/callback`,
+  //       queryParams: {
+  //         access_type: 'offline',
+  //         prompt: 'consent',
+  //       },
+  //     },
+  //   })
+  //   if (error) {
+  //     toast({
+  //       variant: 'destructive',
+  //       title: "An error occurred while processing the request!",
+  //     })
+  //   }    
+  // }
   
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -29,6 +49,12 @@ export default function SignIn() {
           <h1 className="text-2xl font-semibold text-grey-1 text-center">Sign In</h1>
           <h3 className="text-base font-normal text-grey-2 xs:w-5/6 self-center">To keep connected with please login with your personal info</h3>
         </div>
+        {/* <div className="flex flex-col px-9 mt-4">
+          <Button onClick={signInWithGoogle} variant="outline" className="text-grey-2">
+            <GoogleIcon className="mr-2 h-5 w-5" />
+            <div>Sign In with Google</div>
+          </Button>
+        </div> */}
         <form className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground px-9 my-6">
           <Label className="text-md" htmlFor="email">
             Email

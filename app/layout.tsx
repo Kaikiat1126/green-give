@@ -6,6 +6,8 @@ import NavBar from "@/components/nav-bar";
 import BottomNavBar from "@/components/bottom-nav-bar";
 
 import { cn } from "@/lib/utils"
+import { createClient } from "@/utils/supabase/server";
+import { useUserStore } from "@/utils/zustand/zustand";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -28,11 +30,19 @@ const viewport: Viewport = {
 }
 export { viewport };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (user) {
+    // console.log('set user');
+    useUserStore.setState({ user })
+  }
+
   return (
     <html lang="en">
       <head>
@@ -44,9 +54,9 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}>
-          <NavBar />
+          { user ? <NavBar /> : null}
           {children}
-          <BottomNavBar />
+          { user ? <BottomNavBar /> : null}
           <Toaster />
         </body>
     </html>
