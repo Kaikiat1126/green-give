@@ -26,11 +26,9 @@ import { useUserStore } from "@/utils/zustand/zustand"
 
 const montserrat = Montserrat({ subsets: ["latin"] })
 
-export default function NavBar() {
+export default function NavBar({ user }: { user: User}) {
 
-  const router = useRouter()
-  const user = useUserStore.getState().user as User //should be changed
-
+  const router = useRouter();
   async function sign_out() {
     await signOut()
     return router.replace("/sign-in")
@@ -75,7 +73,7 @@ export default function NavBar() {
                   <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                {/* <div>{ user.user_metadata.first_name + " " + user.user_metadata.last_name }</div> */}
+                <div>{ user.user_metadata.first_name + " " + user.user_metadata.last_name }</div>
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>

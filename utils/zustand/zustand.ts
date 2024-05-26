@@ -1,16 +1,14 @@
 import { User } from "@supabase/supabase-js";
 import { createStore } from "zustand/vanilla";
-import { type StoreApi, useStore } from "zustand";
+import { type StoreApi, useStore, create } from "zustand";
 
-type UserStore = {
+interface UserStore {
     user: User | null;
     setUser: (user: User) => void;
     logout: () => void;
 };
 
-// const createUserStore = 
-
-export const useUserStore = createStore <UserStore>()((set) => ({
+export const useUserStore = create<UserStore>()((set) => ({
     user: null as User | null,
     setUser: (user: User) => set({ user }),
     logout: () => set({ user: null }),

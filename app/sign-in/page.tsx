@@ -6,10 +6,12 @@ import { SubmitButton } from "@/components/ui/submit-button";
 import { signIn } from "./sign-in";
 import { useToast } from "@/components/ui/use-toast";
 import { redirect } from 'next/navigation';
+import { useUserStore } from "@/utils/zustand/zustand"
 
 export default function SignIn() {
 
   const { toast } = useToast()
+  const setUser = useUserStore((state) => state.setUser);
 
   async function sign_in(formData: FormData){
     const response = await signIn(formData);
@@ -19,7 +21,11 @@ export default function SignIn() {
       variant: success ? 'default' : 'destructive',
       title: response.success || response.error,
     })
-    if (response.success) redirect('/');
+    
+    if (response.success && response.user) {
+      setUser(response.user);
+      redirect('/')
+    };
   }
 
   // async function signInWithGoogle(){

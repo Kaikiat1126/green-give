@@ -38,9 +38,9 @@ export default async function RootLayout({
   
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  // const { setUser } = useUserStore();
   if (user) {
-    // console.log('set user');
-    useUserStore.setState({ user })
+    // setUser(user);
   }
 
   return (
@@ -54,7 +54,7 @@ export default async function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}>
-          { user ? <NavBar /> : null}
+          { user ? <NavBar user={user} /> : null}
           {children}
           { user ? <BottomNavBar /> : null}
           <Toaster />
