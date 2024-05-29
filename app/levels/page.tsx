@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { levels_list, Pink } from '@/components/levels-badge'
+import { levels_list } from '@/components/levels-badge'
 import { Card } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { CircleHelp } from 'lucide-react'
@@ -11,7 +11,7 @@ import { createClient } from '@/utils/supabase/client'
 export default function Levels(){
   
   const [level, setLevel]: any = useState(null)
-  const [points, setPoints]: any = useState(0)
+  const [points, setPoints] = useState<number>(0)
   const [nextLevel, setNextLevel]: any = useState(null)
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function Levels(){
         <div className="text-sm font-bold text-[#f9cc45]">Total {points} karma points</div>
       </div>
       <div className='flex flex-col items-center gap-y-2'>
-        <Progress value={level? (nextLevel.points - points / nextLevel.points) * 100 : 0} 
+        <Progress value={level? (points / nextLevel.points) * 100 : 0} 
           className='md:w-3/5 w-4/5 h-3'
           color={level? `bg-${level.color}` : ''}
         />
@@ -54,7 +54,7 @@ export default function Levels(){
           <span className='font-bold text-grey-1'>Karma points</span>
         </div>
       </div>
-      <div className='grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 md:mb-0 mb-6'>
+      <div className='grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 md:mb-0 mb-6 py-2'>
         { levels_list.map((levelObj, index) => (
           <Card key={index} className='p-3 inline-flex items-center justify-between'>
             <div className='inline-flex items-center gap-x-4'>

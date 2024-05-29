@@ -31,7 +31,7 @@ export default function SideNav() {
             <Home color="#09090B" className="mr-3 h-5 w-5" />
             <span>Home</span>
           </Link>
-          <Link href="/" className="py-2 flex items-center hover:bg-[#f2f3f5] rounded-md px-2">
+          <Link href="/impact" className="py-2 flex items-center hover:bg-[#f2f3f5] rounded-md px-2">
             <Earth color="#09090B" className="mr-3 h-5 w-5" />
             <span>My Impact</span>
           </Link>
@@ -43,7 +43,7 @@ export default function SideNav() {
             <LayoutList color="#09090B" className="mr-3 h-5 w-5" />
             <span>My Listings</span>
           </Link>
-          <Link href="/" className="py-2 flex items-center hover:bg-[#f2f3f5] rounded-md px-2">
+          <Link href="/profile" className="py-2 flex items-center hover:bg-[#f2f3f5] rounded-md px-2">
             <Smile color="#09090B" className="mr-3 h-5 w-5" />
             <span>Profile</span>
           </Link>

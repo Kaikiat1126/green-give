@@ -22,7 +22,6 @@ import { Award, CircleUser, Earth, LayoutList, LogOut, Smile } from "lucide-reac
 import SideNav from "./side-nav"
 import { signOut } from "@/app/auth/sign-out"
 import { User } from "@supabase/supabase-js"
-import { useUserStore } from "@/utils/zustand/zustand"
 
 const montserrat = Montserrat({ subsets: ["latin"] })
 
@@ -83,12 +82,16 @@ export default function NavBar({ user }: { user: User}) {
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Smile color="#09090B" className="mr-2 h-4 w-4" />
-                <span>Profile</span>
+                <Link href="/profile" className="inline-flex">
+                  <Smile color="#09090B" className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Earth color="#09090B" className="mr-2 h-4 w-4" />
-                <span>My Impact</span>
+                <Link href="/impact" className="inline-flex">
+                  <Earth color="#09090B" className="mr-2 h-4 w-4" />
+                  <span>My Impact</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="hover:bg-[#f4f4f5] cursor-pointer">
                 <Link href="/levels" className="inline-flex">
