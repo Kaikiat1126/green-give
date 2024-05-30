@@ -32,6 +32,8 @@ export default function NavBar({ user }: { user: User}) {
     await signOut()
     return router.replace("/sign-in")
   }
+
+  const userAvatar = "https://api.multiavatar.com/" + user.id + ".svg"
   
   return(
     <nav className="bg-white md:border-b-0 border-b">
@@ -69,7 +71,7 @@ export default function NavBar({ user }: { user: User}) {
             <DropdownMenuTrigger className="outline-none">
               <div className="flex flex-row items-center gap-x-4">
                 <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                  <AvatarImage src={userAvatar} alt="@greengive" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <div>{ user.user_metadata.first_name + " " + user.user_metadata.last_name }</div>
@@ -112,7 +114,7 @@ export default function NavBar({ user }: { user: User}) {
           </DropdownMenu>
         </div>
         <div className="md:hidden block">
-          <SideNav />
+          <SideNav userAvatar={userAvatar} />
         </div>
       </div>
     </nav>

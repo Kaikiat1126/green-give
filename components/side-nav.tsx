@@ -2,15 +2,15 @@
 
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar"
 import {
-    Sheet,
-    SheetContent,
-    SheetTrigger,
-  } from "@/components/ui/sheet"
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { AlignJustify, Award, CircleUser, Earth, Home, LayoutList, LogOut, Smile } from "lucide-react"
 import { Button } from "./ui/button"
 import Link from "next/link"
 
-export default function SideNav() {
+export default function SideNav({ userAvatar }: {userAvatar: string}) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -21,8 +21,8 @@ export default function SideNav() {
       <SheetContent className="max-w-60 flex flex-col justify-between">
         <div className="flex flex-col gap-y-4 py-4">
           <div className="flex flex-row items-center gap-x-4 mb-4 px-2">
-            <Avatar className=" w-14 h-14">
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <Avatar className="w-14 h-14">
+              <AvatarImage src={userAvatar} alt="@greengive" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <div>KaiKiat Tyu</div>
