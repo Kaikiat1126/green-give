@@ -1,6 +1,7 @@
-export function calculateDateDifferenceWithToday(date: number): number {
+export function calculateDateDifferenceWithToday(date: string): number {
   const currentDate = new Date();
-  const postDate = new Date(date);
-  const diff = currentDate.getTime() - postDate.getTime();
-  return Math.floor(diff / (1000 * 60 * 60 * 24));
+  const joinedDate = new Date(date);
+  const diffTime = Math.abs(currentDate.getTime() - joinedDate.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
 }
