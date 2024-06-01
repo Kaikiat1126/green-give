@@ -2,14 +2,14 @@
 import { createClient } from '@/utils/supabase/server'
 import { calculateDateDifferenceWithToday } from '@/utils/date'
 
-const supabase = createClient()
-
 export async function getUser() {
+  const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
   return user
 }
 
 export async function getUserImpacts() {
+  const supabase = createClient()
   const user = await getUser()
   const { data } = await supabase.from('impacts').select('*').eq('id', user?.id).single() 
   return data
@@ -23,12 +23,14 @@ export async function getUserJoinedDays() {
 }
 
 export async function getUserProfile(){
+  const supabase = createClient()
   const user = await getUser()
   const { data } = await supabase.from('profiles').select('*').eq('id', user?.id).single()
   return data
 }
 
 export async function getUserFullData() {
+  const supabase = createClient()
   const user = await getUser()
   const { data } = await supabase
     .from('profiles')
