@@ -1,6 +1,3 @@
-'use client'
-
-import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,73 +5,54 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
 import Link from "next/link"
-import { useRouter } from 'next/navigation'
 import { Montserrat } from "next/font/google";
 import { Award, CircleUser, Earth, LayoutList, LogOut, Smile } from "lucide-react"
-import SideNav from "./side-nav"
-import { signOut } from "@/app/auth/sign-out"
-import { User } from "@supabase/supabase-js"
+import SideNav from "./side-nav";
+import UserAvatar from "./user-avatar";
+import { getUser } from "@/app/auth/get-user";
+import { Button  } from "./ui/button";
+import { redirect } from "next/navigation";
+import { createClient } from "@/utils/supabase/server";
 
 const montserrat = Montserrat({ subsets: ["latin"] })
 
-export default function NavBar({ user }: { user: User}) {
+export default async function NavBar(){
 
-  const router = useRouter();
-  async function sign_out() {
-    await signOut()
-    return router.replace("/sign-in")
+  const user = await getUser();
+
+  const handleSignOut = async () => {
+    'use server'
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    return redirect("/sign-in")
   }
 
-  const userAvatar = "https://api.multiavatar.com/" + user.id + ".svg"
-  
   return(
     <nav className="bg-white md:border-b-0 border-b">
       <div className="max-w-screen-xl flex flex-row justify-between items-center mx-auto px-4 md:py-6 py-3">
         <Link href="/" className="flex flex-row items-center">
           <strong className={"text-lg text-[#16a34a] tracking-wide font-bold " + montserrat.className}>GreenGive</strong>
         </Link>
-        <NavigationMenu className="md:block hidden">
-          <NavigationMenuList className="gap-x-4">
-            <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Market
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Community
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Message
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+        <div className="md:block hidden">
+          <div className="inline-flex flex-row items-center gap-x-4">
+            <Button variant="ghost" asChild>
+              <Link href="/">Home</Link>
+            </Button>
+            <Button variant="ghost" asChild>
+              <Link href="/">Community</Link>
+            </Button>
+            <Button variant="ghost" asChild>
+              <Link href="/">Message</Link>
+            </Button>
+          </div>
+        </div>
         <div className="md:block hidden">
           <DropdownMenu>
             <DropdownMenuTrigger className="outline-none">
               <div className="flex flex-row items-center gap-x-4">
-                <Avatar>
-                  <AvatarImage src={userAvatar} alt="@greengive" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <div>{ user.user_metadata.first_name + " " + user.user_metadata.last_name }</div>
+                <UserAvatar />
+                <div>{ user?.user_metadata.first_name + " " + user?.user_metadata.last_name }</div>
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -106,15 +84,19 @@ export default function NavBar({ user }: { user: User}) {
                 <span>My Listings</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="hover:bg-[#f4f4f5] cursor-pointer" onClick={sign_out}>
-                <LogOut color="#09090B" className="mr-2 h-4 w-4" />
-                <span>Log out</span>
+              <DropdownMenuItem className="hover:bg-[#f4f4f5] cursor-pointer">
+                <form action={handleSignOut}>
+                  <Button variant="ghost" type="submit" className="p-0 h-auto">
+                    <LogOut color="#09090B" className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </Button>
+                </form>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
         <div className="md:hidden block">
-          <SideNav userAvatar={userAvatar} />
+          <SideNav />
         </div>
       </div>
     </nav>

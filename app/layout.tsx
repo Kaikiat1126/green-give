@@ -54,7 +54,7 @@ export default async function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}>
-          { user ? <NavBar user={user} /> : null}
+          { user ? <NavBar /> : null}
           {children}
           { user ? <BottomNavBar /> : null}
           <Toaster />
