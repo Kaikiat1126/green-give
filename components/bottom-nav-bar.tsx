@@ -4,10 +4,10 @@ import Link from "next/link"
 import { Home, Mail, MessagesSquare, Plus, Smile } from "lucide-react"
 import { Button } from "./ui/button"
 import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+  Drawer,
+  DrawerContent,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 
 export default function BottomNavBar() {
   return (
@@ -22,18 +22,18 @@ export default function BottomNavBar() {
             <MessagesSquare className="mb-5"/>
             <span className="text-xs absolute top-2/3">Community</span>
           </Link>
-          <Sheet>
-            <SheetTrigger asChild>
+          <Drawer>
+            <DrawerTrigger asChild>
               <div className="relative flex flex-col items-center">
                 <Button variant="outline" size="icon" className="rounded-full relative bottom-4 bg-[#16a34a] h-11 w-11 text-white">
                   <Plus />
                 </Button>
                 <span className="text-xs absolute top-2/3">Add</span>
               </div>
-            </SheetTrigger>
-            <SheetContent side="bottom">
-            </SheetContent>
-          </Sheet>
+            </DrawerTrigger>
+            <DrawerContent>
+            </DrawerContent>
+          </Drawer>
           <Link href="/message" className="relative flex flex-col items-center">
             <Mail className="mb-5" />
             <span className="text-xs absolute top-2/3">Message</span>

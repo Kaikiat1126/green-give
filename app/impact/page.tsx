@@ -1,8 +1,7 @@
-import { CircleHelp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { getUserImpacts, getUserJoinedDays } from "../auth/get-user";
 import ShareImpact from "./share-impact";
+import ImpactSheet from "./impact-sheet";
 
 export default async function Impact(){
 
@@ -18,7 +17,7 @@ export default async function Impact(){
         <div className="inline-flex flex-col gap-y-2 py-3">
           <div className="inline-flex flex-row items-center">
             <div className="font-semibold text-grey-1">Total Impact</div>
-            <CircleHelp color='#c9cdd4' className="ml-4" />
+            <ImpactSheet />
           </div>
           <div className="grid xs:grid-cols-3 grid-cols-2 gap-3">
             <Card className="p-2 bg-[#f9f9f9]">
