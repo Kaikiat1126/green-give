@@ -30,7 +30,7 @@ export default async function NavBar(){
 
   return(
     <nav className="bg-white md:border-b-0 border-b">
-      <div className="max-w-screen-xl flex flex-row justify-between items-center mx-auto px-4 md:py-6 py-3">
+      <div className="max-w-screen-2xl flex flex-row justify-between items-center mx-auto px-4 md:py-6 md:px-8 pl-6 py-3">
         <Link href="/" className="flex flex-row items-center">
           <strong className={"text-lg text-[#16a34a] tracking-wide font-bold " + montserrat.className}>GreenGive</strong>
         </Link>
@@ -57,8 +57,10 @@ export default async function NavBar(){
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem>
-                <CircleUser className="mr-2 h-4 w-4" />
-                <span>Account</span>
+                <Link href="/account" className="inline-flex">
+                  <CircleUser className="mr-2 h-4 w-4" />
+                  <span>Account</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>

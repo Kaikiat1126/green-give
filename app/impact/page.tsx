@@ -9,8 +9,8 @@ export default async function Impact(){
   const joinedDays = await getUserJoinedDays();
 
   return (
-    <div className="mx-auto md:px-8 px-6">
-      <div className="xs:p-6 py-4 px-2 flex flex-col gap-y-2">
+    <div className="mx-auto md:px-8 px-6 max-w-screen-2xl">
+      <div className="xs:py-6 py-4 flex flex-col gap-y-2">
         <div className="text-xl font-semibold text-grey-1">
           You&apos;ve been joining <span className="text-[#16a34a]">GreenGive</span> for <span className="text-[#f74b70]">{joinedDays}</span> days!
         </div>

@@ -52,7 +52,7 @@ export default async function SideNav() {
             <Smile color="#09090B" className="mr-3 h-5 w-5" />
             <span>Profile</span>
           </Link>
-          <Link href="/" className="py-2 flex items-center hover:bg-[#f2f3f5] rounded-md px-2">
+          <Link href="/account" className="py-2 flex items-center hover:bg-[#f2f3f5] rounded-md px-2">
             <CircleUser color="#09090B" className="mr-3 h-5 w-5" />
             <span>Account</span>
           </Link>
