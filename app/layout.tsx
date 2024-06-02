@@ -7,7 +7,6 @@ import BottomNavBar from "@/components/bottom-nav-bar";
 
 import { cn } from "@/lib/utils"
 import { createClient } from "@/utils/supabase/server";
-import { useUserStore } from "@/utils/zustand/zustand";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -38,10 +37,7 @@ export default async function RootLayout({
   
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  // const { setUser } = useUserStore();
-  if (user) {
-    // setUser(user);
-  }
+  if (user) {}
 
   return (
     <html lang="en">
