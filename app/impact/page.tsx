@@ -2,6 +2,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getUserImpacts, getUserJoinedDays } from "../auth/get-user";
 import ShareImpact from "./share-impact";
 import ImpactSheet from "./impact-sheet";
+import ImpactCard from "./impact-card";
+import { WomanRaisingHand, Spaghetti, PortableWater, WrappedGift, Package, ClutchBag } from "@/components/emoji";
 
 export default async function Impact(){
 
@@ -20,27 +22,21 @@ export default async function Impact(){
             <ImpactSheet />
           </div>
           <div className="grid xs:grid-cols-3 grid-cols-2 gap-3">
-            <Card className="p-2 bg-[#f9f9f9]">
-              <CardContent className="flex flex-col items-center p-4 py-0 gap-y-1">
-                <div className="text-3xl">🙋🏻‍♀️</div>
-                <div className="text-xl font-bold">{data?.item_offers + data?.item_receives}</div>
-                <div className="text-sm text-grey-2 text-center whitespace-nowrap">People shared with</div>
-              </CardContent>
-            </Card>
-            <Card className="p-2 bg-[#f9f9f9]">
-              <CardContent className="flex flex-col items-center p-4 py-0 gap-y-1">
-                <div className="text-3xl">🍛</div>
-                <div className="text-xl font-bold">{data?.meals_saved}</div>
-                <div className="text-sm text-grey-2 text-center whitespace-nowrap">Meal&apos;s saved</div>
-              </CardContent>
-            </Card>
-            <Card className="p-2 bg-[#f9f9f9]">
-              <CardContent className="flex flex-col items-center p-4 py-0 gap-y-1">
-                <div className="text-3xl">🚰</div>
-                <div className="text-xl font-bold">{data?.water_saved}</div>
-                <div className="text-sm text-grey-2 text-center whitespace-nowrap">Water saved (L)</div>
-              </CardContent>
-            </Card>
+            <ImpactCard>
+              <WomanRaisingHand className="h-7 w-7 mt-1.5" />
+              <div className="text-xl font-bold">{data?.item_offers + data?.item_receives}</div>
+              <div className="text-sm text-grey-2 text-center whitespace-nowrap">People shared with</div>
+            </ImpactCard>
+            <ImpactCard>
+              <Spaghetti className="h-7 w-7 mt-1.5" />
+              <div className="text-xl font-bold">{data?.meals_saved}</div>
+              <div className="text-sm text-grey-2 text-center whitespace-nowrap">Meal&apos;s saved</div>
+            </ImpactCard>
+            <ImpactCard>
+              <PortableWater className="h-7 w-7 mt-1.5" />
+              <div className="text-xl font-bold">{data?.water_saved}</div>
+              <div className="text-sm text-grey-2 text-center whitespace-nowrap">Water saved (L)</div>
+            </ImpactCard>
           </div>
           <div className="text-sm text-grey-3">Water and meals are for food sharing only</div>
           <ShareImpact meals_saved={data?.meals_saved} water_saved={data?.water_saved}  />
@@ -48,27 +44,21 @@ export default async function Impact(){
         <div className="inline-flex flex-col gap-y-2 py-3">
           <div className="text-center font-semibold text-xl text-grey-1">Your stats on <span className="text-[#16a34a]">GreenGive</span></div>
           <div className="grid xs:grid-cols-3 grid-cols-2 gap-3">
-            <Card className="p-2 bg-[#f9f9f9]">
-              <CardContent className="flex flex-col items-center p-4 py-0 gap-y-1">
-                <div className="text-3xl">🎁</div>
-                <div className="text-xl font-bold">{data?.item_offers + data?.item_receives}</div>
-                <div className="text-sm text-grey-2 text-center whitespace-nowrap">Total activity</div>
-              </CardContent>
-            </Card>
-            <Card className="p-2 bg-[#f9f9f9]">
-              <CardContent className="flex flex-col items-center p-4 py-0 gap-y-1">
-                <div className="text-3xl">🫳</div>
-                <div className="text-xl font-bold">{data?.item_offers}</div>
-                <div className="text-sm text-grey-2 text-center whitespace-nowrap">Listings offered</div>
-              </CardContent>
-            </Card>
-            <Card className="p-2 bg-[#f9f9f9]">
-              <CardContent className="flex flex-col items-center p-4 py-0 gap-y-1">
-                <div className="text-3xl">🫴</div>
-                <div className="text-xl font-bold">{data?.item_receives}</div>
-                <div className="text-sm text-grey-2 text-center whitespace-nowrap">Listings received</div>
-              </CardContent>
-            </Card>
+            <ImpactCard>
+              <WrappedGift className="h-7 w-7 mt-1.5" />
+              <div className="text-xl font-bold">{data?.item_offers + data?.item_receives}</div>
+              <div className="text-sm text-grey-2 text-center whitespace-nowrap">Total activity</div>
+            </ImpactCard>
+            <ImpactCard>
+              <Package className="h-7 w-7 mt-1.5" />
+              <div className="text-xl font-bold">{data?.item_offers}</div>
+              <div className="text-sm text-grey-2 text-center whitespace-nowrap">Listings offered</div>
+            </ImpactCard>
+            <ImpactCard>
+              <ClutchBag className="h-7 w-7 mt-1.5" />
+              <div className="text-xl font-bold">{data?.item_receives}</div>
+              <div className="text-sm text-grey-2 text-center whitespace-nowrap">Listings received</div>
+            </ImpactCard>
           </div>
           <div className="my-2">
             <div className="font-semibold text-grey-1 text-lg">Pick-up quota count</div>

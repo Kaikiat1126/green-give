@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import UserAvatar from "@/components/user-avatar";
 import { getUserProfile } from "../auth/get-user";
+import Link from "next/link";
 
 export default async function Profile(){
 
@@ -14,10 +15,13 @@ export default async function Profile(){
         <UserAvatar className="md:h-40 md:w-40 h-32 w-32" />
         <div className="py-2 lg:w-1/2 xs:w-2/3 w-4/5 inline-flex flex-col">
           <Button 
+            asChild
             variant="outline" 
             className="md:w-5/6 w-full font-semibold rounded-full border-primary text-primary hover:text-white hover:bg-primary self-center mb-6"
           >
-            View public profile
+            <Link href={"/public-profile/" + data?.id }>
+              View public profile
+            </Link>
           </Button>
           <div className="inline-flex flex-col my-4">
             <div className="inline-flex">Verifications</div>

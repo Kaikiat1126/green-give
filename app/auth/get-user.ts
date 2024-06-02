@@ -34,21 +34,7 @@ export async function getUserFullData() {
   const user = await getUser()
   const { data } = await supabase
     .from('profiles')
-    .select(`
-      id,
-      username,
-      first_name,
-      last_name,
-      address,
-      about,
-      impacts (
-        items_receives,
-        items_offers,
-        points,
-        meals_saved,
-        water_saved
-      )
-    `)
+    .select("*, impacts!inner(*)")
     .eq('id', user?.id)
     .single()
   return data
@@ -57,4 +43,13 @@ export async function getUserFullData() {
 export async function getUserEmail(): Promise<string> {
   const user = await getUser()
   return user?.email ?? ''
+}
+
+export async function getUserProfileDataById(id: string) {
+  const supabase = createClient()
+  const { data: profiles } = await supabase
+    .from('profiles')
+    .select("*, impacts!inner(*)")
+    .eq('id', id).single()
+  return profiles
 }

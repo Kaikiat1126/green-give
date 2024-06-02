@@ -6,6 +6,11 @@ export async function getUserAvatarSrc(): Promise<string> {
   return `${api}${user?.id}.svg`;
 }
 
+export async function getUserAvatarSrcById(id: string): Promise<string> {
+  const api = process.env.MULTIAVATAR_API;
+  return `${api}${id}.svg`;
+}
+
 export function getAvatarAPI(): string | undefined{
   return process.env.MULTIAVATAR_API;
 }

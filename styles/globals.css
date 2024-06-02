@@ -1,59 +1,199 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
-  @layer base {
-    :root {
-      --background: 0 0% 100%;
-      --foreground: 240 10% 3.9%;
-      --card: 0 0% 100%;
-      --card-foreground: 240 10% 3.9%;
-      --popover: 0 0% 100%;
-      --popover-foreground: 240 10% 3.9%;
-      --primary: 142.1 76.2% 36.3%;
-      --primary-foreground: 355.7 100% 97.3%;
-      --secondary: 240 4.8% 95.9%;
-      --secondary-foreground: 240 5.9% 10%;
-      --muted: 240 4.8% 95.9%;
-      --muted-foreground: 240 3.8% 46.1%;
-      --accent: 240 4.8% 95.9%;
-      --accent-foreground: 240 5.9% 10%;
-      --destructive: 0 84.2% 60.2%;
-      --destructive-foreground: 0 0% 98%;
-      --border: 240 5.9% 90%;
-      --input: 240 5.9% 90%;
-      --ring: 142.1 76.2% 36.3%;
-      --radius: 0.5rem;
-    }
-   
-    .dark {
-      --background: 20 14.3% 4.1%;
-      --foreground: 0 0% 95%;
-      --card: 24 9.8% 10%;
-      --card-foreground: 0 0% 95%;
-      --popover: 0 0% 9%;
-      --popover-foreground: 0 0% 95%;
-      --primary: 142.1 70.6% 45.3%;
-      --primary-foreground: 144.9 80.4% 10%;
-      --secondary: 240 3.7% 15.9%;
-      --secondary-foreground: 0 0% 98%;
-      --muted: 0 0% 15%;
-      --muted-foreground: 240 5% 64.9%;
-      --accent: 12 6.5% 15.1%;
-      --accent-foreground: 0 0% 98%;
-      --destructive: 0 62.8% 30.6%;
-      --destructive-foreground: 0 85.7% 97.3%;
-      --border: 240 3.7% 15.9%;
-      --input: 240 3.7% 15.9%;
-      --ring: 142.4 71.8% 29.2%;
-    }
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 142.1 76.2% 36.3%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 142.1 76.2% 36.3%;
+    --radius: 0.5rem;
   }
+  
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 0 0% 95%;
+    --card: 24 9.8% 10%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 144.9 80.4% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142.4 71.8% 29.2%;
+  }
+}
 
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-    }
+@layer base {
+  * {
+    @apply border-border;
   }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.text-lvl-light-red {
+  --tw-text-opacity: 1;
+  color: rgb(249 97 83 / var(--tw-text-opacity));
+}
+
+.bg-lvl-light-red {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(249 97 83 / var(--tw-bg-opacity));
+}
+
+.text-lvl-red {
+  --tw-text-opacity: 1;
+  color: rgb(219 20 20 / var(--tw-text-opacity));
+}
+
+.bg-lvl-red {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(219 20 20 / var(--tw-bg-opacity));
+}
+
+.text-lvl-light-orange {
+  --tw-text-opacity: 1;
+  color: rgb(254 150 0 / var(--tw-text-opacity));
+}
+
+.bg-lvl-light-orange {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(254 150 0 / var(--tw-bg-opacity));
+}
+
+.text-lvl-orange {
+  --tw-text-opacity: 1;
+  color: rgb(255 136 38 / var(--tw-text-opacity));
+}
+
+.bg-lvl-orange {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(255 136 38 / var(--tw-bg-opacity));
+}
+
+.text-lvl-light-yellow {
+  --tw-text-opacity: 1;
+  color: rgb(253 236 111 / var(--tw-text-opacity));
+}
+
+.bg-lvl-light-yellow {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(253 236 111 / var(--tw-bg-opacity));
+}
+
+.text-lvl-yellow {
+  --tw-text-opacity: 1;
+  color: rgb(255 238 74 / var(--tw-text-opacity));
+}
+
+.bg-lvl-yellow {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(255 238 74 / var(--tw-bg-opacity));
+}
+
+.text-lvl-light-green {
+  --tw-text-opacity: 1;
+  color: rgb(110 207 66 / var(--tw-text-opacity));
+}
+
+.bg-lvl-light-green {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(110 207 66 / var(--tw-bg-opacity));
+}
+
+.text-lvl-green {
+  --tw-text-opacity: 1;
+  color: rgb(0 179 76 / var(--tw-text-opacity));
+}
+
+.bg-lvl-green {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(0 179 76 / var(--tw-bg-opacity));
+}
+
+.text-lvl-light-blue {
+  --tw-text-opacity: 1;
+  color: rgb(210 253 254 / var(--tw-text-opacity));
+}
+
+.bg-lvl-light-blue {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(210 253 254 / var(--tw-bg-opacity));
+}
+
+.text-lvl-blue {
+  --tw-text-opacity: 1;
+  color: rgb(0 116 180 / var(--tw-text-opacity));
+}
+
+.bg-lvl-blue {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(0 116 180 / var(--tw-bg-opacity));
+}
+
+.text-lvl-light-purple {
+  --tw-text-opacity: 1;
+  color: rgb(201 123 165 / var(--tw-text-opacity));
+}
+
+.bg-lvl-light-purple {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(201 123 165 / var(--tw-bg-opacity));
+}
+
+.text-lvl-purple {
+  --tw-text-opacity: 1;
+  color: rgb(91 29 153 / var(--tw-text-opacity));
+}
+
+.bg-lvl-purple {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(91 29 153 / var(--tw-bg-opacity));
+}
+
+.text-lvl-light-pink {
+  --tw-text-opacity: 1;
+  color: rgb(232 111 158/ var(--tw-text-opacity));
+}
+
+.bg-lvl-light-pink {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(232 111 158/ var(--tw-bg-opacity));
+}
+
+.text-lvl-pink {
+  --tw-text-opacity: 1;
+  color: rgb(244 67 111 / var(--tw-text-opacity));
+}
+
+.bg-lvl-pink {
+  --tw-bg-opacity: 0.2;
+  background-color: rgb(244 67 111 / var(--tw-bg-opacity));
+}
