@@ -12,11 +12,13 @@ import { getUserProfile } from '../auth/get-user'
 import { updateUserLocation } from '../auth/update-user-data'
 import useLocation from '@/utils/hooks/useLocation'
 import type { Location } from '@/utils/hooks/useLocation'
+import { useToast } from "@/components/ui/use-toast"
 
 export default function Location(){
   const [position, setPosition] = useState<Location>();
   const [hasLocation, setHasLocation] = useState<boolean>(false)
   const location = useLocation()
+  const { toast } = useToast()
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -24,6 +26,7 @@ export default function Location(){
       const data = user?.location
       if (data) {
         setPosition({ lat: data[0], lng: data[1]})
+        showToast("Your home location has been loaded successfully.", "Latest home location", "default")
       }
     }
     fetchUserProfile()
@@ -33,10 +36,21 @@ export default function Location(){
     setHasLocation(true)
   }, [position])
 
+  function showToast(message?: string, title?: string, variant?: 'default' | 'destructive') {
+    toast({
+        variant: variant,
+        title: title,
+        description: message,
+    })
+  }
+
   async function useCurrentLocation() {
     if (location && 'error' in location === false) {
       setPosition(location)
+      showToast("Your current location has been loaded successfully.", "Latest location", "default")
     }
+    if (location && 'error' in location) 
+      showToast(location?.error, "Location initial error", "destructive")
   }
 
   async function setHomeLocation(){
@@ -51,7 +65,7 @@ export default function Location(){
       {
         hasLocation && position ? (
           <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
-            <div className='md:h-[77.5vh] h-[70vh] relative'>
+            <div className='md:h-[77.5vh] h-[69vh] relative'>
               <Map 
                 mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID as string}
                 defaultZoom={16} 
