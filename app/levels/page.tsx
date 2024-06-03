@@ -30,7 +30,7 @@ export default function Levels(){
   }, [])
 
   return (
-    <div className="flex flex-col mx-auto gap-y-2 md:px-8 px-6 max-w-screen-2xl">
+    <div className="flex flex-col gap-y-2">
       <div className="md:py-4 pt-8 pb-6 flex flex-col items-center gap-y-2">
         { level && <level.component />}
         <div className="text-lg text-grey-1 font-bold tracking-wide">

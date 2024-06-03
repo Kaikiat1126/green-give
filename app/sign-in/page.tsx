@@ -24,7 +24,7 @@ export default function SignIn() {
     
     if (response.success && response.user) {
       setUser(response.user);
-      redirect('/')
+      redirect('/');
     };
   }
 

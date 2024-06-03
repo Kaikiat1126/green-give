@@ -3,7 +3,7 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import { HatchingChick, WavingHand } from "@/components/emoji";
+import { HatchingChick } from "@/components/emoji";
 
 export default function Newbie({name}: {name: string}){
   return (

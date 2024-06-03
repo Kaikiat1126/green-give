@@ -16,7 +16,7 @@ export default async function SideNav() {
     'use server'
     const supabase = createClient()
     await supabase.auth.signOut()
-    return redirect("/sign-in")
+    return redirect("/")
   }
 
   return (

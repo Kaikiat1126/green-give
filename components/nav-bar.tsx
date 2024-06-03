@@ -25,7 +25,7 @@ export default async function NavBar(){
     'use server'
     const supabase = createClient()
     await supabase.auth.signOut()
-    return redirect("/sign-in")
+    return redirect("/")
   }
 
   return(

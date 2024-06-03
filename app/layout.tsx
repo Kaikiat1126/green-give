@@ -4,6 +4,7 @@ import '../styles/globals.css'
 import { Toaster } from "@/components/ui/toaster"
 import NavBar from "@/components/nav-bar";
 import BottomNavBar from "@/components/bottom-nav-bar";
+import SessionProvider from "@/components/session-provider";
 
 import { cn } from "@/lib/utils"
 import { createClient } from "@/utils/supabase/server";
@@ -37,7 +38,6 @@ export default async function RootLayout({
   
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (user) {}
 
   return (
     <html lang="en">
@@ -51,7 +51,11 @@ export default async function RootLayout({
           fontSans.variable
         )}>
           { user ? <NavBar /> : null}
-          {children}
+          <div className="mx-auto md:px-8 px-6 max-w-screen-2xl">
+            <SessionProvider>
+              {children}
+            </SessionProvider>
+          </div>
           { user ? <BottomNavBar /> : null}
           <Toaster />
         </body>
