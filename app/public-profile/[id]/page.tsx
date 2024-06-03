@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { getUserProfileDataById } from "@/app/auth/get-user";
 
 export default async function PublicProfile(
-    { params: { id } }: { params: { id: string } }
+  { params: { id } }: { params: { id: string } }
 ){
   const data = await getUserProfileDataById(id);
 

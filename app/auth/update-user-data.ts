@@ -1,5 +1,6 @@
 'use server'
 import { createClient } from "@/utils/supabase/server"
+import { getUser } from "./get-user"
 
 export async function updateAccountData(formData: FormData) {
   const supabase = createClient()
@@ -15,6 +16,26 @@ export async function updateAccountData(formData: FormData) {
     if (error) return { error: "An error occurred while updating the account data!", status: 400 }
 
     return { success: 'Successfully updated account data!', status: 200 }
+  } catch (error) {
+    return { error: "An error occurred while processing the request!", status: 500 }
+  }
+}
+
+export async function updateUserLocation(location: { lat: number, lng: number } | { error: string }) {
+  const supabase = createClient()
+  const user = await getUser()
+  if (!user) return { error: "User not found!", status: 404 }
+  if ('error' in location) return { error: location.error, status: 400 }
+  console.log(location);
+
+  try {
+    const { error } = await supabase.from('profiles')
+      .update({ location: [location.lat, location.lng]})
+      .eq('id', user.id)
+    
+    if (error) return { error: "An error occurred while updating the location!", status: 400 }
+
+    return { success: 'Successfully updated location!', status: 200 }
   } catch (error) {
     return { error: "An error occurred while processing the request!", status: 500 }
   }

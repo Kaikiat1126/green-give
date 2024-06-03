@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 
+type Location = { lat: number, lng: number } | { error: string };
+
 const useLocation = () => {
-  const [location, setLocation] = useState<{ lat: number, long: number } | { error: string }>();
+  const [location, setLocation] = useState<Location>();
 
   const handleLocationError = (error: any) => {
     switch(error.code) {
@@ -20,7 +22,7 @@ const useLocation = () => {
     if (typeof window !== "undefined" && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
-        setLocation({ lat: latitude, long: longitude });
+        setLocation({ lat: latitude, lng: longitude });
       }, (error) => {
         setLocation(handleLocationError(error));
       });
@@ -31,3 +33,4 @@ const useLocation = () => {
 }
 
 export default useLocation;
+export type { Location };

@@ -5,8 +5,7 @@ import { levels_list } from '@/components/levels-badge'
 import { Card } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { CircleHelp } from 'lucide-react'
-import { getUser } from '../auth/get-user'
-import { createClient } from '@/utils/supabase/client'
+import { getUserImpacts } from '../auth/get-user'
 
 export default function Levels(){
   
@@ -16,10 +15,8 @@ export default function Levels(){
 
   useEffect(() => {
     async function initUserLevel() {
-      const user = await getUser()
-      const userId = user?.id
-      const { data } = await createClient().from('impacts').select('*').eq('id', userId).single()    
-      const point = data?.points
+      const impacts = await getUserImpacts()
+      const point = impacts?.points
       setPoints(point)
       const currentLevel = levels_list.filter((level) => level.points <= point).pop()
       const nextLevel = levels_list.filter((level) => level.points > point).shift()

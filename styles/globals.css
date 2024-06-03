@@ -197,3 +197,5 @@
   --tw-bg-opacity: 0.2;
   background-color: rgb(244 67 111 / var(--tw-bg-opacity));
 }
+
+.gm-style iframe + div { border:none!important; }

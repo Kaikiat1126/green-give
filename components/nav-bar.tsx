@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
 import { Montserrat } from "next/font/google";
-import { Award, CircleUser, Earth, LayoutList, LogOut, Smile } from "lucide-react"
+import { Award, CircleUser, Earth, LayoutList, LogOut, MapPinned, Smile } from "lucide-react"
 import SideNav from "./side-nav";
 import UserAvatar from "./user-avatar";
 import { getUser } from "@/app/auth/get-user";
@@ -85,6 +85,12 @@ export default async function NavBar(){
                 <LayoutList color="#09090B" className="mr-2 h-4 w-4" />
                 <span>My Listings</span>
               </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/location" className="inline-flex">
+                  <MapPinned color="#09090B" className="mr-2 h-4 w-4" />
+                  <span>Location</span>
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="hover:bg-[#f4f4f5] cursor-pointer">
                 <form action={handleSignOut}>
@@ -98,7 +104,7 @@ export default async function NavBar(){
           </DropdownMenu>
         </div>
         <div className="md:hidden block">
-          <SideNav />
+          <SideNav displayName={ user?.user_metadata.first_name + " " + user?.user_metadata.last_name } />
         </div>
       </div>
     </nav>
