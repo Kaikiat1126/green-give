@@ -21,12 +21,28 @@ export async function updateAccountData(formData: FormData) {
   }
 }
 
+export async function updateProfileAbout(about: string) {
+  const supabase = createClient()
+  const user = await getUser()
+  if (!user) return { error: "User not found!", status: 404 }
+  try {
+    const { error } = await supabase.from('profiles')
+      .update({ about })
+      .eq('id', user.id)
+    
+    if (error) return { error: "An error occurred while updating the profile about!", status: 400 }
+
+    return { success: 'Successfully updated profile about!', status: 200 }
+  } catch (error) {
+    return { error: "An error occurred while processing the request!", status: 500 }
+  }
+}
+
 export async function updateUserLocation(location: { lat: number, lng: number } | { error: string }) {
   const supabase = createClient()
   const user = await getUser()
   if (!user) return { error: "User not found!", status: 404 }
   if ('error' in location) return { error: location.error, status: 400 }
-  console.log(location);
 
   try {
     const { error } = await supabase.from('profiles')

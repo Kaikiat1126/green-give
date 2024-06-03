@@ -7,7 +7,7 @@ import ImpactCard from "@/app/impact/impact-card";
 import { WrappedGift, Package, ClutchBag, PortableWater, Spaghetti } from "@/components/emoji";
 import KarmaCard from "./KarmaCard";
 import Newbie from "./Newbie";
-import { Button } from "@/components/ui/button";
+import ListingsNavBar from "@/components/listings/nav-bar";
 import { getUserProfileDataById } from "@/app/auth/get-user";
 
 export default async function PublicProfile(
@@ -88,12 +88,7 @@ export default async function PublicProfile(
       <Separator className="xs:hidden block" />
       <div className="flex flex-col gap-y-3 mb-2">
         <h3 className="text-grey-1 font-semibold">Listings</h3>
-        <div className="inline-flex flex-row items-center gap-x-2">
-          <Button className="px-5 py-1.5 rounded-full">All</Button>
-          <Button variant="secondary" className="px-5 py-1.5 rounded-full">Free</Button>
-          <Button variant="secondary" className="px-5 py-1.5 rounded-full">Buy</Button>
-          <Button variant="secondary" className="px-5 py-1.5 rounded-full">Wanted</Button>
-        </div>
+        <ListingsNavBar />
         <div className="py-1.5">
           When {data?.first_name} adds a listing it will be shown here
         </div>

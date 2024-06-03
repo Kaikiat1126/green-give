@@ -82,8 +82,10 @@ export default async function NavBar(){
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <LayoutList color="#09090B" className="mr-2 h-4 w-4" />
-                <span>My Listings</span>
+                <Link href="/listings" className="inline-flex">
+                  <LayoutList color="#09090B" className="mr-2 h-4 w-4" />
+                  <span>My Listings</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link href="/location" className="inline-flex">

@@ -40,7 +40,7 @@ export default async function SideNav({displayName}: {displayName: string}) {
           <SideBarLink href="levels" text="My Levels">
             <Award color="#09090B" className="mr-3 h-5 w-5" />
           </SideBarLink>
-          <SideBarLink href="" text="My Listings">
+          <SideBarLink href="listings" text="My Listings">
             <LayoutList color="#09090B" className="mr-3 h-5 w-5" />
           </SideBarLink>
           <SideBarLink href="location" text="Location">
