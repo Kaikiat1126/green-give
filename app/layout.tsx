@@ -4,7 +4,7 @@ import '../styles/globals.css'
 import { Toaster } from "@/components/ui/toaster"
 import NavBar from "@/components/nav-bar";
 import BottomNavBar from "@/components/bottom-nav-bar";
-import SessionProvider from "@/components/session-provider";
+import SessionProvider from "@/components/provider/session-provider";
 
 import { cn } from "@/lib/utils"
 import { createClient } from "@/utils/supabase/server";

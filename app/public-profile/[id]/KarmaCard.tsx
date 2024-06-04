@@ -1,5 +1,5 @@
 import ProfileCard from "./ProfileCard";
-import { levels_list } from "@/components/levels-badge";
+import { levels_list } from "@/components/levels/levels-badge";
 import { cn } from "@/lib/utils";
 
 type KarmaCardProps = {

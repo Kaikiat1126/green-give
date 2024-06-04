@@ -1,5 +1,5 @@
 'use client';
-import RequiredLogin from "./required-login";
+import RequiredLogin from "../required-login";
 import { redirect, usePathname } from "next/navigation";
 
 const specialPaths = ["/sign-in", "/sign-up"];

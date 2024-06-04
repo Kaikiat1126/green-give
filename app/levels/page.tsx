@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { levels_list } from '@/components/levels-badge'
+import { levels_list } from '@/components/levels/levels-badge'
 import { Card } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { CircleHelp } from 'lucide-react'
