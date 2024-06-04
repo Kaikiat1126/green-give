@@ -1,4 +1,5 @@
 'use client';
+import { useState } from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -7,10 +8,13 @@ import { Montserrat } from "next/font/google";
 import { signUp } from "./sign-up";
 import { useToast } from "@/components/ui/use-toast"
 import { redirect } from 'next/navigation';
+import TermsAndCondition from "./tnc";
 
 const montserrat = Montserrat({ subsets: ["latin"] })
 
 export default function SignUp() {
+
+  const [confirm, setConfirm] = useState(false)
 
   const { toast } = useToast()
 
@@ -24,6 +28,8 @@ export default function SignUp() {
     })
     if (response.success) redirect('/');
   }
+
+  if (!confirm) return (<TermsAndCondition setConfirm={setConfirm} />)
 
   return ( 
     <div className="flex flex-col items-center justify-center h-screen">

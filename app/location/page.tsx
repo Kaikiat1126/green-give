@@ -70,7 +70,7 @@ export default function Location(){
                 mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID as string}
                 defaultZoom={16} 
                 defaultCenter={position as { lat: number, lng: number }} 
-                gestureHandling={'greedy'}
+                gestureHandling={'cooperative'}
                 disableDefaultUI={true}
               >
                 <AdvancedMarker position={position as { lat: number, lng: number }} />
