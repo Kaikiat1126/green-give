@@ -13,6 +13,9 @@ import TnCTrigger from "./tnc-trigger"
 import Modal from "./modal"
 import SelectCategory from "./select-category"
 import SellTnC from "./sell-tnc"
+// sheets
+import FullScreenSheet from "./sheet/full-screen-sheet"
+import AddItemSheet from "./sheet/add-item-sheet"
 
 type Props = {
   children: React.ReactNode
@@ -31,6 +34,9 @@ export default function AddItemDrawer({ children }: Props) {
   const [open, setOpen] = useState(false)
   const [modalType, setModalType] = useState("")
 
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [categoryType, setCategoryType] = useState("")
+
   const buttonList: ButtonList = [
     { color: "#ffece8", icon: RedApple, rotate: 0, title: "Free", description: "Give away free food/non-food", _onClick: openSelectCategory },
     { color: "#FFFCE8", icon: Label, rotate: 45, title: "Sell", description: "Sell non-food items", _onClick: openSellTnC },
@@ -38,14 +44,25 @@ export default function AddItemDrawer({ children }: Props) {
     { color: "#F5E8FF", icon: SpeechBallon, rotate: 0, title: "Forum", description: "Share relevant topics with the community" }
   ]
 
-  function openSelectCategory() {
-    setModalType("select-category")
+  function openSelectCategory(): void {
+    setModalType("free")
     setOpen(true)
   }
 
-  function openSellTnC() {
-    setModalType("sell-tnc")
+  function openSellTnC(): void {
+    setModalType("sell")
     setOpen(true)
+  }
+
+  function openFullScreenSheet(): void {
+    setSheetOpen(true)
+  }
+
+  const getSheetTitle = (): string => {
+    if (modalType === "free") {
+      return `Free ${categoryType}`
+    }
+    return "Sell non-food"
   }
 
   return (
@@ -88,11 +105,30 @@ export default function AddItemDrawer({ children }: Props) {
       <Modal 
         open={open} 
         setOpen={setOpen} 
-        title={modalType === "select-category" ? "Select Category" : undefined}
+        title={modalType === "free" ? "Select Category" : undefined}
       >
-        {modalType === "select-category" && <SelectCategory />}
-        {modalType === "sell-tnc" && <SellTnC />}
+        {modalType === "free" && 
+          <SelectCategory 
+            openFullScreenSheet={openFullScreenSheet} 
+            setCategoryType={setCategoryType}
+            setOpen={setOpen}
+          />
+        }
+        {modalType === "sell" && 
+          <SellTnC 
+            openFullScreenSheet={openFullScreenSheet} 
+            setCategoryType={setCategoryType}
+            setOpen={setOpen}
+          />
+        }
       </Modal>
+      <FullScreenSheet 
+        open={sheetOpen} 
+        setOpen={setSheetOpen} 
+        title={getSheetTitle()}
+      >
+        <AddItemSheet />
+      </FullScreenSheet>
     </>
   )
 }

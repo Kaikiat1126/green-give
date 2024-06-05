@@ -5,7 +5,7 @@ import { Broccoli, RollerSkate } from "../emoji"
 export default function AddItemTnC(){
   return (
     <ScrollArea className="py-2 md:max-h-[75vh] max-h-auto w-auto">
-      <div className="flex flex-col gap-y-2">
+      <div className="flex flex-col gap-y-2 mb-4">
         <h3 className="font-semibold text-lg text-grey-1">What you can list on GreenGive</h3>
         <div className="inline-flex flex-col gap-y-4 my-4">
           <EmojiWithText bold text="Free food & drink"><Broccoli className="h-5 w-5" /></EmojiWithText>
