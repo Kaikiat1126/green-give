@@ -24,12 +24,12 @@ export default function KarmaCard({className, points}: KarmaCardProps){
           { currentLevel && <currentLevel.component className="h-7 w-7 relative right-1" />}
         </KarmaBadge>
         {
-            currentLevel?.color && 
-              <KarmaBadge 
-                badgeBg={`bg-${currentLevel?.color}`} 
-                badgeColor={`text-${currentLevel?.color}`} 
-                badgeText={`${points} Karma points`} 
-              />
+          currentLevel?.color && 
+            <KarmaBadge 
+              badgeBg={`bg-${currentLevel?.color}`} 
+              badgeColor={`text-${currentLevel?.color}`} 
+              badgeText={`${points} Karma points`} 
+            />
         }
       </div>
     </ProfileCard>

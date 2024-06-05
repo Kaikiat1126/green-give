@@ -8,7 +8,7 @@ type Props = {
 
 export default function TermsAndCondition({ setConfirm }: Props) {
   return (
-    <div className="xs:py-2 py-4 md:my-2 my-4 inline-flex flex-row justify-center">
+    <div className="xs:py-2 py-4 h-screen inline-flex flex-row justify-center items-center xs:my-0 my-6">
       <div className="flex flex-col gap-y-2 md:w-1/2 w-full">
         <h2 className="text-xl font-semibold text-grey-1">Before you join</h2>
         <p>GreenGive is all about building strong communities where we share more and waste less. That way, we can help each other and the planet.</p>
