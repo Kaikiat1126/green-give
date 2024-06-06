@@ -53,3 +53,8 @@ export async function getUserProfileDataById(id: string) {
     .eq('id', id).single()
   return profiles
 }
+
+export async function getUserId() {
+  const user = await getUser()
+  return user?.id
+}

@@ -127,7 +127,11 @@ export default function AddItemDrawer({ children }: Props) {
         setOpen={setSheetOpen} 
         title={getSheetTitle()}
       >
-        <AddItemSheet />
+        <AddItemSheet 
+          type={categoryType}
+          category={modalType}
+          closeSheet={() => setSheetOpen(false)}
+        />
       </FullScreenSheet>
     </>
   )
