@@ -63,7 +63,7 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
       showToaster("You must add your location first", false)
       return
     }
-
+    // trigger user account validation
     const response = await addItem(formData)
     const success = response?.success;
     if (success) {

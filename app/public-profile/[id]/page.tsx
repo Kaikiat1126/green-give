@@ -32,7 +32,7 @@ export default async function PublicProfile(
             <div className="text-grey-2">Username: {data?.username}</div>
             <div className="inline-flex flex-row items-center gap-x-2 text-grey-1">
               <ScanFace size={20} color="#09090B" />
-              <span className="text-sm font-semibold">I.D: {id.split("-")[0] + "..."}</span>
+              <span className="text-sm font-semibold">I.D: {id.split("-")[0]}</span>
             </div>
             <JoinedDate name={data?.first_name} date={data?.created_at} className="hidden xs:inline-flex" />
           </div>

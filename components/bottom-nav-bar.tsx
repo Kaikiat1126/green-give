@@ -17,7 +17,7 @@ export default function BottomNavBar() {
           <BigScreenBottomButton /> :
         (
           <div className="md:hidden block h-[4.5rem]">
-            <div className="fixed left-0 bottom-0 w-full px-6 pb-4 pt-6 bg-white border-t">
+            <div className="fixed left-0 bottom-0 w-full px-6 py-6 bg-white border-t">
               <div className="flex justify-between items-center">
                 <Link href="/" className="relative flex flex-col items-center">
                   <Home className="mb-5"/>
