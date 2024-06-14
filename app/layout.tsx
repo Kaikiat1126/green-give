@@ -12,6 +12,7 @@ import { createClient } from "@/utils/supabase/server";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
+  preload: false,
 })
 
 export const metadata: Metadata = {

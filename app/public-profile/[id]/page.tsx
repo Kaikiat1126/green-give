@@ -7,7 +7,7 @@ import ImpactCard from "@/app/impact/impact-card";
 import { WrappedGift, Package, ClutchBag, PortableWater, Spaghetti } from "@/components/emoji";
 import KarmaCard from "./KarmaCard";
 import Newbie from "./Newbie";
-import ListingsNavBar from "@/components/listings/nav-bar";
+import Listings from "./Listings";
 import { getUserProfileDataById } from "@/app/auth/get-user";
 
 export default async function PublicProfile(
@@ -39,6 +39,7 @@ export default async function PublicProfile(
         </div>
         <JoinedDate name={data?.first_name} date={data?.created_at} className="inline-flex xs:hidden" />
         <Separator className="xs:hidden block" />
+        <div className="xl:hidden md:block hidden"></div>
         <ProfileCard>
           <h3 className="text-grey-1 font-semibold">Verified</h3>
           <div className="flex flex-row items-center gap-x-2">
@@ -86,13 +87,7 @@ export default async function PublicProfile(
         </div>
       </div>
       <Separator className="xs:hidden block" />
-      <div className="flex flex-col gap-y-3 mb-2">
-        <h3 className="text-grey-1 font-semibold">Listings</h3>
-        <ListingsNavBar />
-        <div className="py-1.5">
-          When {data?.first_name} adds a listing it will be shown here
-        </div>
-      </div>
+      <Listings first_name={data?.first_name} userId={id} />
     </div>
   )
 }

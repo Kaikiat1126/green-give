@@ -8,12 +8,13 @@ import {
 import Link from "next/link"
 import { Montserrat } from "next/font/google";
 import { Award, CircleUser, Earth, LayoutList, LogOut, MapPinned, Smile } from "lucide-react"
-import SideNav from "./side-nav";
+import SideNav from "./side-nav/side-nav";
 import UserAvatar from "./user-avatar";
 import { getUser } from "@/app/auth/get-user";
 import { Button  } from "./ui/button";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
+import SideNavLogout from "./side-nav/side-nav-logout";
 
 const montserrat = Montserrat({ subsets: ["latin"] })
 
@@ -56,20 +57,20 @@ export default async function NavBar(){
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-[#f4f4f5] cursor-pointer">
                 <Link href="/account" className="inline-flex">
                   <CircleUser className="mr-2 h-4 w-4" />
                   <span>Account</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-[#f4f4f5] cursor-pointer">
                 <Link href="/profile" className="inline-flex">
                   <Smile color="#09090B" className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-[#f4f4f5] cursor-pointer">
                 <Link href="/impact" className="inline-flex">
                   <Earth color="#09090B" className="mr-2 h-4 w-4" />
                   <span>My Impact</span>
@@ -81,13 +82,13 @@ export default async function NavBar(){
                   <span>My Levels</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-[#f4f4f5] cursor-pointer">
                 <Link href="/listings" className="inline-flex">
                   <LayoutList color="#09090B" className="mr-2 h-4 w-4" />
                   <span>My Listings</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-[#f4f4f5] cursor-pointer">
                 <Link href="/location" className="inline-flex">
                   <MapPinned color="#09090B" className="mr-2 h-4 w-4" />
                   <span>Location</span>
@@ -106,7 +107,14 @@ export default async function NavBar(){
           </DropdownMenu>
         </div>
         <div className="md:hidden block">
-          <SideNav displayName={ user?.user_metadata.first_name + " " + user?.user_metadata.last_name } />
+          <SideNav 
+            displayName={ user?.user_metadata.first_name + " " + user?.user_metadata.last_name } 
+            logoutChild={ 
+              <SideNavLogout handleSignOut={handleSignOut} /> 
+            }
+          >
+            <UserAvatar className="w-16 h-16" />
+          </SideNav>
         </div>
       </div>
     </nav>

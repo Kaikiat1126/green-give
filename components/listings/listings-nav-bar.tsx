@@ -1,13 +1,18 @@
 'use client'
-import { useState } from "react";
 import { Button } from "../ui/button";
 
-export default function ListingsNavBar(){
-  const [active, setActive] = useState<string>("All");
+type Props = {
+  category?: string;
+  setCategory?: (value: string) => void;
+}
+
+export default function ListingsNavBar({category = "All", setCategory}: Props){
   const buttonList = ["All", "Free", "Buy", "Wanted"];
   
   function handleActive(value: string){
-    setActive(value);
+    if(setCategory){
+      setCategory(value)
+    }
   }
 
   return (
@@ -17,7 +22,7 @@ export default function ListingsNavBar(){
           <Button 
             key={index} 
             onClick={() => handleActive(item)} 
-            variant={item === active ? "default" : "secondary"} 
+            variant={item === category ? "default" : "secondary"} 
             className="px-6 py-1.5 rounded-3xl"
           >
             {item}

@@ -45,7 +45,7 @@ export default async function Account(){
           <div className="inline-flex flex-col gap-y-2">
             <Label className="text-grey-2">User ID</Label>
             <Input name="userId" className="bg-grey-5 text-grey-1 disabled:opacity-90" 
-              value={ data?.id.split("-")[0] + "..." } 
+              value={ data?.id } 
               disabled 
             />
           </div>

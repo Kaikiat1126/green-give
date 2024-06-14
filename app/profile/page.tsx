@@ -32,9 +32,9 @@ export default async function Profile(){
             View public profile
           </Link>
         </Button>
-        <div className="inline-flex flex-col my-4">
+        {/* <div className="inline-flex flex-col my-4">
           <div className="inline-flex">Verifications</div>
-        </div>
+        </div> */}
         <div className="inline-flex flex-col my-4 gap-2">
           <Label htmlFor="about">About you</Label>
           <Textarea placeholder="Tell us about yourself" id="about" name="about" defaultValue={data?.about} />
