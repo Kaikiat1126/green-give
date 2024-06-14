@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
 import { Montserrat } from "next/font/google";
-import { Award, CircleUser, Earth, LayoutList, LogOut, MapPinned, Smile } from "lucide-react"
+import { Award, CalendarDays, CircleUser, Earth, LayoutList, LogOut, MapPinned, Smile } from "lucide-react"
 import SideNav from "./side-nav/side-nav";
 import UserAvatar from "./user-avatar";
 import { getUser } from "@/app/auth/get-user";
@@ -86,6 +86,12 @@ export default async function NavBar(){
                 <Link href="/listings" className="inline-flex">
                   <LayoutList color="#09090B" className="mr-2 h-4 w-4" />
                   <span>My Listings</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-[#f4f4f5] cursor-pointer">
+                <Link href="/campaign" className="inline-flex">
+                  <CalendarDays color="#09090B" className="mr-2 h-4 w-4" />
+                  <span>Campaign</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="hover:bg-[#f4f4f5] cursor-pointer">

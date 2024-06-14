@@ -7,7 +7,7 @@ type Props = {
 }
 
 export default function ListingsNavBar({category = "All", setCategory}: Props){
-  const buttonList = ["All", "Free", "Buy", "Wanted"];
+  const buttonList = ["All", "Free", "Sell", "Wanted"];
   
   function handleActive(value: string){
     if(setCategory){

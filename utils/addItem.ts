@@ -2,7 +2,6 @@
 
 import { createClient } from "@/utils/supabase/server"
 import { getUserId } from "@/app/auth/get-user"
-import { parse } from "path"
 
 export default async function addItem(formData: FormData) {
 

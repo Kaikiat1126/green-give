@@ -5,7 +5,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { AlignJustify, Award, CircleUser, Earth, Home, LayoutList, MapPinned, Smile } from "lucide-react"
+import { AlignJustify, Award, CalendarDays, CircleUser, Earth, Home, LayoutList, MapPinned, Smile } from "lucide-react"
 import { Button } from "../ui/button"
 import SideBarLink from "./side-bar-link";
 
@@ -26,6 +26,7 @@ export default function SideNav(
     { href: "impact", text: "My Impact", icon: Earth },
     { href: "levels", text: "My Levels", icon: Award },
     { href: "listings", text: "My Listings", icon: LayoutList },
+    { href: "campaign", text: "Campaign", icon: CalendarDays },
     { href: "location", text: "Location", icon: MapPinned },
     { href: "profile", text: "Profile", icon: Smile },
     { href: "account", text: "Account", icon: CircleUser }

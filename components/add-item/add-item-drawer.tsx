@@ -40,7 +40,7 @@ export default function AddItemDrawer({ children }: Props) {
   const buttonList: ButtonList = [
     { color: "#ffece8", icon: RedApple, rotate: 0, title: "Free", description: "Give away free food/non-food", _onClick: openSelectCategory },
     { color: "#FFFCE8", icon: Label, rotate: 45, title: "Sell", description: "Sell non-food items", _onClick: openSellTnC },
-    { color: "#E8F3FF", icon: LoudSpeaker, rotate: 0, title: "Wanted", description: "Ask for something" },
+    { color: "#E8F3FF", icon: LoudSpeaker, rotate: 0, title: "Wanted", description: "Ask for something", _onClick: requiredWanted},
     { color: "#F5E8FF", icon: SpeechBallon, rotate: 0, title: "Forum", description: "Share relevant topics with the community" }
   ]
 
@@ -54,6 +54,12 @@ export default function AddItemDrawer({ children }: Props) {
     setOpen(true)
   }
 
+  function requiredWanted(): void {
+    setModalType("wanted")
+    setCategoryType("non-food")
+    openFullScreenSheet()
+  }
+
   function openFullScreenSheet(): void {
     setSheetOpen(true)
   }
@@ -62,7 +68,10 @@ export default function AddItemDrawer({ children }: Props) {
     if (modalType === "free") {
       return `Free ${categoryType}`
     }
-    return "Sell non-food"
+    if (modalType === "sell") {
+      return "Sell non-food"
+    }
+    return "Wanted"
   }
 
   return (

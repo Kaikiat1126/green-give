@@ -63,7 +63,7 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
       showToaster("You must add your location first", false)
       return
     }
-    // trigger user account validation
+    // future: trigger user account validation
     const response = await addItem(formData)
     const success = response?.success;
     if (success) {
@@ -93,38 +93,56 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
         </div>
         <div className="flex-1 inline-flex flex-col gap-y-2">
           <Label htmlFor="description">Description</Label>
-          <Input id="description" name="description" type="text" placeholder="e.g 2 x tins of veg soup, XX May 2024" required />
+          <Input 
+            id="description" 
+            name="description" 
+            type="text" 
+            placeholder={ category === categoryValue.WANTED ? "e.g. I'm looking for some plant plots" : "e.g 2 x tins of veg soup, XX May 2024" }
+            required 
+          />
         </div>
       </div>
 
-      <div className="flex sm:flex-row flex-col sm:items-end gap-4 my-2">
-        <div className="flex-1 inline-flex flex-col gap-y-2">
-          <Label htmlFor="quantity">Quantity</Label>
-          <ImpactDrawer />
-          <div className="inline-flex flex-row xs:gap-x-2.5 gap-x-2">
-            {
-              [1, 2, 3, 4, 5].map((number, index) => (
-                <Button 
-                  key={index}
-                  variant={number === quantity ? "default" : "secondary"} 
-                  className="h-auto py-2 xs:px-8 px-5 rounded-3xl hover:bg-primary hover:text-primary-foreground transition-colors"
-                  type="button"
-                  onClick={() => setQuantity(number)}
-                >
-                  {number}
-                </Button>
-              ))
-            }
+      {
+        category === categoryValue.WANTED && (
+          <div className="text-sm text-grey-2 mb-1">
+            👉 You can only ask for &apos;things&apos; not services (i.e. plumber, dog walker not allowed)
           </div>
-        </div>
-        <div className="flex-1">
-          <Input 
-            type="number" placeholder="Other" min={6} max={15} 
-            onChange={(e) => setQuantity(parseInt(e.target.value))}
-          />
-          <Input type="hidden" value={quantity} name="quantity" />
-        </div>
-      </div>
+        )
+      }
+
+      {
+        category !== categoryValue.WANTED && (
+          <div className="flex sm:flex-row flex-col sm:items-end gap-4 my-2">
+            <div className="flex-1 inline-flex flex-col gap-y-2">
+              <Label htmlFor="quantity">Quantity</Label>
+              <ImpactDrawer />
+              <div className="inline-flex flex-row xs:gap-x-2.5 gap-x-2">
+                {
+                  [1, 2, 3, 4, 5].map((number, index) => (
+                    <Button 
+                      key={index}
+                      variant={number === quantity ? "default" : "secondary"} 
+                      className="h-auto py-2 xs:px-8 px-5 rounded-3xl hover:bg-primary hover:text-primary-foreground transition-colors"
+                      type="button"
+                      onClick={() => setQuantity(number)}
+                    >
+                      {number}
+                    </Button>
+                  ))
+                }
+              </div>
+            </div>
+            <div className="flex-1">
+              <Input 
+                type="number" placeholder="Other" min={6} max={15} 
+                onChange={(e) => setQuantity(parseInt(e.target.value))}
+              />
+              <Input type="hidden" value={quantity} name="quantity" />
+            </div>
+          </div>
+        )
+      }
 
       <div className="flex sm:flex-row flex-col items-start gap-4 my-2">
         {
@@ -153,7 +171,7 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
           <Textarea 
             id="pickup_instructions" 
             name="pickup_instructions" 
-            placeholder="e.g. 'Pick up today from 4-6pm. Please ring doorbell when here.'"
+            placeholder={ category === categoryValue.WANTED ? "e.g. Anytime this weekend" : "e.g. 'Pick up today from 4-6pm. Please ring doorbell when here.'"}
             required 
           />
         </div>
@@ -167,7 +185,7 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
 
       <div className="flex flex-col my-2 gap-y-2">
         {
-          category === categoryValue.FREE &&
+          category === categoryValue.FREE || category === categoryValue.WANTED &&
           (
             <div className="flex flex-row items-center sm:justify-normal justify-between gap-4">
               <div>List for</div>
