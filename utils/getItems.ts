@@ -52,3 +52,13 @@ export async function getItemsByUserId(userId: string){
     .order('created_at', {ascending: false})
   return data
 }
+
+export async function getItemById(itemId: string){
+  const supabase = createClient()
+  const { data } = await supabase
+    .from('items')
+    .select("*, item_intro!inner(*), profiles:user_id(first_name, username, location)")
+    .eq('id', itemId)
+    .single()
+  return data
+}

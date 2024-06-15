@@ -49,8 +49,7 @@ export default function MapLocation({ setLocationExist }: Props) {
 
   useEffect(() => {
     setHasLocation(true)
-    handleUpdateLocation()
-  }, [position, handleUpdateLocation, setHasLocation])
+  }, [position, setHasLocation])
 
   useEffect(() => {
     setLocationExist(hasLocation)
@@ -63,6 +62,7 @@ export default function MapLocation({ setLocationExist }: Props) {
     }
     if (location && 'error' in location) 
       showToast(location?.error, "Location initial error", "destructive")
+    handleUpdateLocation()
   }
 
   return (

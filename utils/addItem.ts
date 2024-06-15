@@ -13,7 +13,7 @@ export default async function addItem(formData: FormData) {
   for (let i = 0; i < imagesArray.length; i += 2) {
     imagesArrayGrouped.push(imagesArray.slice(i, i + 2).join(","))
   }
-  const itemPrice = formData.get("price") ? parseInt(formData.get("price") as string) : 0
+  const itemPrice = formData.get("price") ? parseInt(formData.get("price") as string) : null
   const untilMidnight = formData.get("list_for") === "0"
 
   try {

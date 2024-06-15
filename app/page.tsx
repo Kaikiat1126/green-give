@@ -6,17 +6,23 @@ import HomeLinkBtn from "@/components/home-link-btn";
 import CardContainer from "@/components/listings/card-container";
 import ItemCard from "@/components/listings/items/item-card";
 import LoadingCard from "@/components/listings/items/loading-card";
+import FullScreenSheet from "@/components/add-item/sheet/full-screen-sheet";
+import ItemView from "@/components/listings/items/item-view";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { getItemsWithoutSelf } from "@/utils/getItems";
 import { createClient } from "@/utils/supabase/client";
 
 export default function Home() {
+  const [open, setOpen] = useState<boolean>(false)
   const [type, setType] = useState<string>("Non-food")
   const [category, setCategory] = useState<string>("All")
   const [loading, setLoading] = useState<boolean>(false)
   const [listings, setListings] = useState<any[]>([])
   const [search, setSearch] = useState<string>("")
+  const [selectedItem, setSelectedItem] = useState<string>("")
+  const [title, setTitle] = useState<string>("")
+
   const supabase = createClient()
 
   const handleGetItems = useCallback(async () => {
@@ -92,7 +98,15 @@ export default function Home() {
           <CardContainer className="mb-4">
             {
               listings.map((item) => (
-                <ItemCard key={item.id} item={item} />
+                <ItemCard 
+                  key={item.id} 
+                  item={item} 
+                  _onClick={() => {
+                    setOpen(true)
+                    setSelectedItem(item.id)
+                    setTitle(item.item_intro.title)
+                  }}
+                />
               ))
             }
           </CardContainer>
@@ -105,6 +119,13 @@ export default function Home() {
           </div>
         )
       }
+      <FullScreenSheet
+        open={open}
+        setOpen={setOpen}
+        title={title}
+      >
+        <ItemView itemId={selectedItem} />
+      </FullScreenSheet>
     </div>
   );
 }

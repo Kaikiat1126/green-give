@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import PostAuthor from "./post-author"
 import { Skeleton } from "../ui/skeleton"
 import { getPostById } from "@/utils/getPosts"

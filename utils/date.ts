@@ -16,8 +16,8 @@ export function calculateAgo(date: string): string {
   const postedDate = new Date(date);
   const diffTime = Math.abs(currentDate.getTime() - postedDate.getTime());
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  if (diffDays <= 1) {
-    const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
+  const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
+  if (diffHours < 24) {
     if (diffHours <= 1) {
       const diffMinutes = Math.ceil(diffTime / (1000 * 60));
       return `${diffMinutes}${diffMinutes > 1 ? " minutes" : " minute"}`;
