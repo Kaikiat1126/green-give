@@ -47,6 +47,7 @@ export async function getPostById(postId: string){
     .from('posts')
     .select("*, profiles:user_id(username, first_name), comments(*)")
     .eq('id', postId)
+    .single()
   return data
 }
 

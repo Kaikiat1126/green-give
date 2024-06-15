@@ -4,15 +4,19 @@ import SelectPostCategory from "../community/select-category"
 import PostCardContainer from "@/components/posts/post-card-container"
 import PostCard from "@/components/posts/post-card"
 import LoadingPostCard from "@/components/posts/loading-post-card"
+import FullScreenSheet from "@/components/add-item/sheet/full-screen-sheet"
+import PostView from "@/components/posts/post-view"
 import { useToast } from "@/components/ui/use-toast"
 import { getUserPosts, deletePost } from "@/utils/getPosts"
 import { createClient } from "@/utils/supabase/client"
 
 export default function MyPostsArea(){
 
+  const [open, setOpen] = useState<boolean>(false)
   const [category, setCategory] = useState<string>("All")
   const [posts, setPosts] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const [selectedPost, setSelectedPost] = useState<string>("")
   const { toast } = useToast()
   const supabase = createClient()
 
@@ -41,7 +45,7 @@ export default function MyPostsArea(){
     return () => {
       subscription.unsubscribe()
     }
-  }, [filteredPosts])
+  }, [filteredPosts, supabase])
 
   const getPosts = async () => {
     setLoading(true)
@@ -94,12 +98,22 @@ export default function MyPostsArea(){
                   post={post} 
                   showButton
                   deletePost={() => handleDeletePost(post.id)}
+                  _onClick={() => {
+                    setOpen(true)
+                    setSelectedPost(post.id)
+                  }}
                 />
               ))
             }
           </PostCardContainer>
         )
       }
+      <FullScreenSheet 
+        open={open} 
+        setOpen={setOpen}
+      >
+        <PostView postId={selectedPost} />
+      </FullScreenSheet>
     </>
   )
 }

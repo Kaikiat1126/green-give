@@ -4,13 +4,17 @@ import SelectPostCategory from "./select-category"
 import PostCardContainer from "@/components/posts/post-card-container"
 import PostCard from "@/components/posts/post-card"
 import LoadingPostCard from "@/components/posts/loading-post-card"
+import FullScreenSheet from "@/components/add-item/sheet/full-screen-sheet"
+import PostView from "@/components/posts/post-view"
 import { getPosts } from "@/utils/getPosts"
 import { createClient } from "@/utils/supabase/client"
 
 export default function PostsArea(){
+  const [open, setOpen] = useState<boolean>(false)
   const [category, setCategory] = useState<string>("All")
   const [posts, setPosts] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const [selectedPost, setSelectedPost] = useState<string>("")
   const supabase = createClient()
 
   const getAllPosts = async () => {
@@ -72,12 +76,25 @@ export default function PostsArea(){
           <PostCardContainer>
             {
               posts.map((post) => (
-                <PostCard key={post.id} post={post} />
+                <PostCard 
+                  key={post.id} 
+                  post={post} 
+                  _onClick={() => {
+                    setOpen(true)
+                    setSelectedPost(post.id)
+                  }} 
+                />
               ))
             }
           </PostCardContainer>
         )
       }
+      <FullScreenSheet 
+        open={open} 
+        setOpen={setOpen} 
+      >
+        <PostView postId={selectedPost} />
+      </FullScreenSheet>
     </>
   )
 }

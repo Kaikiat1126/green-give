@@ -13,7 +13,7 @@ type Props = {
 export default function PostCategory({ category, setCategory, hasAll, className }: Props){
   const list = [
     { title: "All", color: "#FFF7E8", emoji: OpenHandsLightSkinTone },
-    { title: "Spreading The World", color:"#e8f3ff", emoji: LoudSpeaker },
+    { title: "Spreading The Word", color:"#e8f3ff", emoji: LoudSpeaker },
     { title: "Local Events", color:"#FFECE8", emoji: SpiralCalendar },
     { title: "Tips & Tricks", color:"#FFFCE8", emoji: LightBulb},
     { title: "Zero Waste", color: "#E8FFEA", emoji: RecyclingSymbol },

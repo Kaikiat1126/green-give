@@ -1,16 +1,16 @@
 import Image from "next/image";
-import { Clock4, MessageCircle, Trash } from "lucide-react";
+import { MessageCircle, Trash } from "lucide-react";
 import { Card } from "../ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { calculateAgo } from "@/utils/date";
+import PostAuthor from "./post-author";
 
 type Props = {
   post: any
   showButton?: boolean
   deletePost?: () => void
+  _onClick?: () => void
 }
 
-export default function PostCard({ post, showButton = false, deletePost }: Props){
+export default function PostCard({ post, showButton = false, deletePost, _onClick }: Props){
 
   function handleDeletePost(e: any){
     deletePost && deletePost()
@@ -18,21 +18,14 @@ export default function PostCard({ post, showButton = false, deletePost }: Props
   }
 
   return (
-    <Card className="shadow p-4 cursor-pointer relative">
+    <Card className="shadow p-4 cursor-pointer relative" onClick={_onClick}>
       <div className="flex flex-col gap-y-2">
-        <div className="inline-flex flex-row items-center gap-x-3">
-          <Avatar className="h-10 w-10">
-            <AvatarImage src={`https://api.multiavatar.com/` + post?.user_id + `.svg`} alt="avatar" />
-            <AvatarFallback>Avatar</AvatarFallback>
-          </Avatar>
-          <div className="inline-flex flex-col gap-y-1">
-            <div className="text-sm">{post?.profiles?.first_name} posted in {post?.category}</div>
-            <div className="inline-flex flex-row items-start gap-x-1 text-grey-3 text-xs">
-              <Clock4 size={14} />
-              <p>{ calculateAgo(post?.created_at) } ago</p>
-            </div>
-          </div>
-        </div>
+        <PostAuthor
+          userId={post?.user_id}
+          category={post?.category}
+          created_at={post?.created_at}
+          first_name={post?.profiles?.first_name}
+        />
         <div className="text-grey-1 line-clamp-3 tracking-tight leading-5">
           { post?.content }
         </div>
