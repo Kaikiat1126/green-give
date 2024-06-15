@@ -6,6 +6,7 @@ import PostCard from "@/components/posts/post-card"
 import LoadingPostCard from "@/components/posts/loading-post-card"
 import { useToast } from "@/components/ui/use-toast"
 import { getUserPosts, deletePost } from "@/utils/getPosts"
+import { createClient } from "@/utils/supabase/client"
 
 export default function MyPostsArea(){
 
@@ -13,27 +14,49 @@ export default function MyPostsArea(){
   const [posts, setPosts] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const { toast } = useToast()
-
-  useEffect(() => {
-    setLoading(true)
-    getUserPosts()
-      .then((data) => {
-        if(data) setPosts(data)
-        setLoading(false)
-      })
-  }, [])
+  const supabase = createClient()
 
   const filteredPosts = useMemo(() => {
     if(category === "All") return posts
     return posts.filter((post) => post.category === category)
   }, [category, posts])
 
+  useEffect(() => {
+    setLoading(true)
+    getPosts()
+  }, [])
+
+  useEffect(() => {
+    const subscription = supabase
+      .channel("posts_changes")
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "posts",
+      }, () => {
+        getPosts()
+      })
+      .subscribe()
+    
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [filteredPosts])
+
+  const getPosts = async () => {
+    setLoading(true)
+    await getUserPosts()
+      .then((data) => {
+        if(data) setPosts(data)
+        setLoading(false)
+    })
+  }
+
   async function handleDeletePost(postId: string){
     await deletePost(postId).then(() => {
       toast({
         title: "Post has been deleted successfully",
       })
-      setPosts(posts.filter((post) => post.id !== postId))
     })
   }
 

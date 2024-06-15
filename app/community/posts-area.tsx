@@ -5,20 +5,44 @@ import PostCardContainer from "@/components/posts/post-card-container"
 import PostCard from "@/components/posts/post-card"
 import LoadingPostCard from "@/components/posts/loading-post-card"
 import { getPosts } from "@/utils/getPosts"
+import { createClient } from "@/utils/supabase/client"
 
 export default function PostsArea(){
   const [category, setCategory] = useState<string>("All")
   const [posts, setPosts] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const supabase = createClient()
 
-  useEffect(() => {
+  const getAllPosts = async () => {
     setLoading(true)
-    getPosts({category})
+    await getPosts({category})
       .then((data) => {
         if(data) setPosts(data)
         setLoading(false)
-      })
+    })
+  }
+
+  useEffect(() => {
+    setLoading(true)
+    getAllPosts()
   }, [category])
+
+  useEffect(() => {
+    const subscription = supabase
+      .channel("posts_changes")
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "posts",
+      }, () => {
+        getAllPosts()
+      })
+      .subscribe()
+    
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [category, posts])
 
   return (
     <>

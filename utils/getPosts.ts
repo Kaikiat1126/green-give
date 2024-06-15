@@ -15,7 +15,7 @@ export async function getPosts({category}: Props) {
   }
   const { data } = await supabase
     .from('posts')
-    .select("*, profiles:user_id(username, first_name), comments!inner(*)")
+    .select("*, profiles:user_id(username, first_name), comments(*)")
     .eq('category', category)
     .order('created_at', {ascending: false})
   return data
