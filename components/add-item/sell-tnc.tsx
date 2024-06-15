@@ -13,7 +13,7 @@ export default function SellTnC({ openFullScreenSheet, setCategoryType, setOpen 
   function handleSelectCategory() {
     setOpen(false)
     openFullScreenSheet()
-    setCategoryType("sell")
+    setCategoryType("non-food")
   }
 
   const tnc = [

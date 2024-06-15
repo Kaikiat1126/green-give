@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import ListingsNavBar from "@/components/listings/listings-nav-bar";
 import HomeLinkBtn from "@/components/home-link-btn";
 import CardContainer from "@/components/listings/card-container";
@@ -9,6 +9,7 @@ import LoadingCard from "@/components/listings/items/loading-card";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { getItemsWithoutSelf } from "@/utils/getItems";
+import { createClient } from "@/utils/supabase/client";
 
 export default function Home() {
   const [type, setType] = useState<string>("Non-food")
@@ -16,19 +17,41 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false)
   const [listings, setListings] = useState<any[]>([])
   const [search, setSearch] = useState<string>("")
+  const supabase = createClient()
 
-  useEffect(() => {
+  const handleGetItems = useCallback(async () => {
     setLoading(true)
-    getItemsWithoutSelf({type, category})
+    await getItemsWithoutSelf({type, category})
       .then((data) => {
         if(data) setListings(data)
         setLoading(false)
-      })
+    })
   }, [type, category])
+
+  useEffect(() => {
+    handleGetItems()
+  }, [type, category, handleGetItems])
 
   useEffect(() => {
     setCategory("All")
   }, [type])
+
+  useEffect(() => {
+    const subscription = supabase
+      .channel("items_changes")
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "items",
+      }, () => {
+        handleGetItems()
+      })
+      .subscribe()
+    
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [type, category, listings, handleGetItems, supabase])
   
   return (
     <div className="xs:py-2 py-4 flex flex-col gap-y-2">
@@ -50,15 +73,15 @@ export default function Home() {
       </div>
       {
         type === "Non-food" && (
-          <ListingsNavBar category={category} setCategory={setCategory} />
+          <ListingsNavBar key="listing-nav-bar" category={category} setCategory={setCategory} />
         )
       }
       {
         loading && (
           <CardContainer>
             {
-              Array.from({length: 3}).map((_, index) => (
-                <LoadingCard key={index} />
+              Array.from({length: 2}).map((_, index) => (
+                <LoadingCard key={`loading-${index}`} />
               ))
             }
           </CardContainer>
@@ -66,7 +89,7 @@ export default function Home() {
       }
       {
         !loading && listings.length > 0 && (
-          <CardContainer>
+          <CardContainer className="mb-4">
             {
               listings.map((item) => (
                 <ItemCard key={item.id} item={item} />

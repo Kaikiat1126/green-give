@@ -26,6 +26,7 @@ export async function getItemsWithoutSelf (
     .eq('type', type)
     .eq('category', category)
     .neq('user_id', userId)
+    .neq('available', false)
     .order('created_at', {ascending: false})
   return data
 }
@@ -37,6 +38,7 @@ export async function selectAllCategoriesWithoutSelf(userId: string){
     .select("*, item_intro!inner(*), profiles:user_id(username)")
     .eq('type', 'Non-food')
     .neq('user_id', userId)
+    .neq('available', false)
     .order('created_at', {ascending: false})
   return data
 }

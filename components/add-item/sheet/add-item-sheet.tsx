@@ -185,7 +185,7 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
 
       <div className="flex flex-col my-2 gap-y-2">
         {
-          category === categoryValue.FREE || category === categoryValue.WANTED &&
+          (category === categoryValue.FREE || category === categoryValue.WANTED) &&
           (
             <div className="flex flex-row items-center sm:justify-normal justify-between gap-4">
               <div>List for</div>
@@ -223,6 +223,7 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
                   <li>Posting or shipping items is not allowed</li>
                 </ul>
               </div>
+              <Input type="hidden" value="28" name="list_for" />
             </>
           )
         }
