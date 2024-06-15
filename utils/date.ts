@@ -10,3 +10,19 @@ export function getJoinedDate(date: string): string {
   const joinedDate = new Date(date);
   return joinedDate.toLocaleString('default', { month: 'long' }) + " " + joinedDate.getFullYear();
 }
+
+export function calculateAgo(date: string): string {
+  const currentDate = new Date();
+  const postedDate = new Date(date);
+  const diffTime = Math.abs(currentDate.getTime() - postedDate.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  if (diffDays <= 1) {
+    const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
+    return `${diffHours}${diffHours > 1 ? " hours" : " hour"}`;
+  }
+  if (diffDays <= 30) {
+    return `${diffDays}${diffDays > 1 ? " days" : " day"}`;
+  }
+  const diffMonths = Math.ceil(diffDays / 30);
+  return `${diffMonths}${diffMonths > 1 ? " months" : " month"}`;
+}
