@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { allSections, saleSection, wantedSection } from "./sections"
-import { Broccoli, RollerSkate } from "../emoji"
+import { Broccoli, RollerSkate } from "../emoji/emoji"
 
 export default function AddItemTnC(){
   return (

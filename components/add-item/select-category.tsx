@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { RedApple, TeddyBear } from "../emoji"
+import { RedApple, TeddyBear } from "../emoji/emoji"
 
 type Props = {
   openFullScreenSheet: () => void

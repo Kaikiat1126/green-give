@@ -2,7 +2,7 @@ import { getUserImpacts, getUserJoinedDays } from "../auth/get-user";
 import ShareImpact from "./share-impact";
 import ImpactSheet from "./impact-sheet";
 import ImpactCard from "./impact-card";
-import { WomanRaisingHand, Spaghetti, PortableWater, WrappedGift, Package, ClutchBag } from "@/components/emoji";
+import { WomanRaisingHand, Spaghetti, PortableWater, WrappedGift, Package, ClutchBag } from "@/components/emoji/emoji";
 
 export default async function Impact(){
 

@@ -4,7 +4,7 @@ import { CircleCheck, ScanFace } from "lucide-react";
 import JoinedDate from "./JoinedDate";
 import ProfileCard from "./ProfileCard";
 import ImpactCard from "@/app/impact/impact-card";
-import { WrappedGift, Package, ClutchBag, PortableWater, Spaghetti } from "@/components/emoji";
+import { WrappedGift, Package, ClutchBag, PortableWater, Spaghetti } from "@/components/emoji/emoji";
 import KarmaCard from "./KarmaCard";
 import Newbie from "./Newbie";
 import Listings from "./Listings";

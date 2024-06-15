@@ -27,7 +27,7 @@ import {
   MoneyWithWings,
   LoudSpeaker,
   Wrench
-} from "../emoji"
+} from "../emoji/emoji"
 
 type ItemSection = {
   text: string;

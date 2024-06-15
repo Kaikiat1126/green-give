@@ -1,4 +1,4 @@
-import { Alien, SpeechBallon, Robot, OneOclock, HeartWithRibbon, GirlLightSkinTone } from "@/components/emoji";
+import { Alien, SpeechBallon, Robot, OneOclock, HeartWithRibbon, GirlLightSkinTone } from "@/components/emoji/emoji";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 

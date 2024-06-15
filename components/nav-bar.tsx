@@ -41,7 +41,7 @@ export default async function NavBar(){
               <Link href="/">Home</Link>
             </Button>
             <Button variant="ghost" asChild>
-              <Link href="/">Community</Link>
+              <Link href="/community">Community</Link>
             </Button>
             <Button variant="ghost" asChild>
               <Link href="/">Message</Link>

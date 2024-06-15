@@ -1,4 +1,4 @@
-import { MoneyWithWings } from "../emoji"
+import { MoneyWithWings } from "../emoji/emoji"
 import { Check } from 'lucide-react';
 import { Button } from "../ui/button";
 

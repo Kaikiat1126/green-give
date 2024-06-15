@@ -7,7 +7,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { Separator } from "@/components/ui/separator"
-import { RedApple, LoudSpeaker, Label, SpeechBallon, TeacherLightSkin } from "../emoji"
+import { RedApple, LoudSpeaker, Label, SpeechBallon, TeacherLightSkin } from "../emoji/emoji"
 import { Button } from "@/components/ui/button"
 import TnCTrigger from "./tnc-trigger"
 import Modal from "./modal"
@@ -16,6 +16,7 @@ import SellTnC from "./sell-tnc"
 // sheets
 import FullScreenSheet from "./sheet/full-screen-sheet"
 import AddItemSheet from "./sheet/add-item-sheet"
+import PostForm from "./post-form/post-form"
 
 type Props = {
   children: React.ReactNode
@@ -41,7 +42,7 @@ export default function AddItemDrawer({ children }: Props) {
     { color: "#ffece8", icon: RedApple, rotate: 0, title: "Free", description: "Give away free food/non-food", _onClick: openSelectCategory },
     { color: "#FFFCE8", icon: Label, rotate: 45, title: "Sell", description: "Sell non-food items", _onClick: openSellTnC },
     { color: "#E8F3FF", icon: LoudSpeaker, rotate: 0, title: "Wanted", description: "Ask for something", _onClick: requiredWanted},
-    { color: "#F5E8FF", icon: SpeechBallon, rotate: 0, title: "Forum", description: "Share relevant topics with the community" }
+    { color: "#F5E8FF", icon: SpeechBallon, rotate: 0, title: "Forum", description: "Share relevant topics with the community", _onClick: addPost}
   ]
 
   function openSelectCategory(): void {
@@ -60,11 +61,19 @@ export default function AddItemDrawer({ children }: Props) {
     openFullScreenSheet()
   }
 
+  function addPost(): void {
+    setModalType("post")
+    openFullScreenSheet()
+  }
+
   function openFullScreenSheet(): void {
     setSheetOpen(true)
   }
 
   const getSheetTitle = (): string => {
+    if (modalType === "post") {
+      return "Add post"
+    }
     if (modalType === "free") {
       return `Free ${categoryType}`
     }
@@ -136,11 +145,20 @@ export default function AddItemDrawer({ children }: Props) {
         setOpen={setSheetOpen} 
         title={getSheetTitle()}
       >
-        <AddItemSheet 
-          type={categoryType}
-          category={modalType}
-          closeSheet={() => setSheetOpen(false)}
-        />
+        {
+          modalType !== "post" && (
+            <AddItemSheet 
+              type={categoryType}
+              category={modalType}
+              closeSheet={() => setSheetOpen(false)}
+            />
+          )
+        }
+        {
+          modalType === "post" && (
+            <PostForm closeSheet={() => setSheetOpen(false)} />
+          )
+        }
       </FullScreenSheet>
     </>
   )
