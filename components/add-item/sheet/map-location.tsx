@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import {
   APIProvider,
   Map,
@@ -32,9 +32,25 @@ export default function MapLocation({ setLocationExist }: Props) {
     fetchUserProfile()
   }, [])
 
+  const showToast = useCallback((message?: string, title?: string, variant?: 'default' | 'destructive') => {
+    toast({
+      variant: variant,
+      title: title,
+      description: message,
+    })
+  }, [toast])
+
+  const handleUpdateLocation = useCallback(async () => {
+    position && await updateUserLocation(position).then((res) => {
+      if ('error' in res) showToast(res.error, "Location update error", "destructive")
+      if ('success' in res) showToast(res.success, "Location updated", "default")
+    })
+  }, [position, showToast])
+
   useEffect(() => {
     setHasLocation(true)
-  }, [position])
+    handleUpdateLocation()
+  }, [position, handleUpdateLocation, setHasLocation])
 
   useEffect(() => {
     setLocationExist(hasLocation)
@@ -47,16 +63,6 @@ export default function MapLocation({ setLocationExist }: Props) {
     }
     if (location && 'error' in location) 
       showToast(location?.error, "Location initial error", "destructive")
-
-    if (position) await updateUserLocation(position)
-  }
-
-  function showToast(message?: string, title?: string, variant?: 'default' | 'destructive') {
-    toast({
-      variant: variant,
-      title: title,
-      description: message,
-    })
   }
 
   return (
