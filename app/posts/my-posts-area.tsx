@@ -78,8 +78,9 @@ export default function MyPostsArea(){
       }
       {
         !loading && filteredPosts.length === 0 && (
-          <div key="no-post-1" className="text-lg my-2 text-grey-3">
-            You have not posted anything yet
+          <div key="no-post-1" className="my-4">
+            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">Opps! There&apos;s nothing here</h4>
+            <p className="text-grey-2">As soon as you start to add post to community they will appear here</p>
           </div>
         )
       }
