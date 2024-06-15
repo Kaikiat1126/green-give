@@ -1,15 +1,23 @@
-import { Clock4, MessageCircle } from "lucide-react";
+import { Clock4, MessageCircle, Trash } from "lucide-react";
 import { Card } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { calculateAgo } from "@/utils/date";
 
 type Props = {
   post: any
+  showButton?: boolean
+  deletePost?: () => void
 }
 
-export default function PostCard({post}: Props){
+export default function PostCard({ post, showButton = false, deletePost }: Props){
+
+  function handleDeletePost(e: any){
+    deletePost && deletePost()
+    e.stopPropagation()
+  }
+
   return (
-    <Card className="shadow p-4 cursor-pointer hover:bg-gray-50">
+    <Card className="shadow p-4 cursor-pointer relative">
       <div className="flex flex-col gap-y-2">
         <div className="inline-flex flex-row items-center gap-x-3">
           <Avatar className="h-10 w-10">
@@ -32,6 +40,16 @@ export default function PostCard({post}: Props){
           <span className="text-sm relative top-[1px]">{post?.comments.length} comments</span>
         </div>
       </div>
+      {
+        showButton && (
+          <div 
+            className="absolute top-0 right-0 m-2 p-2 rounded-full hover:bg-[#FFECE8] text-grey-3 hover:text-grey-2"
+            onClick={(e) => handleDeletePost(e)}
+          >
+            <Trash size={16} />
+          </div>
+        )
+      }
     </Card>
   )
 }
