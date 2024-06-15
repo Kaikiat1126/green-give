@@ -1,8 +1,8 @@
 {
   "name": "GreenGive",
   "short_name": "GreenGive",
-  "theme_color": "#2196f3",
-  "background_color": "#2196f3",
+  "theme_color": "#E8FFEA",
+  "background_color": "#E8FFEA",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",

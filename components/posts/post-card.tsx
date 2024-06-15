@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Clock4, MessageCircle, Trash } from "lucide-react";
 import { Card } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -35,6 +36,13 @@ export default function PostCard({ post, showButton = false, deletePost }: Props
         <div className="text-grey-1 line-clamp-3 tracking-tight leading-5">
           { post?.content }
         </div>
+        {
+          post?.image && (
+            <div className="relative h-24 sm:hidden">
+              <Image src={post?.image} layout="fill" objectFit="cover" alt="post-image" />
+            </div>
+          )
+        }
         <div className="flex flex-row items-center justify-end pe-2 gap-x-1 text-grey-2 mt-1">
           <MessageCircle size={18} />
           <span className="text-sm relative top-[1px]">{post?.comments.length} comments</span>

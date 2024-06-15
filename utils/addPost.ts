@@ -9,7 +9,10 @@ export default async function addPost(formData: FormData) {
   try {
     const { error } = await supabase
       .from("posts")
-      .insert([{user_id: userId, content: formData.get("content"), category: formData.get("category")}])
+      .insert([{
+        user_id: userId, content: formData.get("content"), category: formData.get("category"),
+        link: formData.get("link"), image: formData.get("image_url")
+      }])
     if (error) return { error: error.message, status: 400 }
     return { success: "Successfully added post!", status: 200 }
   } 
