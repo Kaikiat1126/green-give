@@ -2,7 +2,7 @@ import type { Metadata, Viewport  } from "next";
 import { Inter as FontSans } from "next/font/google";
 import '../styles/globals.css'
 import { Toaster } from "@/components/ui/toaster"
-import NavBar from "@/components/nav-bar";
+import NavBar from "@/components/nav-bar/nav-bar";
 import BottomNavBar from "@/components/bottom-nav-bar";
 import SessionProvider from "@/components/provider/session-provider";
 

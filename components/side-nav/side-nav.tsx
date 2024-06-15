@@ -1,11 +1,12 @@
 'use client'
 import { useState } from "react";
+import { usePathname } from 'next/navigation'
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { AlignJustify, Award, CalendarDays, CircleUser, Earth, Home, LayoutList, MapPinned, Smile } from "lucide-react"
+import { AlignJustify, Award, BookCopy, CalendarDays, CircleUser, Earth, Home, LayoutList, MapPinned, Smile } from "lucide-react"
 import { Button } from "../ui/button"
 import SideBarLink from "./side-bar-link";
 
@@ -18,7 +19,7 @@ type Props = {
 export default function SideNav(
   { displayName, logoutChild, children }: Props
 ) {
-
+  const pathname = usePathname()
   const [open, setOpen] = useState<boolean>(false);
 
   const list = [
@@ -26,6 +27,7 @@ export default function SideNav(
     { href: "impact", text: "My Impact", icon: Earth },
     { href: "levels", text: "My Levels", icon: Award },
     { href: "listings", text: "My Listings", icon: LayoutList },
+    { href: "posts", text: "My Post", icon: BookCopy },
     { href: "campaign", text: "Campaign", icon: CalendarDays },
     { href: "location", text: "Location", icon: MapPinned },
     { href: "profile", text: "Profile", icon: Smile },
@@ -40,7 +42,7 @@ export default function SideNav(
         </Button>
       </SheetTrigger>
       <SheetContent className="max-w-60 flex flex-col justify-between">
-        <div className="flex flex-col gap-y-4 py-4">
+        <div className="flex flex-col gap-y-2.5 py-4">
           <div className="flex flex-row items-center gap-x-4 mb-4 px-2">
             { children }
             <div>{displayName}</div>
@@ -51,9 +53,10 @@ export default function SideNav(
                 key={item.text} 
                 href={item.href} 
                 text={item.text}
+                active={pathname === `/${item.href}`}
                 onClick={()=>setOpen(false)}
               >
-                <item.icon color="#09090B" className="mr-3 h-5 w-5" />
+                <item.icon className="mr-3 h-5 w-5" />
               </SideBarLink>
             ))
           }
