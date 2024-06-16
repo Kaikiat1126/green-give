@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { SubmitButton } from "@/components/ui/submit-button";
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
@@ -37,6 +38,7 @@ type Props = {
 
 export default function AddItemSheet({ type, category, closeSheet }: Props){
 
+  const [imageFiles, setImageFiles] = useState<File[]>([])
   const [images, setImages] = useState<string[]>([])
   const [quantity, setQuantity] = useState<number>(1)
   const [locationExist, setLocationExist] = useState<boolean>(false)
@@ -52,6 +54,7 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
 
   function removeImage(index: number) {
     setImages(images.filter((_, i) => i !== index))
+    setImageFiles(imageFiles.filter((_, i) => i !== index))
   }
 
   async function handleAddItem(formData: FormData) {
@@ -64,6 +67,9 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
       return
     }
     // future: trigger user account validation
+    imageFiles.forEach((file) => {
+      formData.append("images_files", file)
+    })
     const response = await addItem(formData)
     const success = response?.success;
     if (success) {
@@ -83,7 +89,12 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
         images={images} 
         removeImage={removeImage}
       >
-        <UploadImage images={images} addImage={addImage} />
+        <UploadImage 
+          images={images} 
+          addImage={addImage} 
+          imageFiles={imageFiles}
+          setImageFiles={setImageFiles}
+        />
       </ImagesArea>
 
       <div className="flex sm:flex-row flex-col gap-4 my-2">
@@ -237,9 +248,10 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
       <Input name="category" type="hidden" value={category && category.charAt(0).toUpperCase() + category.slice(1) } />
       <Input name="type" type="hidden" value={type && type.charAt(0).toUpperCase() + type.slice(1)} />
 
-      <Button type="submit" className="rounded-3xl h-auto py-2.5 mt-6" formAction={handleAddItem}>
+
+      <SubmitButton formAction={handleAddItem} className="rounded-3xl h-auto py-2.5 mt-6" pendingText="Adding item...">
         Submit
-      </Button>
+      </SubmitButton>
     </form>
   )
 }

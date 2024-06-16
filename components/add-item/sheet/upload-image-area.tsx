@@ -1,10 +1,11 @@
+'use client'
 import { useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
-import { imageFileToBase64, checkImageSize, base64ToImageFile } from "@/utils/imageToBase64";
+import { checkImageSize } from "@/utils/imageToBase64";
 
 type Props = {
   children?: React.ReactNode
@@ -13,6 +14,8 @@ type Props = {
 type UploadImageProps = {
   images: string[]
   addImage: (image: string) => void
+  imageFiles: File[]
+  setImageFiles?: (files: File[]) => void
 }
 
 export default function UploadImageArea({children}: Props){
@@ -26,20 +29,9 @@ export default function UploadImageArea({children}: Props){
   )
 }
 
-export function UploadImage({ images, addImage }: UploadImageProps){
+export function UploadImage({ images, addImage, imageFiles, setImageFiles }: UploadImageProps){
 
   const imageInputRef = useRef<HTMLInputElement>(null)
-
-  // useEffect(() => {
-  //   const imageFiles = images.map((image, index) => base64ToImageFile(image, `image-${index}`))
-  //   let temp = new DataTransfer()
-  //   imageFiles.forEach(file => temp.items.add(file))
-  //   const imageInput = imageInputRef.current
-  //   if (imageInput) {
-  //     imageInput.files = temp.files
-  //   }
-  // }, [images])
-
   const { toast } = useToast()
 
   function onImageChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -54,12 +46,11 @@ export function UploadImage({ images, addImage }: UploadImageProps){
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
       if (!checkImageSize(file)) {
-        toast({title: "The image size should not exceed 8MB", variant: "destructive"})
+        toast({title: "The image size should not exceed 5MB", variant: "destructive"})
         return
       }
-      imageFileToBase64(file).then((base64) => {
-        addImage(base64)
-      })
+      setImageFiles && setImageFiles([...imageFiles, file])
+      addImage(URL.createObjectURL(file))
     }
     e.target.value = ""
   }
@@ -92,7 +83,6 @@ export function UploadImage({ images, addImage }: UploadImageProps){
         className="hidden"
         onChange={onImageChange}
       />
-      <Input type="hidden" value={images} name="images_base64" />
     </div>
   )
 }

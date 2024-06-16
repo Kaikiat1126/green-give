@@ -15,8 +15,11 @@ export default function MyPostsArea(){
   const [open, setOpen] = useState<boolean>(false)
   const [category, setCategory] = useState<string>("All")
   const [posts, setPosts] = useState<any[]>([])
+  const [postsUrls, setPostsUrls] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const [imagesLoading, setImagesLoading] = useState<boolean>(true)
   const [selectedPost, setSelectedPost] = useState<string>("")
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
   const { toast } = useToast()
   const supabase = createClient()
 
@@ -51,10 +54,43 @@ export default function MyPostsArea(){
     setLoading(true)
     await getUserPosts()
       .then((data) => {
-        if(data) setPosts(data)
+        if(data) {
+          setPosts(data)
+          const tempUrls = data.map((post) => {
+            if(post.image) {
+              return { id: post.id, image: post.image }
+            }
+          }) ?? []
+          setPostsUrls(tempUrls.filter((url) => url !== undefined))
+        }
         setLoading(false)
+        setImagesLoading(true)
     })
   }
+
+  useEffect(() => {
+    const handleImages = async () => {
+      const tempUrls = postsUrls.map((url) => url.image)
+      const { data } = await supabase.storage.from("posts_images")
+        .createSignedUrls(tempUrls, 3600)
+      if(data) {
+        setPostsUrls(
+          postsUrls.map((url, index) => {
+            return { id: url.id, image: data[index].signedUrl }
+          }
+        ))
+      }
+      setImagesLoading(false)
+    }
+    if(postsUrls.length > 0) {
+      if (timer) clearTimeout(timer)
+      setTimer(setTimeout(() => {
+        handleImages()
+      }, 1000))
+    } else {
+      setImagesLoading(false)
+    }
+  }, [posts, supabase])
 
   async function handleDeletePost(postId: string){
     await deletePost(postId).then(() => {
@@ -102,6 +138,8 @@ export default function MyPostsArea(){
                     setOpen(true)
                     setSelectedPost(post.id)
                   }}
+                  imageLoading={imagesLoading}
+                  imageSignedUrl={postsUrls.find((url) => url.id === post.id)?.image}
                 />
               ))
             }

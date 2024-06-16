@@ -24,5 +24,5 @@ export function base64ToImageFile(base64: string, filename: string): File {
 
 // limit image size to 10MB
 export function checkImageSize(file: File): boolean {
-  return file.size <= 8 * 1024 * 1024;
+  return file.size <= 5 * 1024 * 1024;
 }

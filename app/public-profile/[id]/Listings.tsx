@@ -5,6 +5,7 @@ import CardContainer from "@/components/listings/card-container";
 import ItemCard from "@/components/listings/items/item-card";
 import LoadingCard from "@/components/listings/items/loading-card";
 import { getItemsByUserId } from "@/utils/getItems";
+import { createClient } from "@/utils/supabase/client";
 
 type Props = {
   first_name?: string;
@@ -15,15 +16,43 @@ export default function Listings({ first_name, userId }: Props){
   const [category, setCategory] = useState<string>("All")
   const [loading, setLoading] = useState<boolean>(false)
   const [listings, setListings] = useState<any[]>([])
+  const [itemsUrls, setItemsUrls] = useState<any[]>([])
+  const [imageLoading, setImageLoading] = useState<boolean>(false)
+  const supabase = createClient()
 
   useEffect(() => {
     setLoading(true)
     getItemsByUserId(userId!)
       .then((data) => {
-        if(data) setListings(data)
+        if(data) {
+          setListings(data)
+          setItemsUrls(data.map((item) => { return { id: item.id, image: item.item_intro.images[0] } }))
+        }
         setLoading(false)
+        setImageLoading(true)
       })
   }, [userId])
+
+  useEffect(() => {
+    const handleImages = async () => {
+      const tempUrls = itemsUrls.map((url) => url.image)
+      const { data } = await supabase.storage.from("items_images")
+        .createSignedUrls(tempUrls, 3600)
+      if(data) {
+        setItemsUrls(
+          itemsUrls.map((url, index) => {
+            return { id: url.id, image: data[index].signedUrl }
+          }
+        ))
+      }
+      setImageLoading(false)
+    }
+    if(itemsUrls.length > 0) {
+      handleImages()
+    } else {
+      setImageLoading(false)
+    }
+  }, [listings])
 
   const filteredItems = useMemo(() => {
     if (category === "All") return listings
@@ -50,7 +79,12 @@ export default function Listings({ first_name, userId }: Props){
           <CardContainer>
             {
               filteredItems.map((item) => (
-                <ItemCard key={item.id} item={item} />
+                <ItemCard 
+                  key={item.id} 
+                  item={item} 
+                  imageLoading={imageLoading}
+                  imageSignedUrl={itemsUrls.find((url) => url.id === item.id)?.image}
+                />
               ))
             }
           </CardContainer>

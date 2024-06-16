@@ -5,6 +5,9 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV !== "development", // Remove console.log in production
   },
+  images: {
+    domains: ["imjicjvnxbntgauqmmzp.supabase.co"], // Allow images from example.com
+  }
 };
   
 // Configuration object tells the next-pwa plugin 

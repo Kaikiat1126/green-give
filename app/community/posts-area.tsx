@@ -13,16 +13,28 @@ export default function PostsArea(){
   const [open, setOpen] = useState<boolean>(false)
   const [category, setCategory] = useState<string>("All")
   const [posts, setPosts] = useState<any[]>([])
+  const [postsUrls, setPostsUrls] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const [imagesLoading, setImagesLoading] = useState<boolean>(true)
   const [selectedPost, setSelectedPost] = useState<string>("")
   const supabase = createClient()
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
   const getAllPosts = async () => {
     setLoading(true)
     await getPosts({category})
       .then((data) => {
-        if(data) setPosts(data)
-        setLoading(false)
+        if(data) {
+          setPosts(data)
+          const tempUrls = data.map((post) => {
+            if(post.image) {
+              return { id: post.id, image: post.image }
+            }
+          }) ?? []
+          setPostsUrls(tempUrls.filter((url) => url !== undefined))
+        }
+      setLoading(false)
+      setImagesLoading(true)
     })
   }
 
@@ -30,6 +42,30 @@ export default function PostsArea(){
     setLoading(true)
     getAllPosts()
   }, [category])
+
+  useEffect(() => {
+    const handleImages = async () => {
+      const tempUrls = postsUrls.map((url) => url.image)
+      const { data } = await supabase.storage.from("posts_images")
+        .createSignedUrls(tempUrls, 3600)
+      if(data) {
+        setPostsUrls(
+          postsUrls.map((url, index) => {
+            return { id: url.id, image: data[index].signedUrl }
+          }
+        ))
+      }
+      setImagesLoading(false)
+    }
+    if(postsUrls.length > 0) {
+      if (timer) clearTimeout(timer)
+      setTimer(setTimeout(() => {
+        handleImages()
+      }, 1000))
+    } else {
+      setImagesLoading(false)
+    }
+  }, [posts, supabase])
 
   useEffect(() => {
     const subscription = supabase
@@ -46,7 +82,7 @@ export default function PostsArea(){
     return () => {
       subscription.unsubscribe()
     }
-  }, [category, posts])
+  }, [category, posts, supabase])
 
   return (
     <>
@@ -80,9 +116,13 @@ export default function PostsArea(){
                   key={post.id} 
                   post={post} 
                   _onClick={() => {
-                    setOpen(true)
                     setSelectedPost(post.id)
-                  }} 
+                    setOpen(true)
+                  }}
+                  imageLoading={imagesLoading}
+                  imageSignedUrl={
+                    postsUrls.find((url) => url.id === post.id)?.image
+                  }
                 />
               ))
             }

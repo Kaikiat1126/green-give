@@ -8,13 +8,22 @@ export default async function addItem(formData: FormData) {
   const supabase = createClient()
   const userId = await getUserId()
 
-  const imagesArray: string[] = (formData.get("images_base64") as string).split(",")
-  const imagesArrayGrouped: string[] = []
-  for (let i = 0; i < imagesArray.length; i += 2) {
-    imagesArrayGrouped.push(imagesArray.slice(i, i + 2).join(","))
-  }
+  const imageFiles = formData.getAll("images_files")
   const itemPrice = formData.get("price") ? parseInt(formData.get("price") as string) : null
   const untilMidnight = formData.get("list_for") === "0"
+
+  const folderPath = `${userId}/${Date.now()}`
+  const filePathList: string[] = []
+
+  async function uploadImage(file: File, filename: string) {
+    await supabase.storage.from("items_images").upload(filename, file, { cacheControl: "60" })
+  }
+
+  for (let i = 0; i < imageFiles.length; i++) {
+    const filename = `${folderPath}/${i}`
+    filePathList.push(`${filename}`)
+    uploadImage(imageFiles[i] as File, filename)
+  }
 
   try {
     const { error } = await supabase
@@ -28,7 +37,7 @@ export default async function addItem(formData: FormData) {
             {
               id: itemId, title: formData.get("title"), description: formData.get("description"), quantity: parseInt(formData.get("quantity") as string),
               pickup_instructions: formData.get("pickup_instructions"), price: itemPrice, 
-              images: imagesArrayGrouped, until_midnight: untilMidnight, list_for: parseInt(formData.get("list_for") as string),
+              images: filePathList, until_midnight: untilMidnight, list_for: parseInt(formData.get("list_for") as string),
             }
           ])
           //update the user impact and points

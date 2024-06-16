@@ -2,15 +2,18 @@ import Image from "next/image";
 import { MessageCircle, Trash } from "lucide-react";
 import { Card } from "../ui/card";
 import PostAuthor from "./post-author";
+import { Skeleton } from "../ui/skeleton";
 
 type Props = {
   post: any
+  imageSignedUrl?: string
+  imageLoading?: boolean
   showButton?: boolean
   deletePost?: () => void
   _onClick?: () => void
 }
 
-export default function PostCard({ post, showButton = false, deletePost, _onClick }: Props){
+export default function PostCard({ post, imageSignedUrl, imageLoading, showButton = false, deletePost, _onClick }: Props){
 
   function handleDeletePost(e: any){
     deletePost && deletePost()
@@ -30,9 +33,14 @@ export default function PostCard({ post, showButton = false, deletePost, _onClic
           { post?.content }
         </div>
         {
-          post?.image && (
+          (post?.image && imageLoading) && (
+            <Skeleton className="h-24 w-full" />
+          )
+        }
+        {
+          (post?.image && !imageLoading && imageSignedUrl) && (
             <div className="relative h-24 sm:hidden">
-              <Image src={post?.image} layout="fill" objectFit="cover" alt="post-image" />
+              <Image src={imageSignedUrl} priority fill style={{objectFit:"cover"}} alt="post-image" />
             </div>
           )
         }

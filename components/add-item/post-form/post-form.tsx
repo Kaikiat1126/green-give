@@ -19,11 +19,15 @@ export default function PostForm({ closeSheet }: Props){
   const { toast } = useToast()
   const [category, setCategory] = useState<string>("")
   const [imageUrl, setImageUrl] = useState<string>("")
+  const [imageFile, setImageFile] = useState<File | null>(null)
 
   async function handleAddPost(formData: FormData){
     if (!category) {
       showToaster("You must select a category", false)
       return
+    }
+    if (imageFile) {
+      formData.append("image_file", imageFile)
     }
     await addPost(formData).then((response) => {
       if (response.error) {
@@ -41,11 +45,9 @@ export default function PostForm({ closeSheet }: Props){
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files![0]
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      setImageUrl(reader.result as string)
-    }
-    reader.readAsDataURL(file)
+    const url = URL.createObjectURL(file)
+    setImageUrl(url)
+    setImageFile(file)
   }
 
   return (
@@ -64,7 +66,6 @@ export default function PostForm({ closeSheet }: Props){
             onChange={handleImageChange} 
             accept="image/*"
           />
-          <Input type="hidden" value={imageUrl} name="image_url" />
         </div>
       </div>
       <Textarea 
@@ -76,7 +77,7 @@ export default function PostForm({ closeSheet }: Props){
       {
         imageUrl && (
           <div className="my-1.5 relative h-24 xs:h-28 md:h-32 xl:h-48 w-full ">
-            <Image src={imageUrl} priority fill objectFit="cover" alt="image" />
+            <Image src={imageUrl} priority fill style={{objectFit: 'cover'}} alt="image" />
           </div>
         )
       }

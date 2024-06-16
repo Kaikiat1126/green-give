@@ -18,10 +18,13 @@ export default function Home() {
   const [type, setType] = useState<string>("Non-food")
   const [category, setCategory] = useState<string>("All")
   const [loading, setLoading] = useState<boolean>(false)
+  const [imageLoading, setImageLoading] = useState<boolean>(false)
   const [listings, setListings] = useState<any[]>([])
+  const [itemsUrls, setItemsUrls] = useState<any[]>([])
   const [search, setSearch] = useState<string>("")
   const [selectedItem, setSelectedItem] = useState<string>("")
   const [title, setTitle] = useState<string>("")
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
   const supabase = createClient()
 
@@ -29,8 +32,12 @@ export default function Home() {
     setLoading(true)
     await getItemsWithoutSelf({type, category})
       .then((data) => {
-        if(data) setListings(data)
+        if(data) {
+          setListings(data)
+          setItemsUrls(data.map((item) => { return { id: item.id, image: item.item_intro.images[0] } }))
+        }
         setLoading(false)
+        setImageLoading(true)
     })
   }, [type, category])
 
@@ -58,6 +65,30 @@ export default function Home() {
       subscription.unsubscribe()
     }
   }, [type, category, listings, handleGetItems, supabase])
+
+  useEffect(() => {
+    const handleImages = async () => {
+      const tempUrls = itemsUrls.map((url) => url.image)
+      const { data } = await supabase.storage.from("items_images")
+        .createSignedUrls(tempUrls, 3600)
+      if(data) {
+        setItemsUrls(
+          itemsUrls.map((url, index) => {
+            return { id: url.id, image: data[index].signedUrl }
+          }
+        ))
+      }
+      setImageLoading(false)
+    }
+    if(itemsUrls.length > 0) {
+      if (timer) clearTimeout(timer)
+      setTimer(setTimeout(() => {
+        handleImages()
+      }, 1000))
+    } else {
+      setImageLoading(false)
+    }
+  }, [listings])
   
   return (
     <div className="xs:py-2 py-4 flex flex-col gap-y-2">
@@ -106,6 +137,8 @@ export default function Home() {
                     setSelectedItem(item.id)
                     setTitle(item.item_intro.title)
                   }}
+                  imageLoading={imageLoading}
+                  imageSignedUrl={itemsUrls.find((url) => url.id === item.id)?.image}
                 />
               ))
             }
