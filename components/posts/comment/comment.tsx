@@ -15,7 +15,7 @@ export default function Comment({ comment }: Props) {
         <p className="text-sm text-grey-1 text-[1.05rem] font-medium">
           { comment?.content }
         </p>
-        <div className="inline-flex flex-row items-start gap-x-1 text-grey-3 text-xs mt-2">
+        <div className="inline-flex flex-row items-start gap-x-1 text-grey-3 text-xs mt-1">
           <Clock4 size={14} />
           <p>{ calculateAgo(comment?.created_at) } ago</p>
         </div>

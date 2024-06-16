@@ -4,6 +4,7 @@ import Image from "next/image"
 import PostAuthor from "./post-author"
 import Comment from "./comment/comment"
 import CommentField from "./comment/comment-field"
+import PostImageModal from "./post-image-modal"
 import { Separator } from "../ui/separator"
 import { Skeleton } from "../ui/skeleton"
 import { getPostById } from "@/utils/getPosts"
@@ -110,7 +111,9 @@ export default function PostView({ postId }: Props){
       {
         !loading && imageSignedUrl && (
           <div className="relative h-52">
-            <Image src={imageSignedUrl} fill priority style={{objectFit:"cover"}} alt="post-image" />
+            <PostImageModal>
+              <Image src={imageSignedUrl} fill priority style={{objectFit:"cover"}} className="cursor-pointer" alt="post-image" />
+            </PostImageModal>
           </div>
         )
       }
@@ -125,7 +128,10 @@ export default function PostView({ postId }: Props){
       <div className="flex flex-col">
         {
           post?.comments.map((comment: any) => (
-            <Comment key={comment.id} comment={comment} />
+            <>
+              <Comment key={comment.id} comment={comment} />
+              <Separator key={comment.id + comment.created_at} />
+            </>
           ))
         }
       </div>
