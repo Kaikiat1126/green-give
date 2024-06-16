@@ -2,6 +2,9 @@
 import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import PostAuthor from "./post-author"
+import Comment from "./comment/comment"
+import CommentField from "./comment/comment-field"
+import { Separator } from "../ui/separator"
 import { Skeleton } from "../ui/skeleton"
 import { getPostById } from "@/utils/getPosts"
 import { MessageCircle } from "lucide-react"
@@ -46,8 +49,26 @@ export default function PostView({ postId }: Props){
     getPost()
   }, [getPost])
 
+  //build subscription to comments table to update comments in real-time with post_id
+  useEffect(() => {
+    const subscription = supabase
+      .channel(`comments_changes:${postId}`)
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "comments",
+      }, () => {
+        getPost()
+      })
+      .subscribe()
+    
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [post, postId, getPost, supabase])
+
   return (
-    <div className="inline-flex flex-col gap-y-4 mb-4 w-full px-2">
+    <div className="inline-flex flex-col gap-y-3 mb-4 w-full px-2">
       {
         loading && (
           <>
@@ -93,12 +114,23 @@ export default function PostView({ postId }: Props){
           </div>
         )
       }
-      <div className="my-2">
+      <div className="my-1">
         <div className="flex flex-row items-center justify-end gap-x-1 text-grey-2">
           <MessageCircle size={18} />
           <span className="text-sm relative top-[1px]">{post?.comments.length} comments</span>
         </div>
+        <Separator className="mt-4" />
       </div>
+
+      <div className="flex flex-col">
+        {
+          post?.comments.map((comment: any) => (
+            <Comment key={comment.id} comment={comment} />
+          ))
+        }
+      </div>
+
+      <CommentField key="comment-field" postId={post?.id} />
     </div>
   )
 }

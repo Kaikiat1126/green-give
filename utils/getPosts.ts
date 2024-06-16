@@ -45,7 +45,9 @@ export async function getPostById(postId: string){
   const supabase = createClient()
   const { data } = await supabase
     .from('posts')
-    .select("*, profiles:user_id(username, first_name), comments(*)")
+    .select(
+      "*, profiles:user_id(username, first_name), comments(*, profiles:user_id(first_name))"
+    )
     .eq('id', postId)
     .single()
   return data
