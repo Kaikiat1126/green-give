@@ -50,13 +50,3 @@ export async function getPostById(postId: string){
     .single()
   return data
 }
-
-export async function deletePost(postId: string){
-  const supabase = createClient()
-  const { error } = await supabase
-    .from('posts')
-    .delete()
-    .eq('id', postId)
-  if (error) return error
-  return true
-}

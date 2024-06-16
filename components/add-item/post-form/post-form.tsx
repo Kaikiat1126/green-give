@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { SubmitButton } from "@/components/ui/submit-button"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -93,9 +94,9 @@ export default function PostForm({ closeSheet }: Props){
         <PostCategory category={category} setCategory={setCategory} />
       </div>
       <Input id="category" type="hidden" value={category} name="category" />
-      <Button type="submit" className="rounded-3xl h-auto py-2.5 mt-6" formAction={handleAddPost}>
+      <SubmitButton className="rounded-3xl h-auto py-2.5 mt-6" formAction={handleAddPost} pendingText="Posting...">
         Submit
-      </Button>
+      </SubmitButton>
     </form>
   )
 }

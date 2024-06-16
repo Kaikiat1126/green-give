@@ -7,7 +7,8 @@ import LoadingPostCard from "@/components/posts/loading-post-card"
 import FullScreenSheet from "@/components/add-item/sheet/full-screen-sheet"
 import PostView from "@/components/posts/post-view"
 import { useToast } from "@/components/ui/use-toast"
-import { getUserPosts, deletePost } from "@/utils/getPosts"
+import { getUserPosts } from "@/utils/getPosts"
+import { deletePost } from "@/utils/deletePost"
 import { createClient } from "@/utils/supabase/client"
 
 export default function MyPostsArea(){
@@ -92,8 +93,8 @@ export default function MyPostsArea(){
     }
   }, [posts, supabase])
 
-  async function handleDeletePost(postId: string){
-    await deletePost(postId).then(() => {
+  async function handleDeletePost(postId: string, image: string | null){
+    await deletePost(postId, image).then(() => {
       toast({
         title: "Post has been deleted successfully",
       })
@@ -133,7 +134,7 @@ export default function MyPostsArea(){
                   key={post.id} 
                   post={post} 
                   showButton
-                  deletePost={() => handleDeletePost(post.id)}
+                  deletePost={() => handleDeletePost(post.id, post?.image)}
                   _onClick={() => {
                     setOpen(true)
                     setSelectedPost(post.id)
