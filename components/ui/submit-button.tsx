@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 
 type Props = ComponentProps<"button"> & {
   pendingText?: string;
-  variant?: "default" | "secondary";
+  variant?: "default" | "secondary" | "destructive";
 };
   
 export function SubmitButton({ children, pendingText, variant, ...props }: Props) {

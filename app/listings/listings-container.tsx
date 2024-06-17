@@ -138,7 +138,7 @@ export default function ListingsContainer({ userId }: Props) {
         setOpen={setOpen}
         title={title}
       >
-        <ItemView itemId={selectedItem} />
+        <ItemView itemId={selectedItem} closeSheet={() => setOpen(false)}/>
       </FullScreenSheet>
     </>
   )

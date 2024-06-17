@@ -70,7 +70,7 @@ export default function Home() {
     const handleImages = async () => {
       const tempUrls = itemsUrls.map((url) => url.image)
       const { data } = await supabase.storage.from("items_images")
-        .createSignedUrls(tempUrls, 3600)
+        .createSignedUrls(tempUrls, 1800)
       if(data) {
         setItemsUrls(
           itemsUrls.map((url, index) => {
@@ -157,7 +157,10 @@ export default function Home() {
         setOpen={setOpen}
         title={title}
       >
-        <ItemView itemId={selectedItem} />
+        <ItemView 
+          itemId={selectedItem} 
+          closeSheet={() => setOpen(false)}
+        />
       </FullScreenSheet>
     </div>
   );

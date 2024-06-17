@@ -6,7 +6,19 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV !== "development", // Remove console.log in production
   },
   images: {
-    domains: ["imjicjvnxbntgauqmmzp.supabase.co"], // Allow images from example.com
+    // domains: ["imjicjvnxbntgauqmmzp.supabase.co"], // Allow images from example.com
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "imjicjvnxbntgauqmmzp.supabase.co",
+        pathname: '**'
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        pathname: '**'
+      }
+    ]
   }
 };
   

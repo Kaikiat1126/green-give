@@ -23,7 +23,7 @@ export default function ItemCard({item, imageSignedUrl, imageLoading, _onClick}:
           }
           {
             (!imageLoading && imageSignedUrl) && (
-              <Image src={imageSignedUrl} fill alt="item-image" className="object-cover rounded-t-lg" priority sizes="(min-width: 475px) 100%" />
+              <Image src={imageSignedUrl} fill alt="item-image" className="object-cover xs:rounded-t-lg rounded-l-lg xs:rounded-l-none" priority sizes="(min-width: 475px) 100%" />
             )
           }
         </div> 
