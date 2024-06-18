@@ -45,18 +45,18 @@ export default function CampaignPost({ campaign }: Props) {
           {formatDate(campaign?.date)} at {parseTime(campaign?.start_time)} to {parseTime(campaign?.end_time)}</span>
         </h5>
         <h5 className="font-semibold text-grey-1 mt-3">Avenue: <span className="font-normal">{campaign?.venue}</span></h5>
-        <div className="font-semibold text-grey-1 mt-4 flex flex-row items-center">
+        <div className="font-semibold text-grey-1 mt-4 flex flex-row flex-wrap gap-x-2 gap-y-1 items-center">
           {
             campaign?.tags.map((tag: string) => (
-              <Badge key={tag} className="mr-2">#{tag}</Badge>
+              <Badge key={tag}>#{tag}</Badge>
             ))
           }
         </div>
       </div>
-      <div className="relative w-full h-[35vh] my-1">
+      <div className="relative w-full my-1">
         {
           signedUrl && (
-            <Image src={signedUrl} fill priority style={{objectFit: "cover"}} alt={campaign?.title} />
+            <Image src={signedUrl} layout="responsive" width={500} height={500} priority style={{objectFit: "cover"}} alt={campaign?.title} />
           )
         }
       </div>
