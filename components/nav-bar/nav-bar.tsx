@@ -1,13 +1,6 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import Link from "next/link"
 import { Montserrat } from "next/font/google";
-import { Award, BookCopy, CalendarDays, CircleUser, Earth, LayoutList, LogOut, MapPinned, Smile } from "lucide-react"
+import { LogOut } from "lucide-react"
 import NavBarDropDown from "./nav-bar-drop-down";
 import SideNav from "../side-nav/side-nav";
 import UserAvatar from "../user-avatar";

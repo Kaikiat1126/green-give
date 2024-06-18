@@ -15,7 +15,7 @@ export default function ShareImpact({meals_saved, water_saved}: {meals_saved: an
       url: 'https://greengive.vercel.app/',
     })
     .then(() => createToast('Successfully shared your impact!', false))
-    .catch(() => createToast('An error occurred while sharing your impact!', true));
+    // .catch(() => createToast('An error occurred while sharing your impact!', true));
   }
 
   const createToast = (message: string, error: boolean) => {

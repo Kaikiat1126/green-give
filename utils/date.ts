@@ -6,6 +6,20 @@ export function calculateDateDifferenceWithToday(date: string): number {
   return diffDays;
 }
 
+export function formatDate(date: string): string {
+  const formattedDate = new Date(date);
+  return formattedDate.getDate() + " " + formattedDate.toLocaleString('default', { month: 'short' }) + " " + formattedDate.getFullYear();
+}
+
+export function parseTime(time: string): string {
+  const timeArray = time.split(":");
+  const hours = parseInt(timeArray[0]);
+  const minutes = parseInt(timeArray[1]);
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const hour = hours % 12 || 12;
+  return `${hour}:${minutes} ${ampm}`;
+}
+
 export function getJoinedDate(date: string): string {
   const joinedDate = new Date(date);
   return joinedDate.toLocaleString('default', { month: 'long' }) + " " + joinedDate.getFullYear();

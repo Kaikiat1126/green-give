@@ -27,7 +27,7 @@ export default function NavBarDropDown({ children, signOutChild }: Props) {
     { href: "levels", text: "My Levels", icon: Award },
     { href: "listings", text: "My Listings", icon: LayoutList },
     { href: "posts", text: "My Posts", icon: BookCopy },
-    { href: "campaign", text: "Campaign", icon: CalendarDays },
+    { href: "campaigns", text: "Campaigns", icon: CalendarDays },
     { href: "location", text: "Location", icon: MapPinned }
   ]
 
