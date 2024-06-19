@@ -68,6 +68,7 @@ export default function ItemView({ itemId, closeSheet }: Props){
               itemId={item?.id} 
               senderId={item?.user_id} 
               imagePath={item?.item_intro.images[item?.item_intro.images.length - 1]}
+              category={item?.category}
               closeSheet={() => closeSheet && closeSheet()}
             />
           </>

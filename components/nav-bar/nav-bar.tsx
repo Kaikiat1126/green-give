@@ -38,7 +38,7 @@ export default async function NavBar(){
               <Link href="/community">Community</Link>
             </Button>
             <Button variant="ghost" asChild>
-              <Link href="/">Message</Link>
+              <Link href="/chat">Message</Link>
             </Button>
           </div>
         </div>

@@ -44,8 +44,8 @@ export default function BottomNavBar() {
                   </div>
                 </AddItemDrawer>
                 <Link 
-                  href="/message" 
-                  className={`relative flex flex-col items-center ${pathname === '/message' ? 'text-[#009A29]' : ''}`}
+                  href="/chat" 
+                  className={`relative flex flex-col items-center ${pathname?.includes('/chat') ? 'text-[#009A29]' : ''}`}
                 >
                   <Mail className="mb-5" />
                   <span className="text-xs absolute top-2/3">Message</span>

@@ -1,6 +1,5 @@
 import { useState } from "react"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
 import { SubmitButton } from "@/components/ui/submit-button"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"

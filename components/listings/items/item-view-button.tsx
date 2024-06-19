@@ -8,10 +8,11 @@ type Props = {
   itemId: string;
   senderId: string;
   imagePath?: string;
+  category?: string;
   closeSheet: () => void;
 };
 
-export default function ItemViewButton({ itemId, senderId, imagePath, closeSheet }: Props) {
+export default function ItemViewButton({ itemId, senderId, imagePath, category, closeSheet }: Props) {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>("");
   const { toast } = useToast();
@@ -55,6 +56,19 @@ export default function ItemViewButton({ itemId, senderId, imagePath, closeSheet
       </SubmitButton>
     );
   }
+
+  if (category === "Wanted") {
+    return (
+      <SubmitButton
+        variant="default"
+        className="rounded-3xl h-auto py-2.5 mt-4"
+        pendingText="Sending message..."
+      >
+        Send message
+      </SubmitButton>
+    );
+  }
+
   return (
     <SubmitButton
       variant="default"

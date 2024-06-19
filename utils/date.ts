@@ -20,6 +20,11 @@ export function parseTime(time: string): string {
   return `${hour}:${minutes} ${ampm}`;
 }
 
+export function getTime(date: string): string {
+  const formattedDate = new Date(date);
+  return formattedDate.toLocaleTimeString('default', { hour: '2-digit', minute: '2-digit' });
+}
+
 export function getJoinedDate(date: string): string {
   const joinedDate = new Date(date);
   return joinedDate.toLocaleString('default', { month: 'long' }) + " " + joinedDate.getFullYear();
