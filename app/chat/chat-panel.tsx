@@ -20,27 +20,31 @@ type Props = {
 export default function ChatPanel({chatId, user}: Props){
   const [messages, setMessages] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(false)
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const scrollRefV2 = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const supabase = createClient()
   const { toast } = useToast()
 
   const scrollToBottom = () => {
-    scrollRef.current?.scrollIntoView(false)
+    const scrollArea = scrollRefV2.current
+    if (scrollArea) {
+      scrollArea.scrollTop = scrollArea?.scrollHeight
+    }
   }
 
   const fetchMessages = useCallback(async () => {
-    setLoading(true)
     await getMessages(chatId)
       .then((data) => {
         if(data) {
           setMessages(data)
         }
         setLoading(false)
+        scrollToBottom()
     })
   }, [chatId])
 
   useEffect(() => {
+    setLoading(true)
     fetchMessages()
   }, [chatId, fetchMessages])
 
@@ -63,7 +67,7 @@ export default function ChatPanel({chatId, user}: Props){
 
   useEffect(() => {
     scrollToBottom()
-  }, [scrollRef])
+  }, [scrollRefV2])
 
   function handleSendMessage(formData: FormData) {
     const message = formData.get("message") as string
@@ -85,8 +89,8 @@ export default function ChatPanel({chatId, user}: Props){
         <ProfileAvatar userId={user.id} className="h-9 w-9" />
         <div className="font-medium">{user.first_name}</div>
       </div>
-      <ScrollArea className="w-full h-full pb-1">
-        <div ref={scrollRef}>
+      <ScrollArea ref={scrollRefV2} className="w-full h-full pb-1 pe-2.5">
+        <div>
           {
             loading ? (
               <div className="flex flex-col items-center justify-center my-6">

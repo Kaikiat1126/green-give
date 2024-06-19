@@ -13,7 +13,6 @@ export async function getChats() {
     .or(`owner_id_1.eq.${userId}, owner_id_2.eq.${userId}`)
   
   if(error) throw new Error(error.message)
-  //replace the owner_id_1 or owner_id_2 column that is the same as the current user as null
   const chats = data.map((chat) => {
     if(chat.owner_id_1.id === userId) {
       chat.owner_id_1 = null
@@ -34,7 +33,6 @@ export async function getChatsWithId(chatId: string) {
     .single()
   if (error) throw new Error(error.message)
   data.owner_id_1.id === userId ? data.owner_id_1 = null : data.owner_id_2 = null
-  console.log(data);
   return data
 }
 

@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Montserrat } from "next/font/google";
 import { LogOut } from "lucide-react"
+import NavBarButton from "./nav-bar-button";
 import NavBarDropDown from "./nav-bar-drop-down";
 import SideNav from "../side-nav/side-nav";
 import UserAvatar from "../user-avatar";
@@ -30,17 +31,7 @@ export default async function NavBar(){
           <strong className={"text-lg text-[#16a34a] tracking-wide font-bold " + montserrat.className}>GreenGive</strong>
         </Link>
         <div className="md:block hidden">
-          <div className="inline-flex flex-row items-center gap-x-4">
-            <Button variant="ghost" asChild>
-              <Link href="/">Home</Link>
-            </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/community">Community</Link>
-            </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/chat">Message</Link>
-            </Button>
-          </div>
+          <NavBarButton />
         </div>
         <div className="md:block hidden">
           <NavBarDropDown

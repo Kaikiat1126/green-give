@@ -1,21 +1,51 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import ChatUser from "./chat-user"
 import ChatPanel from "./chat-panel"
 import useMediaQuery from "@/utils/hooks/useMediaQuery"
 import { useRouter } from "next/navigation"
+import { getChats } from "@/utils/getChats"
+import { createClient } from "@/utils/supabase/client"
 
-type Props = {
-  chats: any[]
-}
-
-export default function ChatContainer({ chats }: Props) {
+export default function ChatContainer() {
   const isMobile = useMediaQuery("(max-width: 475px)")
+  const [chats, setChats] = useState<any[]>([])
   const [chatId, setChatId] = useState<string>("")
   const [chatUser, setChatUser] = useState<any>({})
   const router = useRouter()
+  const supabase = createClient()
+
+  const getChatsData = useCallback(async () => {
+    await getChats().then((data) => {
+      if(data) {
+        setChats(data)
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    getChatsData()
+  }, [getChatsData])
+
+  useEffect(() => {
+    const subscription = supabase
+      .channel(`chats_and_messages_changes`)
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "chats",
+      }, () => {
+        getChatsData()
+      })
+      .subscribe()
+
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [getChatsData, supabase])
+
 
   function handleChatClick(chatId: string, user: any) {
     if(isMobile) {
@@ -31,7 +61,7 @@ export default function ChatContainer({ chats }: Props) {
       <div className="xs:col-span-1 col-span-4 md:h-[80vh] h-[73vh] xs:border-r border-r-0">
         <ScrollArea className="max-h-[80vh] xs:pe-2">
           {
-            chats.map((chat) => (
+            chats && chats.map((chat) => (
               <ChatUser 
                 key={chat.id} 
                 currentSelected={chatId === chat.id}

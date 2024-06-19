@@ -23,13 +23,14 @@ export default function ChatUser({ currentSelected, user, lastMessage, _onClick 
       <div className="flex flex-col w-full gap-y-1 items-start md:flex xs:hidden">
         <div className="font-medium">{user.first_name}</div>
         <div className="flex flex-row w-full items-center justify-between">
-          <div className="text-xs line-clamp-1 text-grey-2">{lastMessage.message}</div>
           {
             !currentSelected && lastMessage && (
-              <div className="text-xs text-grey-2">
-                { calculateAgo(lastMessage.created_at)}
-              </div>
-            
+              <>
+                <div className="text-xs line-clamp-1 text-grey-2">{lastMessage?.message}</div>
+                <div className="text-xs text-grey-2">
+                  { calculateAgo(lastMessage?.created_at)}
+                </div>
+              </>
             )
           }
         </div>
