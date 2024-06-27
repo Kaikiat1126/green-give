@@ -46,3 +46,26 @@ export async function getMessages(chatId: string) {
   if(error) throw new Error(error.message)
   return data
 }
+
+export async function upsertChat(ownerId1: string, ownerId2: string) {
+  const supabase = createClient()
+  const { data: existData, error } = await supabase
+    .from("chats")
+    .select("*")
+    .or(`owner_id_1.eq.${ownerId1}, owner_id_1.eq.${ownerId2}`)
+    .or(`owner_id_2.eq.${ownerId1}, owner_id_2.eq.${ownerId2}`)
+    .limit(1);
+  console.log("search: ", existData, error);
+
+  if(error) throw new Error(error.message)
+  if (existData[0]) return existData[0]
+
+  const { data, error: newError } = await supabase
+    .from("chats")
+    .insert([{ owner_id_1: ownerId1, owner_id_2: ownerId2 }])
+    .select()
+    .single()
+  
+  if(newError) throw new Error(newError.message)
+  return data
+}

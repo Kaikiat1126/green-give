@@ -56,6 +56,14 @@ export default function ChatContainer() {
     }
   }
 
+  if (chats.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center mt-6">
+        <div className="font-medium text-grey-2">No messages to show</div>
+      </div>
+    )
+  }
+
   return (
     <div className="grid grid-cols-4">
       <div className="xs:col-span-1 col-span-4 md:h-[80vh] h-[73vh] xs:border-r border-r-0">

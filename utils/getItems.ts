@@ -25,6 +25,7 @@ export async function getItemsWithoutSelf (
     .select("*, item_intro!inner(*), profiles:user_id(username)")
     .eq('type', type)
     .eq('category', category)
+    .is('requested_by', null)
     .neq('user_id', userId)
     .neq('available', false)
     .order('created_at', {ascending: false})
@@ -33,12 +34,13 @@ export async function getItemsWithoutSelf (
 
 export async function selectAllCategoriesWithoutSelf(userId: string){
   const supabase = createClient()
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('items')
     .select("*, item_intro!inner(*), profiles:user_id(username)")
     .eq('type', 'Non-food')
     .neq('user_id', userId)
     .neq('available', false)
+    .is('requested_by', null)
     .order('created_at', {ascending: false})
   return data
 }

@@ -2,20 +2,25 @@ import { useState, useEffect } from "react";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { getUserId } from "@/app/auth/get-user";
 import { removeItem } from "@/utils/removeItem";
+import { addItemRequest } from "@/utils/addItemRequest";
+import { upsertChat } from "@/utils/getChats";
 import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation"
 
 type Props = {
   itemId: string;
   senderId: string;
   imagePath?: string;
   category?: string;
+  sendMessage?: (chatId: string) => void;
   closeSheet: () => void;
 };
 
-export default function ItemViewButton({ itemId, senderId, imagePath, category, closeSheet }: Props) {
+export default function ItemViewButton({ itemId, senderId, imagePath, category, sendMessage, closeSheet }: Props) {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>("");
   const { toast } = useToast();
+  const router = useRouter();
 
   useEffect(() => {
     const checkOwner = async () => {
@@ -38,6 +43,26 @@ export default function ItemViewButton({ itemId, senderId, imagePath, category, 
       }
       closeSheet();
     });
+  }
+
+  async function handleRequestItem() {
+    await addItemRequest(itemId, userId, senderId).then((res) => {
+      if (res) {
+        showToaster("Your request has been sent. In processing", true);
+      } else {
+        showToaster("Failed to send request", false);
+      }
+      closeSheet();
+    })
+    await upsertChat(userId, senderId).then((res) => {
+      if (res) {
+        return res.id
+      } else {
+        showToaster("Failed to create chat", false)
+      }
+    }).then((chatId) => {
+      if (chatId) sendMessage && sendMessage(chatId)
+    })
   }
 
   function showToaster(message: string, success: boolean) {
@@ -63,6 +88,7 @@ export default function ItemViewButton({ itemId, senderId, imagePath, category, 
         variant="default"
         className="rounded-3xl h-auto py-2.5 mt-4"
         pendingText="Sending message..."
+        onClick={handleRequestItem}
       >
         Send message
       </SubmitButton>
@@ -74,6 +100,7 @@ export default function ItemViewButton({ itemId, senderId, imagePath, category, 
       variant="default"
       className="rounded-3xl h-auto py-2.5 mt-4"
       pendingText="Requesting item..."
+      onClick={handleRequestItem}
     >
       Request this
     </SubmitButton>

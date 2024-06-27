@@ -7,6 +7,8 @@ import UserApproxLocation from "./user-approx-location"
 import CategoryNotice from "./category-notice"
 import ItemViewLoading from "./item-view-loading"
 import { getItemById } from "@/utils/getItems"
+import { addMessage } from "@/utils/addMessage"
+import { useRouter } from "next/navigation"
 
 type Props = {
   itemId: string
@@ -16,6 +18,7 @@ type Props = {
 export default function ItemView({ itemId, closeSheet }: Props){
   const [item, setItem] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
+  const router = useRouter()
   
   const getItem = useCallback(async () => {
     setLoading(true)
@@ -29,6 +32,19 @@ export default function ItemView({ itemId, closeSheet }: Props){
   useEffect(() => {
     getItem()
   }, [getItem])
+
+  async function messageToOwner(chatId: string){
+    //send a message to the owner
+    let message = "";
+    if (item?.category === "Wanted") {
+      message = `Hi, I have the item you are looking for - ${item?.item_intro?.title}. Can we discuss more?`
+    } else {
+      message = `Hi, I'm interested in your item - ${item?.item_intro?.title}. Can we discuss more?`
+    }
+    await addMessage(chatId, message).then(() => {
+      router.push(`/chat/${chatId}`)
+    })
+  }
 
   return (
     <div className="inline-flex flex-col gap-y-4 mb-4 w-full px-2">
@@ -63,14 +79,19 @@ export default function ItemView({ itemId, closeSheet }: Props){
                 <UserApproxLocation key="user-approx-location" location={ item?.profiles?.location} />
               )
             }
-            <ItemViewButton 
-              key="item-view-button" 
-              itemId={item?.id} 
-              senderId={item?.user_id} 
-              imagePath={item?.item_intro.images[item?.item_intro.images.length - 1]}
-              category={item?.category}
-              closeSheet={() => closeSheet && closeSheet()}
-            />
+            {
+              item?.available && (
+                <ItemViewButton 
+                  key="item-view-button" 
+                  itemId={item?.id} 
+                  senderId={item?.user_id} 
+                  imagePath={item?.item_intro.images[item?.item_intro.images.length - 1]}
+                  category={item?.category}
+                  sendMessage={messageToOwner}
+                  closeSheet={() => closeSheet && closeSheet()}
+                />
+              )
+            }
           </>
         )
       }

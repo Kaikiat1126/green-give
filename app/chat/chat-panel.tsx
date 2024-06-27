@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
 import ProfileAvatar from "@/components/posts/profile-avatar"
 import Message from "./message"
+import RequestedItem from "./requested-item"
 import { getMessages } from "@/utils/getChats"
+import { getItemRequest } from "@/utils/getItemRequest"
 import { addMessage } from "@/utils/addMessage"
 import { createClient } from "@/utils/supabase/client"
 import { SubmitButton } from "@/components/ui/submit-button"
@@ -20,6 +22,7 @@ type Props = {
 export default function ChatPanel({chatId, user}: Props){
   const [messages, setMessages] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(false)
+  const [itemRequests, setItemRequests] = useState<any>([])
   const scrollRefV2 = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const supabase = createClient()
@@ -69,6 +72,18 @@ export default function ChatPanel({chatId, user}: Props){
     scrollToBottom()
   }, [scrollRefV2])
 
+  useEffect(() => {
+    getItemRequest(user.id).then((data) => {
+      if(data) {
+        setItemRequests(data)
+      }
+    })
+
+    return () => {
+      setItemRequests([])
+    }
+  }, [user])
+
   function handleSendMessage(formData: FormData) {
     const message = formData.get("message") as string
     addMessage(chatId, message).then(() => {
@@ -89,6 +104,11 @@ export default function ChatPanel({chatId, user}: Props){
         <ProfileAvatar userId={user.id} className="h-9 w-9" />
         <div className="font-medium">{user.first_name}</div>
       </div>
+      {
+        itemRequests.length > 0 && (
+          <RequestedItem key="requested-item-notice-bar" itemRequests={itemRequests} />
+        )
+      }
       <ScrollArea ref={scrollRefV2} className="w-full h-full pb-1 pe-2.5">
         <div>
           {
