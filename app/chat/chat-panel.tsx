@@ -72,17 +72,37 @@ export default function ChatPanel({chatId, user}: Props){
     scrollToBottom()
   }, [scrollRefV2])
 
-  useEffect(() => {
-    getItemRequest(user.id).then((data) => {
+  const fetchItemRequests = useCallback(async () => {
+    await getItemRequest(user.id).then((data) => {
       if(data) {
         setItemRequests(data)
       }
     })
+  }, [user])
 
+  useEffect(() => {
+    const subscription = supabase
+      .channel(`item_requests:request_user_id=${user.id}`)
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "item_requests",
+      }, () => {
+        fetchItemRequests()
+      })
+      .subscribe()
+
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [user, supabase, fetchItemRequests])
+
+  useEffect(() => {
+    fetchItemRequests()
     return () => {
       setItemRequests([])
     }
-  }, [user])
+  }, [user, fetchItemRequests])
 
   function handleSendMessage(formData: FormData) {
     const message = formData.get("message") as string

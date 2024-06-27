@@ -5,7 +5,6 @@ import { removeItem } from "@/utils/removeItem";
 import { addItemRequest } from "@/utils/addItemRequest";
 import { upsertChat } from "@/utils/getChats";
 import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation"
 
 type Props = {
   itemId: string;
@@ -20,7 +19,6 @@ export default function ItemViewButton({ itemId, senderId, imagePath, category, 
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>("");
   const { toast } = useToast();
-  const router = useRouter();
 
   useEffect(() => {
     const checkOwner = async () => {

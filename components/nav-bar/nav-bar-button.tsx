@@ -17,8 +17,8 @@ export default function NavBarButton(){
         list.map((item) => (
           <Button 
             key={item.text} 
-            variant={pathname === item.href ? "secondary" : "ghost"}
-            className={`${pathname === item.href ? "text-[#16a34a] bg-[#e8ffed]" : "text-[#09090B]"}`}
+            variant={(pathname === item.href && pathname.includes(item.href)) ? "secondary" : "ghost"}
+            className={`${(pathname === item.href && pathname.includes(item.href))? "text-[#16a34a] bg-[#e8ffed]" : "text-[#09090B]"}`}
             asChild
           >
             <Link href={item.href}>{item.text}</Link>

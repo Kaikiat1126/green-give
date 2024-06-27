@@ -8,8 +8,11 @@ import {
 } from "@/components/ui/accordion"
 import { AlarmClock } from "@/components/emoji/emoji"
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
 import Image from "next/image"
 import { createClient } from "@/utils/supabase/client"
+import { updateItemRequest } from "@/utils/updateItemRequest"
+import { SubmitButton } from "@/components/ui/submit-button"
 
 type Props = {
   itemRequests: any
@@ -19,6 +22,7 @@ export default function RequestedItem({ itemRequests }: Props) {
   const [loading, setLoading] = useState<boolean>(true)
   const [images, setImages] = useState<any>([])
   const supabase = createClient()
+  const { toast } = useToast()
 
   useEffect(() => {
     const handleImages = async () => {
@@ -31,6 +35,20 @@ export default function RequestedItem({ itemRequests }: Props) {
     }
     handleImages()
   }, [itemRequests])
+
+  async function handleUpdateItemRequest(request_id: string, item_id: string, status: string) {
+    await updateItemRequest(request_id, item_id, status).then((data) => {
+      if (data.error) {
+        showToaster(data.message, false)
+      } else {
+        showToaster(data.message, true)
+      }
+    })
+  }
+
+  function showToaster(message: string, success: boolean) {
+    toast({ title: message, variant: success ? 'default' : 'destructive', })
+  }
 
   return (
     <Accordion type="single" collapsible>
@@ -66,8 +84,21 @@ export default function RequestedItem({ itemRequests }: Props) {
               </AccordionTrigger>
               <AccordionContent className="w-full pb-2">
                 <div className="flex flex-row gap-x-2.5 items-center">
-                  <Button className="h-auto text-xs py-1.5">Completed</Button>
-                  <Button variant="destructive" className="h-auto text-xs py-1.5">Cancel request</Button>
+                  <SubmitButton 
+                    className="h-auto text-xs py-1.5"
+                    pendingText="Processing..."
+                    onClick={() => handleUpdateItemRequest(itemRequest.id, itemRequest.item_id, "Completed")}
+                  >
+                    Completed
+                  </SubmitButton>
+                  <SubmitButton 
+                    variant="destructive" 
+                    className="h-auto text-xs py-1.5"
+                    pendingText="Cancelling..."
+                    onClick={() => handleUpdateItemRequest(itemRequest.id, itemRequest.item_id, "Cancelled")}
+                  >
+                    Cancel request
+                  </SubmitButton>
                 </div>
               </AccordionContent>
             </AccordionItem>
