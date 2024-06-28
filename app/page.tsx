@@ -25,12 +25,14 @@ export default function Home() {
   const [selectedItem, setSelectedItem] = useState<string>("")
   const [title, setTitle] = useState<string>("")
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+  const [searchTimer, setSearchTimer] = useState<NodeJS.Timeout | null>(null)
 
   const supabase = createClient()
 
   const handleGetItems = useCallback(async () => {
+    if (loading) return
     setLoading(true)
-    await getItemsWithoutSelf({type, category})
+    await getItemsWithoutSelf({type, category, search})
       .then((data) => {
         if(data) {
           setListings(data)
@@ -39,7 +41,7 @@ export default function Home() {
         setLoading(false)
         setImageLoading(true)
     })
-  }, [type, category])
+  }, [type, category, search])
 
   useEffect(() => {
     handleGetItems()
@@ -90,6 +92,16 @@ export default function Home() {
     }
   }, [listings])
   
+  useEffect(() => {
+    if (searchTimer) clearTimeout(searchTimer)
+    setSearchTimer(setTimeout(() => {
+      handleGetItems()
+    }, 500))
+    return () => {
+      if (searchTimer) clearTimeout(searchTimer)
+    }
+  }, [search])
+
   return (
     <div className="xs:py-2 py-4 flex flex-col gap-y-2">
       <div className="flex flex-row items-center justify-between mt-2">
