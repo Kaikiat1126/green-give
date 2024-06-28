@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image"
 import { Skeleton } from "@/components/ui/skeleton";
+import { isExpired } from "@/utils/calculateExpiry";
 
 type Props = {
   item: any;
@@ -23,7 +24,28 @@ export default function ItemCard({item, imageSignedUrl, imageLoading, _onClick}:
           }
           {
             (!imageLoading && imageSignedUrl) && (
-              <Image src={imageSignedUrl} fill alt="item-image" className="object-cover xs:rounded-t-lg rounded-l-lg xs:rounded-l-none" priority sizes="(min-width: 475px) 100%" />
+              <>
+                <Image 
+                  src={imageSignedUrl} fill 
+                  alt="item-image" 
+                  className={"object-cover xs:rounded-t-lg rounded-l-lg xs:rounded-l-none" + ((isExpired(item?.item_intro.expiry_on) || !item?.available) ? " opacity-50" : "")}
+                  priority sizes="(min-width: 475px) 100%" 
+                />
+                {
+                  (isExpired(item?.item_intro.expiry_on) || !item?.available) && (
+                    <>
+                      <div className="relative bg-grey-1 opacity-30 w-full h-full xs:rounded-t-lg rounded-l-lg xs:rounded-l-none"></div>
+                      <div className="absolute w-1/2 h-full translate-x-1/2 translate-y-1/3 top-0">
+                        <div className="flex items-center justify-center py-2 px-4 bg-[#59C87A] rounded-lg">
+                          <p className="underline text-white xs:text-sm text-xs text-center underline-offset-2 font-medium">
+                            { item?.available ? "Expired": "Pickup Arranged"}
+                          </p>
+                        </div>
+                      </div>
+                    </>
+                  )
+                }
+              </>
             )
           }
         </div> 

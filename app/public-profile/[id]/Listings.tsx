@@ -6,6 +6,8 @@ import ItemCard from "@/components/listings/items/item-card";
 import LoadingCard from "@/components/listings/items/loading-card";
 import { getItemsByUserId } from "@/utils/getItems";
 import { createClient } from "@/utils/supabase/client";
+import FullScreenSheet from "@/components/add-item/sheet/full-screen-sheet";
+import ItemView from "@/components/listings/items/item-view";
 
 type Props = {
   first_name?: string;
@@ -18,6 +20,9 @@ export default function Listings({ first_name, userId }: Props){
   const [listings, setListings] = useState<any[]>([])
   const [itemsUrls, setItemsUrls] = useState<any[]>([])
   const [imageLoading, setImageLoading] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false)
+  const [selectedItem, setSelectedItem] = useState<string>("")
+  const [title, setTitle] = useState<string>("")
   const supabase = createClient()
 
   useEffect(() => {
@@ -60,43 +65,60 @@ export default function Listings({ first_name, userId }: Props){
   }, [category, listings])
 
   return (
-    <div className="flex flex-col gap-y-3 mb-2">
-      <h3 className="text-grey-1 font-semibold">Listings</h3>
-      <ListingsNavBar category={category} setCategory={setCategory} />
-      {
-        loading && (
-          <CardContainer>
-            {
-              Array.from({length: 2}).map((_, index) => (
-                <LoadingCard key={index} />
-              ))
-            }
-          </CardContainer>
-        )
-      }
-      {
-        !loading && filteredItems.length > 0 && (
-          <CardContainer>
-            {
-              filteredItems.map((item) => (
-                <ItemCard 
-                  key={item.id} 
-                  item={item} 
-                  imageLoading={imageLoading}
-                  imageSignedUrl={itemsUrls.find((url) => url.id === item.id)?.image}
-                />
-              ))
-            }
-          </CardContainer>
-        )
-      }
-      {
-        !loading && filteredItems.length === 0 && (
-          <div className="py-1.5">
-            When {first_name} adds a listing it will be shown here
-          </div>
-        )
-      }
-    </div>
+    <>
+      <div className="flex flex-col gap-y-3 mb-2">
+        <h3 className="text-grey-1 font-semibold">Listings</h3>
+        <ListingsNavBar category={category} setCategory={setCategory} />
+        {
+          loading && (
+            <CardContainer>
+              {
+                Array.from({length: 2}).map((_, index) => (
+                  <LoadingCard key={index} />
+                ))
+              }
+            </CardContainer>
+          )
+        }
+        {
+          !loading && filteredItems.length > 0 && (
+            <CardContainer>
+              {
+                filteredItems.map((item) => (
+                  <ItemCard 
+                    key={item.id} 
+                    item={item} 
+                    _onClick={() => {
+                      setOpen(true)
+                      setSelectedItem(item.id)
+                      setTitle(item.item_intro.title)
+                    }}
+                    imageLoading={imageLoading}
+                    imageSignedUrl={itemsUrls.find((url) => url.id === item.id)?.image}
+                  />
+                ))
+              }
+            </CardContainer>
+          )
+        }
+        {
+          !loading && filteredItems.length === 0 && (
+            <div className="py-1.5">
+              When {first_name} adds a listing it will be shown here
+            </div>
+          )
+        }
+      </div>
+      <FullScreenSheet
+        open={open}
+        setOpen={setOpen}
+        title={title}
+      >
+        <ItemView 
+          itemId={selectedItem} 
+          closeSheet={() => setOpen(false)}
+        />
+      </FullScreenSheet>
+    </>
   )
 }

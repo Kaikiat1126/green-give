@@ -11,6 +11,8 @@ export default async function addItem(formData: FormData) {
   const imageFiles = formData.getAll("images_files")
   const itemPrice = formData.get("price") ? parseInt(formData.get("price") as string) : null
   const untilMidnight = formData.get("list_for") === "0"
+  let expiryDate = untilMidnight ? new Date().setHours(23, 59, 59, 999) : new Date(Date.now() + parseInt(formData.get("list_for") as string) * 24 * 60 * 60 * 1000)
+  let newExpiry = new Date(expiryDate).toISOString().split(".")[0] + "+00"
 
   const folderPath = `${userId}/${Date.now()}`
   const filePathList: string[] = []
@@ -37,7 +39,7 @@ export default async function addItem(formData: FormData) {
             {
               id: itemId, title: formData.get("title"), description: formData.get("description"), quantity: parseInt(formData.get("quantity") as string),
               pickup_instructions: formData.get("pickup_instructions"), price: itemPrice, 
-              images: filePathList, until_midnight: untilMidnight, list_for: parseInt(formData.get("list_for") as string),
+              images: filePathList, until_midnight: untilMidnight, list_for: parseInt(formData.get("list_for") as string), expiry_on: newExpiry
             }
           ])
           //update the user impact and points

@@ -9,6 +9,7 @@ import ItemViewLoading from "./item-view-loading"
 import { getItemById } from "@/utils/getItems"
 import { addMessage } from "@/utils/addMessage"
 import { useRouter } from "next/navigation"
+import { isExpired } from "@/utils/calculateExpiry"
 
 type Props = {
   itemId: string
@@ -80,7 +81,10 @@ export default function ItemView({ itemId, closeSheet }: Props){
               )
             }
             {
-              item?.available && (
+              (
+                !item?.requested_by && 
+                !isExpired(item?.item_intro?.expiry_on)
+              ) && (
                 <ItemViewButton 
                   key="item-view-button" 
                   itemId={item?.id} 
@@ -90,6 +94,20 @@ export default function ItemView({ itemId, closeSheet }: Props){
                   sendMessage={messageToOwner}
                   closeSheet={() => closeSheet && closeSheet()}
                 />
+              )
+            }
+            {
+              isExpired(item?.item_intro?.expiry_on) && item?.available && (
+                <div className="mt-4">
+                  <p className="text-primary text-center underline text-lg">This item has expired.</p>
+                </div>
+              )
+            }
+            {
+              !item?.available && (
+                <div className="mt-4">
+                  <p className="text-primary text-center underline text-lg">This item is no longer available.</p>
+                </div>
               )
             }
           </>
