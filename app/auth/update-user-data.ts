@@ -56,3 +56,27 @@ export async function updateUserLocation(location: { lat: number, lng: number } 
     return { error: "An error occurred while processing the request!", status: 500 }
   }
 }
+
+export async function updateUserImpact(
+  owner_id: string | null, receiver_id: string | null, quantity: number, item_type: string
+) {
+  const supabase = createClient()
+  let meals_saved_count = 0, water_saved_count = 0;
+  if (item_type === "Food") {
+    meals_saved_count = quantity * 0.325;
+    water_saved_count = quantity * 196;
+  }
+  
+  try {
+    const { error } = await supabase.rpc('update_users_impact', {
+      meals_saved_count,
+      owner_id, 
+      receiver_id,
+      water_saved_count,
+    })
+    if (error) return { error: "An error occurred while updating the impact!", status: 400 }
+    return { success: 'Successfully updated your impact!', status: 200 }
+  } catch (error) {
+    return { error: "An error occurred while processing the request!", status: 500 }
+  }
+}

@@ -55,7 +55,6 @@ export async function upsertChat(ownerId1: string, ownerId2: string) {
     .or(`owner_id_1.eq.${ownerId1}, owner_id_1.eq.${ownerId2}`)
     .or(`owner_id_2.eq.${ownerId1}, owner_id_2.eq.${ownerId2}`)
     .limit(1);
-  console.log("search: ", existData, error);
 
   if(error) throw new Error(error.message)
   if (existData[0]) return existData[0]

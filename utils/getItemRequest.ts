@@ -9,11 +9,9 @@ export async function getItemRequest(personId: string) {
   const { data, error } = await supabase
     .from('item_requests')
     .select('*, items(*, item_intro(*))')
-    .eq('status', 'In Progress')
+    .or('status.eq.In Progress, status.eq.Confirmed')
     .or(`request_user_id.eq.${userId}, request_user_id.eq.${personId}`)
     .or(`owner_id.eq.${personId}, owner_id.eq.${userId})`)
-
-  console.log("item request", data, error);
   
   if (error) {
     throw new Error(error.message)

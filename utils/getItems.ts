@@ -28,7 +28,7 @@ export async function getItemsWithoutSelf (
     .is('requested_by', null)
     .neq('user_id', userId)
     .neq('available', false)
-    .gte('expiry_on', new Date().toISOString())
+    .gte('item_intro.expiry_on', new Date().toISOString())
     .order('created_at', {ascending: false})
   return data
 }
@@ -42,7 +42,7 @@ export async function selectAllCategoriesWithoutSelf(userId: string){
     .neq('user_id', userId)
     .neq('available', false)
     .is('requested_by', null)
-    .gte('expiry_on', new Date().toISOString())
+    .gte('item_intro.expiry_on', new Date().toISOString())
     .order('created_at', {ascending: false})
   return data
 }
