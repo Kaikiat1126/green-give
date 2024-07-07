@@ -53,7 +53,7 @@ export default function ItemCard({item, imageSignedUrl, imageLoading, _onClick}:
           <h4 className="font-semibold text-grey-1 text-[1.05rem] line-clamp-1">{item?.item_intro?.title}</h4>
           <div className="inline-flex flex-row items-center flex-nowrap gap-x-2">
             <Avatar className="h-8 w-8">
-              <AvatarImage src={`https://api.multiavatar.com/` + item?.user_id + `.svg`} alt="avatar" />
+              <AvatarImage src={`https://api.multiavatar.com/` + item?.user_id + `.svg?apikey=trCeWEJuKTsBIx`} alt="avatar" />
               <AvatarFallback>Avatar</AvatarFallback>
             </Avatar>
             <p className="text-grey-1 font-semibold text-sm">{item?.profiles?.username}</p>

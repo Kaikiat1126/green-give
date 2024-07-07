@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/carousel"
 import { createClient } from "@/utils/supabase/client"
 import Image from "next/image"
+import ItemImageModal from "./item-image-modal"
 
 type Props = {
   images: string[]
@@ -15,6 +16,8 @@ type Props = {
 
 export default function ItemCarousel({ images }: Props) {
   const [signedUrls, setSignedUrls] = useState<string[]>([])
+  const [open, setOpen] = useState<boolean>(false)
+  const [imgUrl, setImgUrl] = useState<string>("")
 
   const supabase = createClient()
 
@@ -30,22 +33,34 @@ export default function ItemCarousel({ images }: Props) {
   }, [images, supabase])
 
   return (
-    <Carousel className="w-full max-w-xl max-h-48">
-      <CarouselContent>
-        { 
-          signedUrls.map((url) => (
-            url && (
-              <CarouselItem key={url}>
-                <div className="relative w-full h-44">
-                  <Image src={url} alt="item-image" fill priority style={{objectFit: 'cover'}} />
-                </div>
-              </CarouselItem>
-            )
-          ))
-        }
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+    <>
+      <Carousel className="w-full max-w-xl max-h-48">
+        <CarouselContent>
+          { 
+            signedUrls.map((url) => (
+              url && (
+                <CarouselItem key={url}>
+                  <div className="relative w-full xs:h-48 h-44">
+                    <Image 
+                      src={url} 
+                      alt="item-image" fill priority 
+                      style={{objectFit: 'cover'}} 
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setImgUrl(url)
+                        setOpen(true)
+                      }}
+                    />
+                  </div>
+                </CarouselItem>
+              )
+            ))
+          }
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+      <ItemImageModal imgUrl={imgUrl} open={open} setOpen={setOpen} />
+    </>
   )
 }

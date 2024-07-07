@@ -30,7 +30,7 @@ export default function CommentField({ postId }: Props) {
 
   return (
     <div className="h-[4.5rem]">
-      <div className="fixed z-20 bottom-0 w-full py-4 pe-4 bg-white border-t max-w-screen-md mx-auto md:-translate-x-6 -translate-x-10">
+      <div className="fixed z-20 bottom-0 w-full py-4 bg-white border-t max-w-screen-md mx-auto md:-translate-x-6 -translate-x-10">
         <form className="flex flex-row items-center gap-x-8 px-4">
           <Input 
             ref={input}
@@ -43,9 +43,9 @@ export default function CommentField({ postId }: Props) {
           <Input type="hidden" value={postId} name="post_id" />
           <SubmitButton 
             key="comment-submit-button"
-            variant="secondary" 
+            variant="default" 
             type="button" 
-            className="text-primary font-semibold rounded-3xl px-6"
+            className="font-semibold rounded-3xl px-6"
             pendingText="Add..."
             formAction={handleSubmit}
           >

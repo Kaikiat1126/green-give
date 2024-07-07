@@ -10,7 +10,7 @@ export default function ProfileAvatar({ userId, className }: Props) {
   return (
     <Link href={`/public-profile/${userId}`}>
       <Avatar className={`h-10 w-10 ${className}`}>
-        <AvatarImage src={`https://api.multiavatar.com/` + userId + `.svg`} alt="@greengive" />
+        <AvatarImage src={`https://api.multiavatar.com/` + userId + `.svg?apikey=trCeWEJuKTsBIx`} alt="@greengive" />
         <AvatarFallback>Avatar</AvatarFallback>
       </Avatar>
     </Link>

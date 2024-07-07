@@ -17,7 +17,7 @@ export default function ChatUser({ currentSelected, user, lastMessage, _onClick 
       onClick={_onClick}
     >
       <Avatar className="h-12 w-12 md:h-12 md:w-13 xs:h-13 xs:w-14 mr-2">
-        <AvatarImage src={`https://api.multiavatar.com/` + user.id + `.svg`} alt="@greengive" />
+        <AvatarImage src={`https://api.multiavatar.com/` + user.id + `.svg?apikey=trCeWEJuKTsBIx`} alt="@greengive" />
         <AvatarFallback>Avatar</AvatarFallback>
       </Avatar>
       <div className="flex flex-col w-full gap-y-1 items-start md:flex xs:hidden">
