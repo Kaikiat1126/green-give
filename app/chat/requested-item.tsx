@@ -1,5 +1,5 @@
 'use client'
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Accordion,
   AccordionContent,
@@ -7,14 +7,17 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { AlarmClock } from "@/components/emoji/emoji"
+import { Button } from "@/components/ui/button"
 import { SubmitButton } from "@/components/ui/submit-button"
 import { useToast } from "@/components/ui/use-toast"
 import ModalConfirm from "./modal-confirm"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { createClient } from "@/utils/supabase/client"
 import { updateItemRequest } from "@/utils/updateItemRequest"
 import { updateUserImpact } from "@/app/auth/update-user-data"
 import { getUserId } from "../auth/get-user"
+import { useViewItemStore } from "@/utils/zustand/zustand"
 
 type Props = {
   itemRequests: any
@@ -30,6 +33,8 @@ export default function RequestedItem({ itemRequests }: Props) {
   const [userId, setUserId] = useState<string>("")
   const supabase = createClient()
   const { toast } = useToast()
+  const { setViewItem } = useViewItemStore()
+  const router = useRouter()
 
   useEffect(()=> {
     const fetchUserID = async () => {
@@ -38,6 +43,7 @@ export default function RequestedItem({ itemRequests }: Props) {
     }
     fetchUserID()
   }, [])
+
   useEffect(() => {
     const handleImages = async () => {
       const images = itemRequests.map((itemRequest: any) => itemRequest.items.item_intro.images[0])
@@ -93,6 +99,11 @@ export default function RequestedItem({ itemRequests }: Props) {
 
   function showToaster(message: string, success: boolean) {
     toast({ title: message, variant: success ? 'default' : 'destructive', })
+  }
+
+  function handleViewItem(item: any) {
+    setViewItem(item.id, item.item_intro.title, true)
+    router.push("/listings")
   }
 
   return (
@@ -166,6 +177,16 @@ export default function RequestedItem({ itemRequests }: Props) {
                         setIsOpen(true)
                       }}
                     />
+                    {
+                      (itemRequest.owner_id !== userId) && (
+                        <Button 
+                          className="h-auto text-xs py-1.5 bg-[#FF9A2E] hover:bg-[#FF7D00] text-white"
+                          onClick={() => handleViewItem(itemRequest.items)}
+                        >
+                          View Item
+                        </Button>
+                      )
+                    }
                   </div>
                 </AccordionContent>
               </AccordionItem>

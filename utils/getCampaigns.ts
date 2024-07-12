@@ -11,6 +11,7 @@ export async function getCampaigns() {
     .from('campaigns')
     .select('*')
     .gte('date', todayString)
+  await supabase.rpc('handle_update_campaign_views')
   if (error) throw error
   return data
 }

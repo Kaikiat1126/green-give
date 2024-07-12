@@ -6,6 +6,7 @@ import ItemViewButton from "./item-view-button"
 import UserApproxLocation from "./user-approx-location"
 import CategoryNotice from "./category-notice"
 import ItemViewLoading from "./item-view-loading"
+import GetLocationButton from "./get-location-button"
 import { getItemById } from "@/utils/getItems"
 import { addMessage } from "@/utils/addMessage"
 import { useRouter } from "next/navigation"
@@ -14,9 +15,10 @@ import { isExpired } from "@/utils/calculateExpiry"
 type Props = {
   itemId: string
   closeSheet?: () => void
+  getLocation?: boolean
 }
 
-export default function ItemView({ itemId, closeSheet }: Props){
+export default function ItemView({ itemId, closeSheet, getLocation }: Props){
   const [item, setItem] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const router = useRouter()
@@ -78,6 +80,11 @@ export default function ItemView({ itemId, closeSheet }: Props){
             {
               item?.category !== "Wanted" && (
                 <UserApproxLocation key="user-approx-location" location={ item?.profiles?.location} />
+              )
+            }
+            {
+              (getLocation && item?.available) && (
+                <GetLocationButton key="get-location-button" location={item?.profiles?.location} />
               )
             }
             {

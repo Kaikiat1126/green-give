@@ -8,7 +8,7 @@ import PostImageModal from "./post-image-modal"
 import { Separator } from "../ui/separator"
 import { Skeleton } from "../ui/skeleton"
 import { getPostById } from "@/utils/getPosts"
-import { MessageCircle } from "lucide-react"
+import { Eye, MessageCircle } from "lucide-react"
 import { createClient } from "@/utils/supabase/client"
 
 type Props = {
@@ -118,9 +118,15 @@ export default function PostView({ postId }: Props){
         )
       }
       <div className="my-1">
-        <div className="flex flex-row items-center justify-end gap-x-1 text-grey-2">
-          <MessageCircle size={18} />
-          <span className="text-sm relative top-[1px]">{post?.comments.length} comments</span>
+        <div className="flex flex-row items-center justify-between mt-1">
+          <div className="flex flex-row items-center gap-x-1 text-grey-2">
+            <Eye size={18} />
+            <span className="text-sm">{post?.views} views</span>
+          </div>
+          <div className="flex flex-row items-center gap-x-1 text-grey-2">
+            <MessageCircle size={18} />
+            <span className="text-sm relative top-[1px]">{post?.comments.length} comments</span>
+          </div>
         </div>
         <Separator className="mt-4" />
       </div>

@@ -67,3 +67,23 @@ export const useAddItemStore = create<AddItemStore>((set, get) => ({
         set(addItemInitialState);
     },
 }));
+
+const viewItemState = {
+  itemId: "",
+  title: "",
+  open: false,
+}
+
+interface ViewItemStore {
+  itemId: string;
+  title: string;
+  open: boolean;
+  setViewItem: (itemId: string, title: string, open: boolean) => void;
+  resetStore: () => void;
+}
+
+export const useViewItemStore = create<ViewItemStore>((set, get) => ({
+  ...viewItemState,
+  setViewItem: (itemId, title, open) => set({ itemId, title, open }),
+  resetStore: () => set(viewItemState),
+}));

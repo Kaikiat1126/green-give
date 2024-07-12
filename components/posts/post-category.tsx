@@ -17,7 +17,7 @@ export default function PostCategory({ category, setCategory, hasAll, className 
     { title: "Local Events", color:"#FFECE8", emoji: SpiralCalendar },
     { title: "Tips & Tricks", color:"#FFFCE8", emoji: LightBulb},
     { title: "Zero Waste", color: "#E8FFEA", emoji: RecyclingSymbol },
-    { title: "GreenGive Love", color:"#FFECE8", emoji: RedHeart },
+    { title: "GreenGive Experience", color:"#FFECE8", emoji: RedHeart },
     { title: "Recipes", color:"#FFE8F1", emoji: PotOfFood },
   ]
 

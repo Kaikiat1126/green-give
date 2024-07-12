@@ -6,7 +6,7 @@ type Props = {
 export default function UserApproxLocation({location}: Props){
   return (
     <div className="flex flex-col gap-y-1.5">
-      <h4 className="text-grey-1 tracking-tight scroll-m-20 font-semibold text-lg">Approx Location</h4>
+      <h4 className="text-grey-1 tracking-tight scroll-m-20 font-semibold text-lg">Approx Pickup Location</h4>
       {
         location && (
           <ApproxMap 

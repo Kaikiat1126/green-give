@@ -93,7 +93,7 @@ export default function Location(){
                     <LocateFixed color='#16a34a' className='mr-2 w-6 h-6'/>
                     Locate me
                   </Button>
-                  <Button className='px-14 py-2.5 h-auto rounded-3xl' onClick={setHomeLocation}>Set home location</Button>
+                  <Button className='px-14 py-2.5 h-auto rounded-3xl' onClick={setHomeLocation}>Set Pickup location</Button>
                 </div>
               </div>
             </div>

@@ -18,3 +18,20 @@ export async function getItemRequest(personId: string) {
   }
   return data
 }
+
+export async function getUserRequestedItems() {
+  const supabase = createClient()
+  const userId = await getUserId()
+  const { data, error } = await supabase
+    .from('item_requests')
+    .select('*, items(*, item_intro(*), profiles:user_id(username))')
+    .eq('request_user_id', userId)
+    .neq('status', 'Cancelled')
+    .order('created_at', { ascending: false })
+    .order('status', { ascending: false })
+
+  if(error) {
+    throw new Error(error.message);
+  } 
+  return data
+}

@@ -50,5 +50,6 @@ export async function getPostById(postId: string){
     )
     .eq('id', postId)
     .single()
+  await supabase.rpc("update_post_views", { post_id: postId })
   return data
 }

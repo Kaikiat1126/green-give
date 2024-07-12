@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image"
 import { Skeleton } from "@/components/ui/skeleton";
 import { isExpired } from "@/utils/calculateExpiry";
+import { Eye } from "lucide-react";
 
 type Props = {
   item: any;
@@ -51,12 +52,18 @@ export default function ItemCard({item, imageSignedUrl, imageLoading, _onClick}:
         </div> 
         <div className="p-4 inline-flex flex-col gap-y-2">
           <h4 className="font-semibold text-grey-1 text-[1.05rem] line-clamp-1">{item?.item_intro?.title}</h4>
-          <div className="inline-flex flex-row items-center flex-nowrap gap-x-2">
-            <Avatar className="h-8 w-8">
-              <AvatarImage src={`https://api.multiavatar.com/` + item?.user_id + `.svg?apikey=trCeWEJuKTsBIx`} alt="avatar" />
-              <AvatarFallback>Avatar</AvatarFallback>
-            </Avatar>
-            <p className="text-grey-1 font-semibold text-sm">{item?.profiles?.username}</p>
+          <div className="flex flex-row justify-between items-center">
+            <div className="inline-flex flex-row items-center flex-nowrap gap-x-2">
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={`https://api.multiavatar.com/` + item?.user_id + `.svg?apikey=trCeWEJuKTsBIx`} alt="avatar" />
+                <AvatarFallback>Avatar</AvatarFallback>
+              </Avatar>
+              <p className="text-grey-1 font-semibold text-sm">{item?.profiles?.username}</p>
+            </div>
+            <div className="flex flex-row items-center gap-x-1 text-grey-2">
+              <Eye size={16} />
+              <span className="text-sm relative top-[1px]">{item?.views} views</span>
+            </div>
           </div>
         </div>
       </div>

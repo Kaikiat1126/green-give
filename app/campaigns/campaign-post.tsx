@@ -6,6 +6,7 @@ import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { calculateAgo, formatDate, parseTime } from "@/utils/date"
 import { createClient } from "@/utils/supabase/client"
+import { Eye } from "lucide-react"
 
 type Props = {
   campaign: any
@@ -18,7 +19,7 @@ export default function CampaignPost({ campaign }: Props) {
   useEffect(() => {
     const fetchImage = async () => {
       const { data } = await supabase.storage.from("campaigns_images")
-        .createSignedUrl(campaign?.images[0], 1800)
+        .createSignedUrl(campaign?.images[0], 3600)
       if(data) {
         setSignedUrl(data.signedUrl)
       }
@@ -59,6 +60,10 @@ export default function CampaignPost({ campaign }: Props) {
             <Image src={signedUrl} layout="responsive" width={500} height={500} priority style={{objectFit: "cover"}} alt={campaign?.title} />
           )
         }
+      </div>
+      <div className="flex flex-row items-center my-2 justify-end text-grey-2 gap-x-1.5">
+        <Eye size={18} />
+        <span className="text-sm mr-2">{campaign?.views} views</span>
       </div>
     </div>
   )

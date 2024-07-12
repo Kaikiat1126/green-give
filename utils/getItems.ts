@@ -72,6 +72,7 @@ export async function getItemById(itemId: string){
     .select("*, item_intro!inner(*), profiles:user_id(first_name, username, location)")
     .eq('id', itemId)
     .single()
+  await supabase.rpc('update_item_views', { item_id: itemId })
   return data
 }
 
