@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { getItemsWithoutSelf } from "@/utils/getItems";
 import { createClient } from "@/utils/supabase/client";
+import CampaignsCarousel from "@/components/campaigns-carousel";
 
 export default function Home() {
   const [open, setOpen] = useState<boolean>(false)
@@ -104,6 +105,7 @@ export default function Home() {
 
   return (
     <div className="xs:py-2 py-4 flex flex-col gap-y-2">
+      <CampaignsCarousel />
       <div className="flex flex-row items-center justify-between mt-2">
         <div className="flex flex-row items-center gap-x-5">
           <HomeLinkBtn text="Food" setType={() => setType("Food")} active={type === "Food"} />

@@ -15,3 +15,17 @@ export async function getCampaigns() {
   if (error) throw error
   return data
 }
+
+export async function getHomeCampaigns() {
+  const supabase = createClient()
+  const today = new Date()
+  const todayString = today.toISOString().split('T')[0]
+  
+  const { data, error } = await supabase
+    .from('campaigns')
+    .select('*')
+    .gte('date', todayString)
+    .limit(4)
+  if (error) throw error
+  return data
+}
