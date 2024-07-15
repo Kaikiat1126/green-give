@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { SubmitButton } from "@/components/ui/submit-button";
-import { getUserId } from "@/app/auth/get-user";
+import { getUserId, getUserProfileLocation } from "@/app/auth/get-user";
 import { removeItem } from "@/utils/removeItem";
 import { addItemRequest } from "@/utils/addItemRequest";
 import { upsertChat } from "@/utils/getChats";
@@ -44,6 +44,12 @@ export default function ItemViewButton({ itemId, senderId, imagePath, category, 
   }
 
   async function handleRequestItem() {
+    const hasLocation = await getUserProfileLocation();
+    if (!hasLocation && category === "Wanted") {
+      showToaster("Please update your location in your profile before continue the process", false);
+      closeSheet();
+      return;
+    }
     await addItemRequest(itemId, userId, senderId).then((res) => {
       if (res) {
         showToaster("Your request has been sent. In processing", true);

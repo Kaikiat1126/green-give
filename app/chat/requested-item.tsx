@@ -178,7 +178,10 @@ export default function RequestedItem({ itemRequests }: Props) {
                       }}
                     />
                     {
-                      (itemRequest.owner_id !== userId) && (
+                      (itemRequest.items.category !== "Wanted" && itemRequest.owner_id !== userId) || 
+                      (itemRequest.items.category === "Wanted" && itemRequest.owner_id === userId) && 
+                      (itemRequest.status === "Confirmed") &&
+                      (
                         <Button 
                           className="h-auto text-xs py-1.5 bg-[#FF9A2E] hover:bg-[#FF7D00] text-white"
                           onClick={() => handleViewItem(itemRequest.items)}

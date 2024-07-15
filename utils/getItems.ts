@@ -69,7 +69,7 @@ export async function getItemById(itemId: string){
   const supabase = createClient()
   const { data } = await supabase
     .from('items')
-    .select("*, item_intro!inner(*), profiles:user_id(first_name, username, location)")
+    .select("*, item_intro!inner(*), profiles:user_id(first_name, username, location), requested_by_profiles:requested_by(username, location)")
     .eq('id', itemId)
     .single()
   await supabase.rpc('update_item_views', { item_id: itemId })

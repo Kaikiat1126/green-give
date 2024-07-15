@@ -46,6 +46,8 @@ export default function Location(){
 
   async function useCurrentLocation() {
     if (location && 'error' in location === false) {
+      hasLocation && setHasLocation(false)
+      setTimeout(() => setHasLocation(true), 0)
       setPosition(location)
       showToast("Your current location has been loaded successfully.", "Latest location", "default")
     }

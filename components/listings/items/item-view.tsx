@@ -84,12 +84,16 @@ export default function ItemView({ itemId, closeSheet, getLocation }: Props){
             }
             {
               (getLocation && item?.available) && (
-                <GetLocationButton key="get-location-button" location={item?.profiles?.location} />
+                <GetLocationButton 
+                  key="get-location-button" 
+                  location={item?.category === "Wanted" ? item?.requested_by_profiles?.location : item?.profiles?.location} 
+                />
               )
             }
             {
               (
                 !item?.requested_by && 
+                item?.available &&
                 !isExpired(item?.item_intro?.expiry_on)
               ) && (
                 <ItemViewButton 

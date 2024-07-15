@@ -58,3 +58,9 @@ export async function getUserId() {
   const user = await getUser()
   return user?.id
 }
+
+export async function getUserProfileLocation() {
+  const user = await getUser()
+  const { data } = await getUserProfileDataById(user?.id!)
+  return data.location
+}
