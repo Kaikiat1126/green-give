@@ -80,7 +80,7 @@ export default function CampaignsCarousel(){
                   <ImageItem 
                     url={signedUrls.find(url => url.id === campaign.id).image}
                     campaign={campaign}
-                    _onClick={() => router.push(`/campaigns/${campaign.id}`)}
+                    _onClick={() => router.push(`/campaigns`)}
                   />
                 </CarouselItem>
           ))}
