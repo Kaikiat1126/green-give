@@ -40,12 +40,12 @@ export default function MapLocation({ setLocationExist }: Props) {
     })
   }, [toast])
 
-  const handleUpdateLocation = useCallback(async () => {
-    position && await updateUserLocation(position).then((res) => {
+  const handleUpdateLocation = useCallback(async (position: {lat: number, lng: number}) => {
+    await updateUserLocation(position).then((res) => {
       if ('error' in res) showToast(res.error, "Location update error", "destructive")
       if ('success' in res) showToast(res.success, "Location updated", "default")
     })
-  }, [position, showToast])
+  }, [showToast])
 
   useEffect(() => {
     setHasLocation(true)
@@ -59,10 +59,10 @@ export default function MapLocation({ setLocationExist }: Props) {
     if (location && 'error' in location === false) {
       setPosition(location)
       showToast("Your current location has been loaded successfully.", "Latest location", "default")
+      handleUpdateLocation(location)
     }
     if (location && 'error' in location) 
       showToast(location?.error, "Location initial error", "destructive")
-    handleUpdateLocation()
   }
 
   return (
