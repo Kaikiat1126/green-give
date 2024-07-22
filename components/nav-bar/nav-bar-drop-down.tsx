@@ -20,14 +20,14 @@ export default function NavBarDropDown({ children, signOutChild }: Props) {
   const pathname = usePathname()
 
   const list = [
-    { href: "account", text: "Account", icon: CircleUser },
-    { href: "profile", text: "Profile", icon: Smile },
-    { href: "impact", text: "My Impact", icon: Earth },
-    { href: "levels", text: "My Levels", icon: Award },
-    { href: "listings", text: "My Listings", icon: LayoutList },
-    { href: "posts", text: "My Posts", icon: BookCopy },
-    { href: "campaigns", text: "Campaigns", icon: CalendarDays },
-    { href: "location", text: "Location", icon: MapPinned }
+    { href: "/account", text: "Account", icon: CircleUser },
+    { href: "/profile", text: "Profile", icon: Smile },
+    { href: "/impact", text: "My Impact", icon: Earth },
+    { href: "/levels", text: "My Levels", icon: Award },
+    { href: "/listings", text: "My Listings", icon: LayoutList },
+    { href: "/posts", text: "My Posts", icon: BookCopy },
+    { href: "/campaigns", text: "Campaigns", icon: CalendarDays },
+    { href: "/location", text: "Location", icon: MapPinned }
   ]
 
   return (
@@ -42,7 +42,7 @@ export default function NavBarDropDown({ children, signOutChild }: Props) {
               key={item.text} 
               href={item.href} 
               text={item.text}
-              active={pathname === `/${item.href}`}
+              active={pathname === item.href && pathname.includes(item.href)}
               icon={item.icon}
             />
           ))
@@ -54,7 +54,7 @@ export default function NavBarDropDown({ children, signOutChild }: Props) {
               key={item.text} 
               href={item.href} 
               text={item.text}
-              active={pathname === `/${item.href}`}
+              active={pathname === item.href && pathname.includes(item.href)}
               icon={item.icon}
             />
           ))
