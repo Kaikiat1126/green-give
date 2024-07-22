@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { EmojiBackground } from "@/components/emoji/emoji-background"
-import { RecyclingSymbol, SpiralCalendar, LoudSpeaker, LightBulb, PotOfFood, RedHeart, OpenHandsLightSkinTone } from "@/components/emoji/emoji"
+import { RecyclingSymbol, SpeechBallon, SpiralCalendar, LoudSpeaker, LightBulb, PotOfFood, RedHeart, OpenHandsLightSkinTone } from "@/components/emoji/emoji"
 import { Button } from "@/components/ui/button"
 
 type Props = {
@@ -19,6 +19,7 @@ export default function PostCategory({ category, setCategory, hasAll, className 
     { title: "Zero Waste", color: "#E8FFEA", emoji: RecyclingSymbol },
     { title: "GreenGive Experience", color:"#FFECE8", emoji: RedHeart },
     { title: "Recipes", color:"#FFE8F1", emoji: PotOfFood },
+    { title: "Q&A", color:"#E8F3FF", emoji: SpeechBallon },
   ]
 
   const filteredList = useMemo(() => {
