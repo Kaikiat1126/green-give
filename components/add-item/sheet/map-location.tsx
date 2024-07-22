@@ -90,7 +90,7 @@ export default function MapLocation({ setLocationExist }: Props) {
               className='py-2.5 h-auto rounded-3xl self-center sm:w-2/5 w-full'
               onClick={setHomeLocation}
             >
-              Locate me & Set as home location
+              Locate me & Set as pickup location
             </Button>
           </div>
         )
