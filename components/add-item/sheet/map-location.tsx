@@ -85,7 +85,7 @@ export default function MapLocation({ setLocationExist }: Props) {
           </APIProvider>
         ) : (
           <div className="flex flex-col py-2 gap-y-3">
-            <div className="text-sm text-[#f53f3f]">* You haven&apos;t set your home location</div>
+            <div className="text-sm text-[#f53f3f]">* You haven&apos;t set your pickup location</div>
             <Button 
               className='py-2.5 h-auto rounded-3xl self-center sm:w-2/5 w-full'
               onClick={setHomeLocation}
