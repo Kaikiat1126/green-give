@@ -104,7 +104,7 @@ export default function Location(){
         (
           <>
             <p className="text-grey-2 text-center my-4 mt-8">
-              No location data found, please add and save your home location.
+              No location data found, please add and save your pickup location.
             </p>
             <div className='flex flex-row justify-center mt-2'>
               <Button 
