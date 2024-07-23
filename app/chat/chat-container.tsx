@@ -10,7 +10,7 @@ import { getChats } from "@/utils/getChats"
 import { createClient } from "@/utils/supabase/client"
 
 export default function ChatContainer() {
-  const isMobile = useMediaQuery("(max-width: 475px)")
+  const isMobile = useMediaQuery("(max-width: 474px)")
   const [chats, setChats] = useState<any[]>([])
   const [chatId, setChatId] = useState<string>("")
   const [chatUser, setChatUser] = useState<any>({})

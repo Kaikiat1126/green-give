@@ -9,7 +9,7 @@ import useMediaQuery from "@/utils/hooks/useMediaQuery"
 import BigScreenBottomButton from "./add-item/big-screen-bottom-button"
 
 export default function BottomNavBar() {
-  const isMobile = useMediaQuery('(max-width: 768px)')
+  const isMobile = useMediaQuery('(max-width: 767px)')
   const pathname = usePathname()
 
   return (

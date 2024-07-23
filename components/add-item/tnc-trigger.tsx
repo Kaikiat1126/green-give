@@ -7,7 +7,7 @@ import Modal from "./modal"
 
 export default function TnCTrigger({ children }: { children: React.ReactNode }){
   const [open, setOpen] = useState(false)
-  const isMobile = useMediaQuery('(max-width: 768px)')
+  const isMobile = useMediaQuery('(max-width: 767px)')
 
   return (
     <Modal open={open} setOpen={setOpen} title="What can / can't be listed on GreenGive" triggerChildren={children}>

@@ -26,7 +26,7 @@ type Props = {
 
 export default function Modal({ title, triggerChildren, children, open, setOpen }: Props) {
 
-  const isMobile = useMediaQuery('(max-width: 768px)')
+  const isMobile = useMediaQuery('(max-width: 767px)')
 
   if (isMobile) {
     return (
