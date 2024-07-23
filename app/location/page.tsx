@@ -26,7 +26,7 @@ export default function Location(){
       const data = user?.location
       if (data) {
         setPosition({ lat: data[0], lng: data[1]})
-        showToast("Your home location has been loaded successfully.", "Latest home location", "default")
+        showToast("Your pickup location has been loaded successfully.", "Latest pickup location", "default")
       }
     }
     fetchUserProfile()
@@ -57,7 +57,11 @@ export default function Location(){
 
   async function setHomeLocation(){
     if (position) {
-      await updateUserLocation(position)
+      await updateUserLocation(position).then(() => {
+        showToast("Your pickup location has been saved successfully.", "Latest pickup location", "default")
+      }).catch((error) => {
+        showToast(error, "Location update error", "destructive")
+      })
     }
   }
 
@@ -95,7 +99,7 @@ export default function Location(){
                     <LocateFixed color='#16a34a' className='mr-2 w-6 h-6'/>
                     Locate me
                   </Button>
-                  <Button className='px-14 py-2.5 h-auto rounded-3xl' onClick={setHomeLocation}>Set Pickup location</Button>
+                  <Button className='px-14 py-2.5 h-auto rounded-3xl' onClick={setHomeLocation}>Set pickup location</Button>
                 </div>
               </div>
             </div>
