@@ -102,6 +102,7 @@ export function ImageItem(
       onMouseLeave={() => setShow(false)}
     >
       <Image 
+        unoptimized
         src={url} 
         alt="campaign-image" fill priority 
         style={{objectFit: 'cover'}} 

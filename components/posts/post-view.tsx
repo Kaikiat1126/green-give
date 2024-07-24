@@ -112,7 +112,7 @@ export default function PostView({ postId }: Props){
         !loading && imageSignedUrl && (
           <div className="relative h-52">
             <PostImageModal>
-              <Image src={imageSignedUrl} fill priority style={{objectFit:"cover"}} className="cursor-pointer" alt="post-image" />
+              <Image unoptimized src={imageSignedUrl} fill priority style={{objectFit:"cover"}} className="cursor-pointer" alt="post-image" />
             </PostImageModal>
           </div>
         )

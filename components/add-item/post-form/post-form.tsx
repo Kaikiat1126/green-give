@@ -20,12 +20,14 @@ export default function PostForm({ closeSheet }: Props){
   const [category, setCategory] = useState<string>("")
   const [imageUrl, setImageUrl] = useState<string>("")
   const [imageFile, setImageFile] = useState<File | null>(null)
+  const [onSubmit, setOnSubmit] = useState<boolean>(false)
 
   async function handleAddPost(formData: FormData){
     if (!category) {
       showToaster("You must select a category", false)
       return
     }
+    setOnSubmit(true)
     if (imageFile) {
       formData.append("image_file", imageFile)
     }
@@ -93,7 +95,12 @@ export default function PostForm({ closeSheet }: Props){
         <PostCategory category={category} setCategory={setCategory} />
       </div>
       <Input id="category" type="hidden" value={category} name="category" />
-      <SubmitButton className="rounded-3xl h-auto py-2.5 mt-6" formAction={handleAddPost} pendingText="Posting...">
+      <SubmitButton 
+        className="rounded-3xl h-auto py-2.5 mt-6" 
+        formAction={handleAddPost} 
+        pendingText="Posting..."
+        disabled={onSubmit}
+      >
         Submit
       </SubmitButton>
     </form>

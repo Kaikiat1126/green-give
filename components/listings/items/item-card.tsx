@@ -27,6 +27,7 @@ export default function ItemCard({item, imageSignedUrl, imageLoading, _onClick}:
             (!imageLoading && imageSignedUrl) && (
               <>
                 <Image 
+                  unoptimized
                   src={imageSignedUrl} fill 
                   alt="item-image" 
                   className={"object-cover xs:rounded-t-lg rounded-l-lg xs:rounded-l-none" + ((isExpired(item?.item_intro.expiry_on) || !item?.available) ? " opacity-50" : "")}

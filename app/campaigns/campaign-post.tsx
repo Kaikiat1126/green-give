@@ -31,7 +31,7 @@ export default function CampaignPost({ campaign }: Props) {
     <div className="flex flex-col gap-y-2">
       <div className="flex flex-row items-center">
         <Avatar className="w-14 h-14">
-          <Image src={GreenGiveLogo} className="aspect-square h-full w-full -translate-x-2" alt="@greengive" />
+          <Image unoptimized src={GreenGiveLogo} className="aspect-square h-full w-full -translate-x-2" alt="@greengive" />
           <AvatarFallback>Avatar</AvatarFallback>
         </Avatar>
         <div className="inline-flex flex-col">
@@ -57,7 +57,7 @@ export default function CampaignPost({ campaign }: Props) {
       <div className="relative w-full my-1">
         {
           signedUrl && (
-            <Image src={signedUrl} layout="responsive" width={500} height={500} priority style={{objectFit: "cover"}} alt={campaign?.title} />
+            <Image unoptimized src={signedUrl} layout="responsive" width={500} height={500} priority style={{objectFit: "cover"}} alt={campaign?.title} />
           )
         }
       </div>

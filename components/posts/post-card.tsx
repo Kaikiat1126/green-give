@@ -34,13 +34,13 @@ export default function PostCard({ post, imageSignedUrl, imageLoading, showButto
         </div>
         {
           (post?.image && imageLoading) && (
-            <Skeleton className="h-24 w-full" />
+            <Skeleton className="h-24 w-full sm:hidden" />
           )
         }
         {
           (post?.image && !imageLoading && imageSignedUrl) && (
             <div className="relative h-24 sm:hidden">
-              <Image src={imageSignedUrl} priority fill style={{objectFit:"cover"}} alt="post-image" />
+              <Image unoptimized src={imageSignedUrl} priority fill style={{objectFit:"cover"}} alt="post-image" />
             </div>
           )
         }
