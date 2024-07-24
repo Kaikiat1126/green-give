@@ -35,3 +35,22 @@ export async function getUserRequestedItems() {
   } 
   return data
 }
+
+export async function getUserReceivedItemsCountInLast4Weeks() {
+  const supabase = createClient()
+  const userId = await getUserId()
+  const temp = new Date().getTime() - 2419200000
+  const fourWeeksAgo = new Date(temp).toISOString()
+  
+  const { count, error } = await supabase
+    .from('item_requests')
+    .select('*', { count: 'exact', })
+    .eq('request_user_id', userId)
+    .eq('status', 'Completed')
+    .gte('created_at', fourWeeksAgo)
+  
+  if(error) {
+    throw new Error(error.message)
+  }
+  return count
+}

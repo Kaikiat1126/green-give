@@ -1,4 +1,5 @@
 import { getUserImpacts, getUserJoinedDays } from "../auth/get-user";
+import { getUserReceivedItemsCountInLast4Weeks } from "@/utils/getItemRequest";
 import ShareImpact from "./share-impact";
 import ImpactSheet from "./impact-sheet";
 import ImpactCard from "./impact-card";
@@ -8,6 +9,7 @@ export default async function Impact(){
 
   const data = await getUserImpacts();
   const joinedDays = await getUserJoinedDays();
+  const itemsReceivedCount = await getUserReceivedItemsCountInLast4Weeks();
 
   return (
     <div className="xs:py-6 py-4 flex flex-col gap-y-2">
@@ -62,7 +64,7 @@ export default async function Impact(){
           <div className="font-semibold text-grey-1 text-lg">Pick-up quota count</div>
           <div className="text-grey-2 font-semibold">Last 4 weeks</div>
           <div className="inline-flex flex-col px-3 border-l-4 my-2">
-            <div className="text-primary text-2xl font-semibold">0</div>
+            <div className="text-primary text-2xl font-semibold">{itemsReceivedCount}</div>
             <div className="text-grey-3 text-sm">Listings received which count towards pick-up quotas</div>
           </div>
         </div>
