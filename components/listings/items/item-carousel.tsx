@@ -42,6 +42,7 @@ export default function ItemCarousel({ images }: Props) {
                 <CarouselItem key={url}>
                   <div className="relative w-full xs:h-48 h-44">
                     <Image 
+                      unoptimized
                       src={url} 
                       alt="item-image" fill priority 
                       style={{objectFit: 'cover'}} 
