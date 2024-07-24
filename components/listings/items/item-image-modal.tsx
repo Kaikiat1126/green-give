@@ -18,7 +18,7 @@ export default function ItemImageModal({imgUrl, open, setOpen}: Props){
         hideClose
       >
         <div className="relative sm:min-h-[75vh] xs:min-h-[60vh] min-h-[50vh] h-full w-full">
-          <Image src={imgUrl} fill priority style={{objectFit:"cover"}} alt="item-image" />
+          <Image unoptimized src={imgUrl} fill priority style={{objectFit:"cover"}} alt="item-image" />
         </div>
       </DialogContent>
     </Dialog>

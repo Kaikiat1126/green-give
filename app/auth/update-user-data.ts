@@ -32,7 +32,7 @@ export async function updateProfileAbout(about: string) {
     
     if (error) return { error: "An error occurred while updating the profile about!", status: 400 }
 
-    return { success: 'Successfully updated profile about!', status: 200 }
+    return { success: 'Successfully updated profile data!', status: 200 }
   } catch (error) {
     return { error: "An error occurred while processing the request!", status: 500 }
   }
