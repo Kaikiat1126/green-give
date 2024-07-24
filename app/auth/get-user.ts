@@ -61,6 +61,6 @@ export async function getUserId() {
 
 export async function getUserProfileLocation() {
   const user = await getUser()
-  const { data } = await getUserProfileDataById(user?.id!)
+  const data = await getUserProfileDataById(user?.id!)
   return data.location
 }
