@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Input } from "@/components/ui/input"
@@ -47,6 +47,7 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
   const defaultSelectValue = type === typeValue.FOOD ? "5" : "28" 
 
   const { toast } = useToast()
+  const quantityFieldRef = useRef<HTMLInputElement>(null)
 
   function addImage(image: string) {
     setImages([...images, image])
@@ -77,6 +78,10 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
       closeSheet && closeSheet()
     }
     else showToaster(response.error || "", false)
+  }
+
+  function clearQuantityField() {
+    quantityFieldRef.current && (quantityFieldRef.current.value = "")
   }
 
   function showToaster(message: string, success: boolean) {
@@ -136,7 +141,7 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
                       variant={number === quantity ? "default" : "secondary"} 
                       className="h-auto py-2 xs:px-8 px-5 rounded-3xl hover:bg-primary hover:text-primary-foreground transition-colors"
                       type="button"
-                      onClick={() => setQuantity(number)}
+                      onClick={() => {clearQuantityField(); setQuantity(number)}}
                     >
                       {number}
                     </Button>
@@ -146,6 +151,7 @@ export default function AddItemSheet({ type, category, closeSheet }: Props){
             </div>
             <div className="flex-1">
               <Input 
+                ref={quantityFieldRef}
                 type="number" placeholder="Other" min={6} max={15} 
                 onChange={(e) => setQuantity(parseInt(e.target.value))}
               />

@@ -69,7 +69,7 @@ export function UploadImage({ images, addImage, imageFiles, setImageFiles }: Upl
           images.length === 0 && (
             <>
               <div className="text-[1.05rem] font-semibold text-grey-1 my-2 text-center whitespace-nowrap">Click to upload</div>
-              <p className=" leading-6 text-grey-2 text-center mt-1 mb-4">Only png, jpg can be uploaded, and the size does not exceed 8MB</p>
+              <p className=" leading-6 text-grey-2 text-center mt-1 mb-4">Only png, jpg can be uploaded, and the size does not exceed 5MB</p>
             </>
           )
         }
