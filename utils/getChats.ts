@@ -42,6 +42,7 @@ export async function getMessages(chatId: string) {
     .from("messages")
     .select("*")
     .eq("chat_id", chatId)
+    .order("created_at", { ascending: true })
   
   if(error) throw new Error(error.message)
   return data
