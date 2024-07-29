@@ -4,14 +4,14 @@ import { createClient } from "./supabase/server"
 
 export async function updateItemRequest(request_id: string, item_id: string, status: string) {
   const supabase = createClient()
-  const { error } = await supabase
-    .from("item_requests")
-    .update({ status, owner_confirmed: status === "Confirmed" })
-    .eq("id", request_id)
-
-  if(error) return { error: error.message, message: "Failed to handle request."}
-
-  if (status === "Completed") {
+  if (status === "Confirmed") {
+    const { error } = await supabase
+      .from("item_requests")
+      .update({ status, owner_confirmed: true })
+      .eq("id", request_id)
+    if(error) return { error: error.message, message: "Failed to handle request."}
+  }
+  else if (status === "Completed") {
     const { error: error2 } = await supabase
       .from("items")
       .update({available: false})

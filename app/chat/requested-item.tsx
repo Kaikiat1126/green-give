@@ -119,6 +119,7 @@ export default function RequestedItem({ itemRequests }: Props) {
                       (!loading && images) && (
                         <div className="relative h-8 w-8">
                           <Image
+                            unoptimized
                             priority
                             src={images[index].signedUrl}
                             alt="placeholder"
